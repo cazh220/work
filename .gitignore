@@ -1,0 +1,8 @@
+/app/runtime
+/app/public/qrcode
+/app/public/uploads
+/app/data
+/wx/cache/smarty
+/wx/logs
+/yuyao/cache/smarty
+/yuyao/logs
