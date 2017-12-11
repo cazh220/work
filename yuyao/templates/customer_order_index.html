@@ -480,12 +480,11 @@ function bring_user(id)
 		data:"do=getuserdetail&user_id="+id,
 		dataType:"json",
 		success:function(msg){
-			console.log(msg);
+			//console.log(msg);
 			$("#customer").val(msg.username);
 			$("#operater_id").val(msg.user_id);
 			$("#order_user_id").val(msg.user_id);
 			$("#order_role_id").val(msg.role_id);
-			$("#add_goods").attr("href", "sssss");
 		}
 	});
 	//document.getElementById("aa").value = 'aa';
