@@ -30,7 +30,7 @@ $cfg['prefix'] = 'ecs_';
 
 //主数据库，默认连接该数据库
 //*
-$cfg['db'] = array('driver'=> 'mysql', 'host'=> 'udm3289897.my3w.com', 'name'=> 'udm3289897_db', 'user'=> 'udm3289897','password'=> '0610640326');
+$cfg['db'] = array('driver'=> 'mysql', 'host'=> 'localhost', 'name'=> 'work', 'user'=> 'root','password'=> '');
 /*
 $cfg['union'] = array('driver'=> 'mysql', 'host'=> 'localhost', 'name'=> 'lyceem_distribution', 'user'=> 'root', 'password'=> '');
 $cfg['store_db'] = array('driver'=> 'mysql', 'host'=> 'localhost', 'name'=> 'market', 'user'=> 'root','password'=> '');

@@ -1,11 +1,11 @@
-/app/runtime
-/app/public/qrcode
-/app/public/uploads
-/app/data
-/wx/cache/smarty
-/wx/logs
-/yuyao/cache/smarty
-/yuyao/logs
+/app/runtime/
+/app/public/qrcode/
+/app/public/uploads/
+/app/data/
+/wx/cache/smarty/
+/wx/logs/
+/yuyao/cache/smarty/
+/yuyao/logs/
 
 app/database.php
 yuyao/config/database.cfg.php
