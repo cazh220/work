@@ -1,12 +1,6 @@
 <?php
 /**
  * 配置文件－－主配置文件
- * @package main
- * @subpackage configure
- * @author  崇<lonce@live.cn>
- * @version 0.1 20090707
- *
- * $Id$
  */
 
 //Memcache分组相关配置信息
