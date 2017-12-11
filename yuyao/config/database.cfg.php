@@ -31,14 +31,4 @@ $cfg['prefix'] = 'ecs_';
 //主数据库，默认连接该数据库
 //*
 $cfg['db'] = array('driver'=> 'mysql', 'host'=> 'localhost', 'name'=> 'work', 'user'=> 'root','password'=> '');
-/*
-$cfg['union'] = array('driver'=> 'mysql', 'host'=> 'localhost', 'name'=> 'lyceem_distribution', 'user'=> 'root', 'password'=> '');
-$cfg['store_db'] = array('driver'=> 'mysql', 'host'=> 'localhost', 'name'=> 'market', 'user'=> 'root','password'=> '');
-$cfg['goods_db'] = array('driver'=> 'mysql', 'host'=> 'localhost', 'name'=> 'lyceem_goods', 'user'=> 'root','password'=> '');
-*/
-
-//$cfg['db'] = array('driver'=> 'mysql', 'host'=> '114.141.181.165', 'name'=> '_t_lyceem', 'user'=> 'developer','password'=> 'LyceemDev203');
-//$cfg['union'] = array('driver'=> 'mysql', 'host'=> '114.141.181.165', 'name'=> '_t_lyceem_distribution', 'user'=> 'developer', 'password'=> 'LyceemDev203');
-//$cfg['store_db'] = array('driver'=> 'mysql', 'host'=> '114.141.181.165', 'name'=> '_t_stock', 'user'=> 'developer','password'=> 'LyceemDev203');
-//$cfg['goods_db'] = array('driver'=> 'mysql', 'host'=> '114.141.181.165', 'name'=> 'lyceem_goods', 'user'=> 'developer','password'=> 'LyceemDev203');
 ?>
