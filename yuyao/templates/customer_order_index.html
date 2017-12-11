@@ -45,6 +45,8 @@
 	</div>
 	<input type="hidden" id="act" name="act" value="{$act}" />
 	<input type="hidden" id="operater_id" name="operater_id" value="{$param.customer_id}" />
+	<input type="hidden" id="order_user_id" name="order_user_id" value="{$param.order_user_id}" />
+	<input type="hidden" id="order_role_id" name="order_role_id" value="{$param.order_role_id}" />
 	</form>
 </div>
 
@@ -79,7 +81,7 @@
 	<div class="panelBar">
 		<ul class="toolBar">
 			{if ($param.customer != '' && $param.order_time != '')  || $param.order_day_id != ''}
-			<li><a class="edit" href="order.php?do=AddGoods" target="dialog" rel="dlg_page9" minable="false"><span>添加订单商品</span></a></li>
+			<li><a id="add_goods" class="edit" href="order.php?do=AddGoods&order_role_id={$order_role_id}&order_user_id={$order_user_id}" target="dialog" rel="dlg_page9" minable="false"><span>添加订单商品</span></a></li>
 			<li><a class="edit" href="javascript:save_order()"><span id="save_order">保存清单</span></a></li>
 			<li><a class="add" href="javascript:send_yufa()"><span id="send_yufa">预发</span></a></li>
 			{/if}
@@ -478,8 +480,12 @@ function bring_user(id)
 		data:"do=getuserdetail&user_id="+id,
 		dataType:"json",
 		success:function(msg){
+			console.log(msg);
 			$("#customer").val(msg.username);
 			$("#operater_id").val(msg.user_id);
+			$("#order_user_id").val(msg.user_id);
+			$("#order_role_id").val(msg.role_id);
+			$("#add_goods").attr("href", "sssss");
 		}
 	});
 	//document.getElementById("aa").value = 'aa';
@@ -566,7 +572,7 @@ function add_goods()
 		}
 	});
 	//document.getElementById("aa").value = 'aa';
-	$.pdialog.closeCurrent();
+	//$.pdialog.closeCurrent();
 }
 
 

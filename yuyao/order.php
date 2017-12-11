@@ -688,7 +688,8 @@ class order extends Action {
 	{
 		$category_id 	= !empty($_REQUEST['category_id']) ? intval($_REQUEST['category_id']) : 0;
 		$goods_name		= !empty($_REQUEST['goods_name']) ? trim($_REQUEST['goods_name']) : '';
-		
+		$order_role_id	= !empty($_REQUEST['order_role_id']) ? intval($_REQUEST['order_role_id']) : '';
+		$order_user_id	= !empty($_REQUEST['order_user_id']) ? intval($_REQUEST['order_user_id']) : '';
 		
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
@@ -716,7 +717,6 @@ class order extends Action {
 			$param['ids'] = $ids;
 		}
 		
-		
 		$list = $obj_good->get_goods_list($param);
 		if($list['list'])
 		{
@@ -725,7 +725,7 @@ class order extends Action {
 			$obj_offer = new OfferInfo;
 			foreach($list['list'] as $key => $value)
 			{
-				$role_price = $obj_offer->get_good_offer_price($value['goods_id'], $_SESSION['user_id'], $_SESSION['role_id']);
+				$role_price = $obj_offer->get_good_offer_price($value['goods_id'], $order_user_id, $order_role_id);
 				$list['list'][$key]['price'] = $role_price ? $role_price : 0;
 			}
 		}
@@ -733,6 +733,8 @@ class order extends Action {
 		$page = $this->app->page();
 		$page->value('goods',$list['list']);
 		$page->value('param',$param);
+		$page->value('order_user_id',$order_user_id);
+		$page->value('order_role_id',$order_role_id);
 		$page->params['template'] = 'goods_template.html';
 		$page->output();
 	}
