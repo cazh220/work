@@ -1,0 +1,138 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$page.current_page}" />
+	<input type="hidden" name="numPerPage" value="{$page.page_size}" />
+	<input type="hidden" name="orderField" value="" />
+	<input type="hidden" name="orderDirection" value="" />
+</form>
+
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="goods.php?do=goodslist" method="post">
+	<input type="hidden" name="category_id" value="{$category_id}"/>
+	<div class="searchBar">
+		<!--<ul class="searchContent">
+			<li>
+				<label>我的客户：</label>
+				<input type="text"/>
+			</li>
+			<li>
+			<select class="combox" name="province">
+				<option value="">所有省市</option>
+				<option value="北京">北京</option>
+				<option value="上海">上海</option>
+				<option value="天津">天津</option>
+				<option value="重庆">重庆</option>
+				<option value="广东">广东</option>
+			</select>
+			</li>
+		</ul>
+		-->
+		<table class="searchContent">
+			<tr>
+				<td>
+					商品名称：<input type="text" name="goods_name"  value="{$goods_name}" />
+				</td>
+				<!--<td>
+					<select class="combox" name="province">
+						<option value="">所有省市</option>
+						<option value="北京">北京</option>
+						<option value="上海">上海</option>
+						<option value="天津">天津</option>
+						<option value="重庆">重庆</option>
+						<option value="广东">广东</option>
+					</select>
+				</td>
+				<td>
+					建档日期：<input type="text" class="date" readonly="true" />
+				</td>-->
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+				<!--<li><a class="button" href="demo_page6.html" target="dialog" mask="true" title="查询框"><span>高级检索</span></a></li>-->
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="goods.php?do=addgood" target="navTab" rel="goods_add"><span>添加</span></a></li>
+			<li><a title="确实要删除这些记录吗?" target="selectedTodo" rel="ids" postType="string" href="goods.php?do=deletegoods" class="delete"><span>批量删除</span></a></li>
+			<li class="line">line</li>
+			<!--<li><a class="icon" href="user.php?do=exportgoods" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>-->
+			<!--<li><a class="icon" target="ajaxTodo" href="goods.php?do=exportgoods&category_id={$category_id}" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>-->
+			<li><a class="icon" href="javascript:$.printBox('w_list_print')"><span>打印</span></a></li>
+			<!--<li><a target="selectedLoad" rel="ids" postType="string" href="demo_page1.html" class="icon"><span>批量Dialog Load逗号分隔</span></a></li>-->
+		</ul>
+	</div>
+	
+	<div id="w_list_print">
+	<table class="table" width="1200" layoutH="138">
+		<thead>
+			<tr>
+				<th width="5%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="5%" orderField="accountNo" class="asc">商品编号</th>
+				<th>商品名称</th>
+				<th width="8%">所属分类</th>
+				<th width="8%">商品规格</th>
+				<th width="8%" align="center">价格</th>
+				<!--<th width="8%">税率</th>-->
+				<th width="8%" orderField="stock">库存</th>
+				<th width="8%">状态</th>
+				<th width="8%">添加人</th>
+				<th width="12%">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $goods}
+			{foreach from=$goods item=item key=key}
+			<tr target="sid_user" rel={$key+1}>
+				<td><input name="ids" value="{$item.goods_id}" type="checkbox"></td>
+				<td>{$item.goods_id}</td>
+				<td>{$item.goods_name}</td>
+				<td>{$item.cname}</td>
+				<td>{$item.unit}</td>
+				<td>{$item.price}</td>
+				<!--<td>{if $item.tax}{$item.tax}%{else}0{/if}</td>-->
+				<td>{$item.stock}</td>
+				<td>{if $item.is_show == 1}下架{else}正常{/if}</td>
+				<td>{$item.operator}</td>
+				<td>
+					<a callback="dialogAjaxDoneThis" target="ajaxTodo" title="确定要删除吗?" fresh="true" href="goods.php?do=deletegoods&ids={$item.goods_id}" class="btnDel">删除</a>
+					<a title="修改" target="navTab" href="goods.php?do=editgood&goods_id={$item.goods_id}"  class="btnEdit">修改</a>
+					<a title="修改商品对应客户报价" target="dialog" href="goods.php?do=offerprice&goods_id={$item.goods_id}" class="btnInfo" rel="dlg_page10" mask="true">修改商品对应客户报价</a>
+					<a title="修改商品对应的客户分类报价" target="dialog" href="goods.php?do=roleofferprice&goods_id={$item.goods_id}" class="btnView" rel="dlg_page10" mask="true">修改商品对应分类报价</a>
+				</td>
+			</tr>
+			{/foreach}
+			{/if}
+			
+		</tbody>
+	</table>
+	</div>
+	<!--<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak(20)">
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<span>条，共{$page.total}条</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$page.total}" numPerPage="{$page.page_size}" pageNumShown="{$page.page_size}" currentPage="{$page.current_page}"></div>
+
+	</div>-->
+</div>
+<script type="text/javascript">
+{literal}
+function export_goods()
+{
+	window.location.href="user.php?do=exportgoods";	
+}
+{/literal}
+</script>

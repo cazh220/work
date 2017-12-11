@@ -1,0 +1,159 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.page}" />
+	<input type="hidden" name="numPerPage" value="{$param.page_size}" />
+	<input type="hidden" name="orderField" value="" />
+	<input type="hidden" name="orderDirection" value="" />
+</form>
+
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="order.php?do=customerorder" method="post">
+	<div class="searchBar">
+		<!--<ul class="searchContent">
+			<li>
+				<label>我的客户：</label>
+				<input type="text"/>
+			</li>
+			<li>
+			<select class="combox" name="province">
+				<option value="">所有省市</option>
+				<option value="北京">北京</option>
+				<option value="上海">上海</option>
+				<option value="天津">天津</option>
+				<option value="重庆">重庆</option>
+				<option value="广东">广东</option>
+			</select>
+			</li>
+		</ul>
+		-->
+		<table class="searchContent">
+			<tr>
+				<td>
+					下单客户名称：<input type="text" name="operator" value="{$param.operator}"/>
+				</td>
+				<td>
+					<select class="combox" name="order_status">
+						<option value="-1" {if $param.order_status == -1}selected{/if}>所有订单状态</option>
+						<option value="0" {if $param.order_status == 0}selected{/if}>待确认</option>
+						<option value="1" {if $param.order_status == 1}selected{/if}>确认</option>
+						<option value="2" {if $param.order_status == 2}selected{/if}>撤销</option>
+						<option value="3" {if $param.order_status == 3}selected{/if}>发货</option>
+						<option value="4" {if $param.order_status == 4}selected{/if}>完成</option>
+					</select>
+				</td>
+				<td>
+					 下单开始日期：<input type="text" class="date" name="start_time" readonly="true" value="{$param.start_time}" />~ 下单结束日期：<input type="text" name="end_time" class="date" readonly="true" value="{$param.end_time}"/>
+				</td>
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			
+			<!--<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>-->
+			<li class="line">line</li>
+			<li><a class="icon" href="javascript:$.printBox('w_list_print')"><span>打印</span></a></li>
+			<!--<li><a target="selectedLoad" rel="ids" postType="string" href="demo_page1.html" class="icon"><span>批量Dialog Load逗号分隔</span></a></li>-->
+		</ul>
+	</div>
+	<div id="w_list_print">
+	<table class="table" width="1200" layoutH="138">
+		<thead>
+			<tr>
+				<th width="5%" orderField="accountNo" class="asc">订单ID</th>
+				<th>订单编号</th>
+				<th width="8%">订单金额</th>
+				<th width="8%">商品数量</th>
+				<th width="8%" align="center">订单状态</th>
+				<th width="8%">下单人</th>
+				<th width="8%">下单时间</th>
+				<th width="8%">更新时间</th>
+				<th width="8%">订单确认时间</th>
+				<th width="12%">订单发货时间</th>
+				<th width="12%">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $list}
+			{foreach from=$list item=item key=key}
+			<tr target="sid_user" rel={$key+1}>
+				<td>{$item.order_id}</td>
+				<td>{$item.order_no}</td>
+				<td>{$item.total_amount}</td>
+				<td>{$item.total_num}</td>
+				<td>{if $item.order_status == 1}已确认{elseif $item.order_status == 2}已撤销{elseif $item.order_status == 3}已发货{elseif $item.order_status == 4}已完成{else}待确认{/if}</td>
+				<td>{$item.operator}</td>
+				<td>{$item.create_time}</td>
+				<td>{$item.update_time}</td>
+				<td>{$item.confirm_time}</td>
+				<td>{$item.send_time}</td>
+				<td>
+					<a title="明细" target="dialog" href="order.php?do=ordergoods&order_id={$item.order_id}" class="btnInfo" rel="dlg_page10" mask="true">明细</a>
+					<!--{if $item.order_status == 0}
+						<a title="确认" onclick="confirm($item.order_id)" class="btnEdit" rel="dlg_page10" mask="true">确认</a>
+					{elseif $item.order_status == 1}
+						<a title="撤销" onclick="reback($item.order_id)" class="btnEdit" rel="dlg_page10" mask="true">撤销</a>
+					{elseif $item.order_status == 2}
+						<a title="发货" onclick="send($item.order_id)" class="btnEdit" rel="dlg_page10" mask="true">发货</a>
+					{elseif $item.order_status == 3}
+						<a title="完成" onclick="complete($item.order_id)" class="btnEdit" rel="dlg_page10" mask="true">完成</a>
+					{else}
+					
+					{/if}-->
+					{if $item.order_status == 1}
+						<a target="ajaxTodo" title="确定要发货吗?" href="order.php?do=updateorderstatus&order_id={$item.order_id}&order_status=3" class="btnEdit" rel="dlg_page10" mask="true">发货</a>
+					{elseif $item.order_status == 3}
+						<a target="ajaxTodo" title="确定要完成订单吗?" href="order.php?do=updateorderstatus&order_id={$item.order_id}&order_status=4" class="btnEdit" rel="dlg_page10" mask="true">完成</a>
+					{else}
+					
+					{/if}
+				</td>
+			</tr>
+			{/foreach}
+			{/if}
+			
+		</tbody>
+	</table>
+	</div>
+	<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak(20)">
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<span>条，共{$total}条</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$page.total}" numPerPage="{$page.page_size}" pageNumShown="{$page.page_size}" currentPage="{$page.current_page}"></div>
+
+	</div>
+</div>
+
+<script type="text/javascript">
+{literal}
+$(function(){
+
+});
+
+//发货
+function send(order_id)
+{
+	if(confirm('确定发货？'))
+	{
+		
+	}
+}
+
+
+{/literal}
+</script>

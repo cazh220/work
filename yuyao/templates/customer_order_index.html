@@ -1,0 +1,576 @@
+<div class="pageContent">
+	<form id="pagerForm" onsubmit="return navTabSearch(this);" action="customer.php?do=CustomerOrderIndex" method="post">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li>
+				客户：<input type="text" id="customer" name="customer" value="{$param.customer}" onchange="get_order_no()" readonly="readonly">	
+			</li>
+			<li>
+				<a class="add" href="user.php?do=UsersAll" lookupGroup="orgLookup"><span>选择客户</span></a>
+			</li>
+			<li>
+				时间：<input type="text" class="date" name="confirm_time" readonly="true" value="{$param.order_time}" id="confirm_time" />
+			</li>
+			<li><div class="buttonActive"><div class="buttonContent"><button onclick="create()">新建</button></div></div></li>
+			<li>
+			
+				<table>
+					<tr>
+						<td>&nbsp;&nbsp;订单序号：</td>
+						<td>
+						<input type="text" style="width: 30px;" name="order_day_id" id="order_day_id" value="{$order_day_id}"/>
+						<!--<select class="combox" name="order_id" id="order_id">
+						<!--<option value="" >请选择订单号</option>-->
+						<!--{if $order_id_set}
+						{foreach from=$order_id_set item=item key=key}
+						<option value="{$item.order_id}" {if $item.order_id == $s_order_id}selected{/if}>{$item.order_id}</option>
+						{/foreach}
+						{/if}-->
+						<!--{if $user_order}
+						{foreach from=$user_order item=item key=key}
+						<option value="{$item}">{$item}</option>
+						{/foreach}
+						{/if}
+						</select>-->
+						</td>
+					</tr>
+				</table>
+				
+				
+			</li>
+			<li><div class="buttonActive"><div class="buttonContent"><button type="button" name="query" value="query" onclick="search()">查询</button></div></div></li>
+			
+			<!--<li><a class="icon" href="order.php?do=sendlist&order_id={$general.order_id}" target="_blank"><span>预览送货清单</span></a></li>-->
+		</ul>
+	</div>
+	<input type="hidden" id="act" name="act" value="{$act}" />
+	<input type="hidden" id="operater_id" name="operater_id" value="{$param.customer_id}" />
+	</form>
+</div>
+
+<form id="myform" action="order.php?do=updateorder" method="post">
+	<input type="hidden" id="my_order_id" value="{$general.order_id}">
+<div class="pageHeader">
+	<div class="searchBar">
+		<table class="searchContent" style="width: 100%;">
+			<tr>
+				<td colspan="4" style="line-height: 60px;"><div style="margin-left: 40%; font-size: 28px; font-weight: bolder;">销售清单</div></td>
+			</tr>
+			<tr>
+				<td colspan="4" height="10px"></td>
+			</tr>
+			<tr>
+				<td>客户：{$general.customer}</td>
+				<td>订单序号：{$order_day_id}</td>
+				<td>订单号：{$order_no}</td>
+				<td>发货单号：<input type="text" id="send_no" name="send_no" value="{$general.send_no}"></td>
+			</tr>
+			<tr>
+				<td>结算方式：<select id="pay_type"><option value="1" {if $general.pay_type ==1}selected="selected"{/if}>现金</option><option value="2" {if $general.pay_type ==2}selected="selected"{/if}>转账</option></select></td>
+				<td>送货日期：<input type="text" id="send_time" class="date" name="start_time" value="{$general.send_time}" /></td>
+				<td>采购日期：<input type="text" class="date" id="update_time" name="update_time" value="{$general.update_time}" /></td>
+				<td>加工日期：<input type="text" class="date" name="processing_time" id="processing_time" value="{$general.processing_time}" /></td>
+			</tr>
+		</table>
+	</div>
+</div>
+
+<div class="pageContent" style="overflow: auto;">
+	<div class="panelBar">
+		<ul class="toolBar">
+			{if ($param.customer != '' && $param.order_time != '')  || $param.order_day_id != ''}
+			<li><a class="edit" href="order.php?do=AddGoods" target="dialog" rel="dlg_page9" minable="false"><span>添加订单商品</span></a></li>
+			<li><a class="edit" href="javascript:save_order()"><span id="save_order">保存清单</span></a></li>
+			<li><a class="add" href="javascript:send_yufa()"><span id="send_yufa">预发</span></a></li>
+			{/if}
+		</ul>
+	</div>
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+			<tr>
+				<th align="center" width="5%">产品编号</th>
+				<th align="center" width="8%">产品名称</th>
+				<th align="center" width="7%">预订数量</th>
+				<th align="center" width="7%">订货单位</th>
+				<th align="center" width="7%">发货数量</th>
+				<th align="center" width="7%">实收数量</th>
+				<th align="center" width="7%">销售单位</th>
+				<th align="center" width="7%">销售价格</th>
+				<th align="center" width="7%">销售金额</th>
+				<th align="center" width="6%">差额</th>
+				<th align="center" width="10%">备注</th>
+				<th align="center" width="10%">内部备注</th>
+				<th align="center" width="5%">已送</th>
+				<th align="center">操作</th>
+		</thead>
+		<tbody class="goods_list">
+			{if $list}
+			{foreach from=$list item=item key=key}
+			<tr id="tr_{$item.goods_id}">
+				<td>{$item.goods_id}</td>
+				<td>{$item.goods_name}</td>
+				<td><span id="d_goods_num{$item.goods_id}">{$item.goods_num}</span></td>
+				<td>{$item.unit}</td>
+				<td><div id="d_send_num{$item.goods_id}">{$item.send_num}</div></td>
+				<td><div id="d_received_num{$item.goods_id}">{$item.received_num}</div></td>
+				<td>{$item.unit}</td>
+				<td>{$item.good_price}</td>
+				<td>{$item.good_price*$item.received_num}</td>
+				<td><span id="diff{$item.goods_id}">{$item.good_price*$item.goods_num-$item.good_price*$item.received_num}</span></td>
+				<td><span id="d_good_note{$item.goods_id}">{$item.good_note}</span></td>
+				<td><span id="dn_good_note{$item.goods_id}">{$item.n_good_note}</span></td>
+				<td><span id="d_send_status_{$item.goods_id}"><i onclick="change({$item.goods_id})" id="send_status{$item.goods_id}" class="{if $item.send_status == 1}fa fa-check{else}fa fa-times{/if}" style="{if $item.send_status == 1}color: green;{else}color: red;{/if}" data-id="{$item.send_status}"></i></span></td>
+				<td><a href="#" onclick="delete_good({$item.goods_id})" style="color:dodgerblue;">删除</a>&nbsp;&nbsp;<a href="#" style="color:dodgerblue;" onclick="edit_info('{$item.goods_id}','{$item.goods_num}','{$item.send_num}','{$item.received_num}','{$item.good_note}', '{$item.good_price}', '{$item.n_good_note}')">编辑</a></td>
+			</tr>
+			{/foreach}
+		    {/if}
+		</tbody>
+	</table>
+</div>
+</form>
+<script type="text/javascript">
+{literal}
+$(function(){
+	
+});
+
+//新建
+function create()
+{
+	var customer = $("#customer").val();
+	var customer_id = $("#operater_id").val();
+	var confirm_time = $("#confirm_time").val();
+	$("#act").val(1);
+	if(customer == '' || confirm_time == '')
+	{
+		alert('请选择用户和时间');
+		$("#save_order").css("display","none");
+		return false;
+	}
+	else
+	{
+		$("#save_order").css("display","block");
+	}
+	var id = $("#order_day_id").val();
+    if(isNaN(id))
+    {
+    	alert('订单序号是数字');
+    	return false;
+    }
+    
+    $.ajax({
+    	type:"get",
+    	url:"order.php?do=checkorderid",
+    	data:"id="+id+"&confirm_time="+confirm_time+"&customer_id="+customer_id,
+    	dataType:"json",
+    	async:true,
+    	success:function(msg)
+    	{
+    		if(msg.status)
+    		{
+    			alert(msg.message);
+    			return false;
+    		}
+    		else
+    		{
+    			$("#pagerForm").submit();
+    		}
+    	}
+    });
+	
+	
+}
+
+//查询
+function search()
+{
+	$("#act").val(0);
+	var order_day_id = $("#order_day_id").val();//序号id
+	var customer = $("#customer").val();
+	var customer_id = $("#operater_id").val();
+	var order_time = $("#confirm_time").val();//订单时间
+	//console.log(order_day_id);console.log(customer_id);console.log(order_time);
+	if(order_day_id == '' || customer_id == '' || order_time == '')
+	{
+		alert("请选择订单编号和客户和时间");
+		$("#save_order").css("display","none");
+		return false;
+	}
+	else
+	{
+		$("#pagerForm").submit();
+	}
+	
+}
+
+function change(val)
+{
+	var cls = $("#send_status"+val).attr("class");
+	var send_status = 0;
+	if(cls == 'fa fa-check')
+	{
+		$("#send_status"+val).removeClass("fa fa-check");
+		$("#send_status"+val).addClass("fa fa-times");
+		$("#send_status"+val).css("color","red");
+		$("#send_status"+val).data("id",0);
+		send_status = 0;
+	}
+	else
+	{
+		$("#send_status"+val).removeClass("fa fa-times");
+		$("#send_status"+val).addClass("fa fa-check");
+		$("#send_status"+val).css("color","green");
+		$("#send_status"+val).data("id",1);
+		send_status = 1;
+	}
+	return false;
+	//ajax
+	var order_id = $("#my_order_id").val();
+	$.ajax({
+		type:"get",
+		url:"order.php",
+		data:"do=UpdateGoodsSendStatus&goods_id="+val+"&order_id="+order_id+"&send_status="+send_status,
+		dataType:"json",
+		success:function(msg){
+			if(!msg.status)
+			{
+				alert(msg.msg);
+				return false;
+			}
+		}
+	});
+}
+/*
+function print()
+{
+	//var newstr = "XXXXXXXXXXXXXXX";
+	var oldstr = document.body.innerHTML; 
+	//var x = document.getElementById('print_you').innerHTML;
+	//document.body.innerHTML = x;
+	//document.body.innerHTML=document.getElementById('print_you').innerHTML; 
+	//document.body.innerHTML = newstr;
+	//document.body.innerHTML.find("[layoutH]").height("auto");
+	//document.body.innerHTML = "111111111";
+	window.print();
+	//document.body.innerHTML = oldstr; 
+	//return false; 
+}
+*/
+
+function save_order()
+{
+	var goods_list=new Array()
+	$(".goods_list tr").each(function(i){
+		//var goods_id = $(this).find("td").eq(0).find("div").html();
+		var goods_id = $(this).find("td").eq(0).html();
+		if(isNaN(goods_id))
+		{
+			var goods_id = $(this).find("td").eq(0).find("div").html();
+		}
+		
+		var goods_num = $("#goods_num"+goods_id).val();
+		//console.log(goods_id);console.log(goods_num);
+		if(typeof(goods_num) == 'undefined')
+		{
+			//return true;
+			//var goods_num = 0;
+			//var send_num = 0;
+			//var received_num = 0;
+			//var good_note = '';
+			//订货数量
+			var goods_num = $("#d_goods_num"+goods_id).html();
+			if(isNaN(goods_num))
+			{
+				goods_num = 0;
+			}
+			//发送数量
+			var send_num = $("#d_send_num"+goods_id).html();
+			if(isNaN(send_num))
+			{
+				send_num = 0;
+			}
+			//收货数量
+			var received_num = $("#d_received_num"+goods_id).html();
+			if(isNaN(received_num))
+			{
+				received_num = 0;
+			}
+			//备注
+			var good_note = $("#d_good_note"+goods_id).html();
+			if(typeof(good_note) == 'undefined')
+			{
+				good_note = '';
+			}
+			var n_good_note = $("#dn_good_note"+goods_id).html();
+			if(typeof(n_good_note) == 'undefined')
+			{
+				n_good_note = '';
+			}
+		}
+		else
+		{
+			var send_num = $("#send_num"+goods_id).val();
+			if(typeof(send_num) == 'undefined')
+			{
+				send_num = 0;
+			}
+			var received_num = $("#received_num"+goods_id).val();
+			if(typeof(received_num) == 'undefined')
+			{
+				received_num = 0;
+			}
+			var good_note = $("#good_note"+goods_id).val();
+			var n_good_note = $("#n_good_note"+goods_id).val();
+		}
+		
+		var send_status = 0;
+		send_status = $("#send_status"+goods_id).data("id");
+		//console.log(send_status);return false;
+		goods_list[i] = goods_id+':'+goods_num+':'+send_num+':'+received_num+':'+good_note+':'+send_status+':'+n_good_note;
+	});
+	var act =  $("#act").val();//1create  0query
+	
+	var send_no = $("#send_no").val();//发货单号
+	var order_id = $("#my_order_id").val();
+	var pay_type = $("#pay_type").val();
+	var send_time = $("#send_time").val();
+	var update_time = $("#update_time").val();
+	var processing_time = $("#processing_time").val();
+	var customer = $("#customer").val();
+	var customer_id = $("#operater_id").val();
+	var order_day_id	= $("#order_day_id").val();
+	/*
+	console.log('act:'+act);
+	console.log('send_no:'+send_no);
+	console.log('order_id:'+order_id);
+	console.log('pay_type:'+pay_type);
+	console.log('send_time:'+send_time);
+	console.log('update_time:'+update_time);
+	console.log('processing_time'+processing_time);
+	console.log('customer:'+customer);
+	console.log('customer_id:'+customer_id);
+	console.log(goods_list);
+	return false;
+	*/
+	$.ajax({
+		type:"get",
+		url:"order.php",
+		data:"do=manageorder&goods_list="+JSON.stringify(goods_list)+"&send_no="+send_no+"&pay_type="+pay_type+"&send_time="+send_time+"&update_time="+update_time+"&processing_time="+processing_time+"&order_id="+order_id+"&customer="+customer+"&customer_id="+customer_id+"&order_day_id="+order_day_id,
+		dataType:"json",
+		success:function(msg){
+			alert(msg.msg);
+			if(msg.data)
+			{
+				$.each(msg.data, function(i,n){
+					$("#d_goods_num"+n.goods_id).html(n.goods_num);
+					$("#d_send_num"+n.goods_id).html(n.send_num);
+					$("#d_received_num"+n.goods_id).html(n.received_num);
+					$("#d_good_note"+n.goods_id).html(n.good_note);
+					$("#dn_good_note"+n.goods_id).html(n.n_good_note);
+				});
+			}
+			
+		}
+	});
+	//$("#myform").submit();
+}
+
+//预发
+function send_yufa()
+{
+	$(".goods_list tr").each(function(i){
+		var goods_id = $(this).find("td").eq(0).html();
+		num = $("#goods_num"+goods_id).val();
+		$("#send_num"+goods_id).val(num);
+		$("#received_num"+goods_id).val(num);
+	});
+}
+
+
+function delete_good(goods_id)
+{
+	$("#tr_"+goods_id).remove("tr");
+}
+
+function edit_info(goods_id, goods_num, send_num, received_num, good_note, good_price, n_good_note)
+{
+	$("#h_goods_id_"+goods_id).html("<input type='hidden' style='width:50px' class='center' value='"+goods_id+"' name='goods_id[]' />");
+	$("#d_goods_num"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+goods_num+"' name='goods_num[]' id='goods_num"+goods_id+"' onblur='diff("+goods_id+", "+good_price+")'  />");
+	$("#d_send_num"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+send_num+"' name='send_num[]' id='send_num"+goods_id+"' />");
+	$("#d_received_num"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+received_num+"' name='received_num[]' id='received_num"+goods_id+"' onblur='diff("+goods_id+", "+good_price+")' />");
+	$("#d_good_note"+goods_id).html("<input type='text' style='width:100px' class='center' value='"+good_note+"' name='good_note[]' id='good_note"+goods_id+"' />");
+	$("#dn_good_note"+goods_id).html("<input type='text' style='width:100px' class='center' value='"+n_good_note+"' name='n_good_note[]' id='n_good_note"+goods_id+"' />");
+	//console.log(goods_id+":"+goods_num+":"+send_num+":"+received_num+":"+good_note);
+}
+
+
+function calc(id, price)
+{
+	price = 1;
+	var sales = 0;
+	var goods_num = $("#goods_num"+id).val();
+	goods_num = parseInt(goods_num);
+	var received_num = $("#received_num"+id).val();
+	if(!received_num)
+	{
+		received_num = 0;
+	}
+	received_num = parseInt(received_num);
+	//console.log(goods_num);
+	//console.log(received_num);
+	sales = goods_num*price;
+	if(received_num >= goods_num)
+	{
+		diff = 0;
+	}
+	else
+	{
+		diff = (goods_num-received_num)*price;
+	}
+	//console.log(sales);
+	//console.log(diff);
+	$("#sales"+id).html(sales);
+	$("#diff"+id).html(diff);
+}
+
+function diff(id, price)
+{
+	var diff = 0;
+	var goods_num = $("#goods_num_"+id).val();
+	var received_num = $("#received_num_"+id).val();
+	if(received_num >= goods_num)
+	{
+		diff = 0;
+	}
+	else
+	{
+		diff = (goods_num-received_num)*price;
+	}
+	$("#diff_"+id).html(diff);
+	//console.log(id+':'+price);
+}
+/*
+function add()
+{
+	$(".goods_list").append("<tr><td align='center'><input type='text' style='width:50px' onblur='find(this.value, this)'></td><td align='center'></td><td align='center'><input type='text' style='width:50px'></td><td align='center'></td><td align='center'><input type='text' style='width:50px'></td><td align='center'><input type='text' style='width:50px'></td><td></td><td></td><td></td><td></td><td align='center'><input type='text'></td></tr>");
+}
+
+function find(id, o)
+{
+	var log = $(o).parent().parent();
+	$.ajax({
+		type:"get",
+		url:"goods.php?do=findgoods",
+		data:'goods_id='+id,
+		dataType:'json',
+		success:function(msg){
+			alert(id);
+			$(".goods_list").append("<tr><td class='center'><input type='text' style='width:50px' value="+id+"></td><td class='center'></td><td class='center'><input type='text' style='width:50px'></td><td class='center'></td><td class='center'><input type='text' style='width:50px'></td><td class='center'><input type='text' style='width:50px'></td><td></td><td></td><td></td><td></td><td class='center'><input type='text'></td></tr>");
+		}
+	});
+}
+*/
+function bring_user(id)
+{
+	$.ajax({
+		type:"get",
+		url:"user.php",
+		data:"do=getuserdetail&user_id="+id,
+		dataType:"json",
+		success:function(msg){
+			$("#customer").val(msg.username);
+			$("#operater_id").val(msg.user_id);
+		}
+	});
+	//document.getElementById("aa").value = 'aa';
+	$.pdialog.closeCurrent();
+}
+
+function bring_goods(id)
+{
+	var goods_num 	= $("#goods_num"+id).val();
+	var good_note	= $("#good_note"+id).val();
+	var n_good_note	= $("#n_good_note"+id).val();
+	
+	$.ajax({
+		type:"get",
+		url:"order.php",
+		data:"do=addgoodsact&goods_id="+id+"&goods_num="+goods_num+"&good_note="+good_note+"&n_good_note="+n_good_note,
+		dataType:"json",
+		success:function(msg){
+			
+			if(msg.status == 1)
+			{
+				$(".goods_list").append("<tr id='tr_"+msg.list.goods_id+"'><td align='center' width='5%'>"+msg.list.goods_id+"</td><td align='center' width='8%'>"+msg.list.goods_name+"</td><td align='center' width='8%'><span id='d_goods_num"+msg.list.goods_id+"'><input type='text' id='goods_num"+msg.list.goods_id+"' name='goods_num[]' style='width:50px' value='"+msg.list.goods_num+"' onblur='calc("+msg.list.goods_id+","+msg.list.price+")'></span></td><td align='center' width='7%'>"+msg.list.unit+"</td><td align='center' width='7%'><span id='d_send_num"+msg.list.goods_id+"'><input type='text' id='send_num"+msg.list.goods_id+"' name='send_num[]' style='width:50px' value=''></span></td><td align='center' width='7%'><span id='d_received_num"+msg.list.goods_id+"'><input type='text' id='received_num"+msg.list.goods_id+"' name='received_num[]' style='width:50px' value='' onblur='calc("+msg.list.goods_id+","+msg.list.price+")'></span></td><td	width='7%' align='center'>"+msg.list.unit+"</td><td width='7%' align='center'>"+msg.list.price+"</td><td width='7%' align='center'><span id='sales"+msg.list.goods_id+"'>"+msg.list.sales+"</span></td><td width='6%' align='center'><span id='diff"+msg.list.goods_id+"'>"+msg.list.diff+"</span></td><td align='center' width='10%'><span id='d_good_note"+msg.list.goods_id+"'><input type='text' id='good_note"+msg.list.goods_id+"' name='good_note[]' style='width:100px' value='"+msg.list.good_note+"'></span></td><td align='center' width='10%'><span id='dn_good_note"+msg.list.goods_id+"'><input type='text' id='n_good_note"+msg.list.goods_id+"' name='n_good_note[]' style='width:100px' value='"+msg.list.n_good_note+"'></span></td> <td width='5%' align='center'><i onclick='change("+msg.list.goods_id+")'  id='send_status"+msg.list.goods_id+"' class='fa fa-times' style='color: red;' data-id='0'></i></td><td class='center'><a href='#' onclick='delete_good("+msg.list.goods_id+")' style='color:dodgerblue;'>删除</a></td></tr>");
+			}
+			else
+			{
+				alert('添加商品失败');
+			}
+			
+			//$("#customer").val(msg.username);
+		}
+	});
+	//document.getElementById("aa").value = 'aa';
+	//$.pdialog.closeCurrent();
+}
+
+
+function add_goods()
+{
+	var goods=new Array()
+	$("input:checked").each(function(i, n){
+		var id = $(n).val();
+		var goods_num 	= $("#goods_num"+id).val();
+		var good_note	= $("#good_note"+id).val();
+		var info = id+'@'+goods_num+'@'+good_note;
+		goods.push(info);
+		
+	});
+	//console.log(goods);
+	goods_list = JSON.stringify(goods);
+	//console.log(goods_list);return false;
+	$.ajax({
+		type:"get",
+		url:"order.php",
+		data:"do=addgoodsbatchact&goods_list="+goods_list,
+		dataType:"json",
+		success:function(msg){
+			
+			//console.log(msg.list);
+			//return false;
+			if(msg.status == 1)
+			{
+				var txt = "";
+				$.each(msg.list, function(i, n){
+					txt += "<tr id='tr_"+n.goods_id+"'><td align='center' width='5%'>"+n.goods_id+"</td><td align='center' width='8%'>"+n.goods_name+"</td><td align='center' width='7%'><span id='d_goods_num"+n.goods_id+"'><input type='text' id='goods_num"+n.goods_id+"' name='goods_num[]' style='width:50px' value='"+n.goods_num+"' onblur='calc("+n.goods_id+","+n.price+")'></span></td><td align='center' width='7%'>"+n.unit+"</td><td align='center' width='7%'><span id='d_send_num"+n.goods_id+"'><input type='text' id='send_num"+n.goods_id+"' name='send_num[]' style='width:50px' value=''></span></td><td align='center' width='7%'><span id='d_received_num"+n.goods_id+"'><input type='text' id='received_num"+n.goods_id+"' name='received_num[]' style='width:50px' value='' onblur='calc("+n.goods_id+","+n.price+")'></span></td><td	width='7%' align='center'>"+n.unit+"</td><td width='8%' align='center'>"+n.price+"</td><td width='7%' align='center'><span id='sales"+n.goods_id+"'>"+n.sales+"</span></td><td width='7%' align='center'><span id='diff"+n.goods_id+"'>"+n.diff+"</span></td><td align='center' width='10%'><span id='d_good_note"+n.goods_id+"'><input type='text' id='good_note"+n.goods_id+"' name='good_note[]' style='width:100px' value='"+n.good_note+"'></span></td><td align='center' width='10%'><span id='dn_good_note"+n.goods_id+"'><input type='text' id='n_good_note"+n.goods_id+"' name='n_good_note[]' style='width:100px' value='"+n.n_good_note+"'></span></td><td width='5%' align='center'><i onclick='change("+n.goods_id+")'  id='send_status"+n.goods_id+"' class='fa fa-times' style='color: red;' data-id='0'></i></td><td class='center'><a href='#' onclick='delete_good("+n.goods_id+")' style='color:dodgerblue;'>删除</a></td></tr>"
+					
+				});
+				
+				$(".goods_list").append(txt);
+				/*
+				console.log(txt);
+				return false;
+				
+				
+				$(".goods_list").append("<tr id='tr_"+msg.list.goods_id+"'><td align='center' width='5%'>"+msg.list.goods_id+"</td><td align='center' width='8%'>"+msg.list.goods_name+"</td><td align='center' width='8%'><span id='d_goods_num"+msg.list.goods_id+"'><input type='text' id='goods_num"+msg.list.goods_id+"' name='goods_num[]' style='width:50px' value='"+msg.list.goods_num+"' onblur='calc("+msg.list.goods_id+","+msg.list.price+")'></span></td><td align='center' width='8%'>"+msg.list.unit+"</td><td align='center' width='8%'><span id='d_send_num"+msg.list.goods_id+"'><input type='text' id='send_num"+msg.list.goods_id+"' name='send_num[]' style='width:50px' value=''></span></td><td align='center' width='8%'><span id='d_received_num"+msg.list.goods_id+"'><input type='text' id='received_num"+msg.list.goods_id+"' name='received_num[]' style='width:50px' value='' onblur='calc("+msg.list.goods_id+","+msg.list.price+")'></span></td><td	width='8%' align='center'>"+msg.list.unit+"</td><td width='8%' align='center'>"+msg.list.price+"</td><td width='8%' align='center'><span id='sales"+msg.list.goods_id+"'>"+msg.list.sales+"</span></td><td width='8%' align='center'><span id='diff"+msg.list.goods_id+"'>"+msg.list.diff+"</span></td><td align='center' width='12%'><span id='d_good_note"+msg.list.goods_id+"'><input type='text' id='good_note"+msg.list.goods_id+"' name='good_note[]' style='width:120px' value='"+msg.list.good_note+"'></span></td><td width='5%' align='center'><i onclick='change("+msg.list.goods_id+")'  id='send_status"+msg.list.goods_id+"' class='fa fa-times' style='color: red;' data-id='0'></i></td><td class='center'><a href='#' onclick='delete_good("+msg.list.goods_id+")' style='color:dodgerblue;'>删除</a></td></tr>");
+				*/
+				
+			}
+			else
+			{
+				alert('添加商品失败');
+			}
+			
+			//$("#customer").val(msg.username);
+		}
+	});
+	//document.getElementById("aa").value = 'aa';
+	$.pdialog.closeCurrent();
+}
+
+
+
+{/literal}
+</script>
+<link href="//netdna.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">

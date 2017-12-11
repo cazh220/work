@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>会员详情</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/style.css" />
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-datetimepicker.min.css" />
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/ckform.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/common.js"></script>
+	<script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/locales/bootstrap-datetimepicker.fr.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<form class="form-inline definewidth m20">  
+<button type="button" class="btn btn-success" id="edit_user" style="float:right; margin-bottom:15px">编辑</button>
+<input type="hidden" id="user_id" value="{$detail.user_id}" >
+</form>
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <th width="10%">真实姓名</th>
+		<td width="20%">{$detail.realname}</td>
+		<th width="10%">性别</th>
+		<td width="25%">{if condition="$detail.sex eq 1"}男{elseif condition="$detail.sex eq 2" /}女{else /}未知{/if}</td>
+		<th width="10%">手机</th>
+		<td width="25%">{$detail.mobile}</td>
+    </tr>
+	<tr>
+		<th width="10%">电子邮箱</th>
+		<td>{$detail.email}</td>
+		<th width="10%">生日</th>
+		<td>{$detail.birthday}</td>
+		<th width="10%">城市</th>
+		<td>上海</td>
+	</tr>	
+</table>
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <th width="10%">单位名称</th>
+		<td width="20%">{$detail.company_name}</td>
+		<th width="10%">部门</th>
+		<td width="25%">{$detail.department}</td>
+		<th width="10%">职位</th>
+		<td width="25%">{$detail.position}</td>
+    </tr>
+	<tr>
+		<th width="10%">单位电话</th>
+		<td>{$detail.company_phone}</td>
+		<th width="10%">单位地址</th>
+		<td colspan="3">{$detail.company_addr}</td>
+	</tr>
+	<tr>
+        <th width="10%">会员类型</th>
+		<td width="20%">{if condition="$detail.user_type eq 1"}技工所{elseif condition="$detail.user_type eq 2" /}医生{else /}其它{/if}</td>
+		<th width="10%">扫描次数</th>
+		<td width="25%">{$count}</td>
+		<th width="10%">最后扫码时间</th>
+		<td width="25%">{$last_time}</td>
+    </tr>
+	<tr>
+        <th width="10%">累计积分</th>
+		<td width="20%">{$detail.total_credits}</td>
+		<th width="10%">已兑积分</th>
+		<td width="25%">{$detail.exchanged_credits}</td>
+		<th width="10%">积分余额</th>
+		<td width="25%">{$detail.left_credits}</td>
+    </tr>
+	<tr>
+        <th width="10%">收货地址</th>
+		<td colspan="5">{$province}{$city}{$district}{$address.address}</td>
+    </tr>
+</table>
+{if condition="$detail.user_type eq 1"}
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <th width="10%">年全瓷牙量</th>
+		<td width="20%">{$detail.year_tooth_num}</td>
+		<th width="10%" rowspan="3" style="text-align: center; vertical-align: middle;">单位简介：</th>
+		<td width="60%" rowspan="3" style="text-align: left; vertical-align: middle;">{$detail.company_info}</td>
+    </tr>
+	<tr>
+		<th width="10%">年营业额</th>
+		<td>{$detail.year_sales}</td>
+	</tr>
+	<tr>
+		<th width="10%">在用氧化锆品牌</th>
+		<td>{$detail.yhg_band}</td>
+	</tr>
+	<tr>
+        <th width="10%">在用瓷粉品牌</th>
+		<td width="20%">{$detail.cf_band}</td>
+		<th width="10%" rowspan="3" style="text-align: center; vertical-align: middle;">单位头像：</th>
+		<td width="60%" rowspan="3" style="text-align: left; vertical-align: middle;"><img src="{$Think.config.host_url}/public/uploads/{$detail.head_img}" width="76px" height="76px"></td>
+    </tr>
+	<tr>
+		<th width="10%">厂房面积</th>
+		<td>{$detail.factory}</td>
+	</tr>
+	<tr>
+		<th width="10%">扩展计划</th>
+		<td>{$detail.year_sales}</td>
+	</tr>
+</table>
+{else /}
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <th width="10%">椅位</th>
+		<td width="20%">{$detail.seats}</td>
+		<th width="10%" rowspan="2" style="text-align: center; vertical-align: middle;">单位简介：</th>
+		<td width="60%" rowspan="2" style="text-align: left; vertical-align: middle;">{$detail.company_info}</td>
+    </tr>
+	<tr>
+		<th width="10%">是否开展已种植</th>
+		<td>{if condition="$detail.is_grow eq 1"}是{else}否{/if}</td>
+	</tr>
+	<tr>
+        <th width="10%">是否上椅旁系统</th>
+		<td>{if condition="$detail.is_seats eq 1"}是{else}否{/if}</td>
+		<th width="10%" rowspan="2" style="text-align: center; vertical-align: middle;">单位头像：</th>
+		<td width="60%" rowspan="2" style="text-align: left; vertical-align: middle;"><img src="{$Think.config.host_url}/public/uploads/{$detail.head_img}" width="76px" height="76px"></td>
+    </tr>
+	<tr>
+		<th width="10%">是否已开展正畸</th>
+		<td>{if condition="$detail.is_correct eq 1"}是{else}否{/if}</td>
+	</tr>
+</table>
+{/if}
+</body>
+</html>
+<script>
+    $(function () {
+        
+		var user_id = $("#user_id").val();
+		$('#edit_user').click(function(){
+
+				window.location.href="edit_user?user_id="+user_id;
+		 });
+
+
+    });
+
+</script>

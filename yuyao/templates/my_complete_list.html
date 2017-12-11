@@ -1,0 +1,122 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$page.current_page}" />
+	<input type="hidden" name="numPerPage" value="{$page.page_size}" />
+	<input type="hidden" name="orderField" value="" />
+	<input type="hidden" name="orderDirection" value="" />
+</form>
+
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="demo_page1.html" method="post">
+	<div class="searchBar">
+		<!--<ul class="searchContent">
+			<li>
+				<label>我的客户：</label>
+				<input type="text"/>
+			</li>
+			<li>
+			<select class="combox" name="province">
+				<option value="">所有省市</option>
+				<option value="北京">北京</option>
+				<option value="上海">上海</option>
+				<option value="天津">天津</option>
+				<option value="重庆">重庆</option>
+				<option value="广东">广东</option>
+			</select>
+			</li>
+		</ul>
+		-->
+		<table class="searchContent">
+			<tr>
+				<td>
+					订单号：<input type="text" name="order_no" value="{$param.order_no}"/>
+				</td>
+				<!--<td>
+					<select class="combox" name="province">
+						<option value="">所有省市</option>
+						<option value="北京">北京</option>
+						<option value="上海">上海</option>
+						<option value="天津">天津</option>
+						<option value="重庆">重庆</option>
+						<option value="广东">广东</option>
+					</select>
+				</td>
+				<td>
+					建档日期：<input type="text" class="date" readonly="true" />
+				</td>-->
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			
+			<!--<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>-->
+			<li class="line">line</li>
+			<li><a class="icon" href="javascript:$.printBox('w_list_print')"><span>打印</span></a></li>
+			<!--<li><a target="selectedLoad" rel="ids" postType="string" href="demo_page1.html" class="icon"><span>批量Dialog Load逗号分隔</span></a></li>-->
+		</ul>
+	</div>
+	<div id="w_list_print">
+	<table class="table" width="1200" layoutH="138">
+		<thead>
+			<tr>
+				<th width="5%" orderField="accountNo" class="asc">订单ID</th>
+				<th>订单编号</th>
+				<th width="8%">订单金额</th>
+				<th width="8%">商品数量</th>
+				<th width="8%" align="center">订单状态</th>
+				<th width="8%">下单人</th>
+				<th width="8%">下单时间</th>
+				<th width="8%">更新时间</th>
+				<th width="8%">订单确认时间</th>
+				<th width="12%">订单发货时间</th>
+				<th width="12%">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $list}
+			{foreach from=$list item=item key=key}
+			<tr target="sid_user" rel={$key+1}>
+				<td>{$item.order_id}</td>
+				<td>{$item.order_no}</td>
+				<td>{$item.total_amount}</td>
+				<td>{$item.total_num}</td>
+				<td>{if $item.order_status==0}待确认{elseif $item.order_status==1}待发货{elseif $item.order_status==2}已撤销{elseif $item.order_status==3}已发货{else}已完成{/if}</td>
+				<td>{$item.operator}</td>
+				<td>{$item.create_time}</td>
+				<td>{$item.update_time}</td>
+				<td>{$item.confirm_time}</td>
+				<td>{$item.send_time}</td>
+				<td>
+					<a title="明细" target="dialog" href="order.php?do=ordergoods&order_id={$item.order_id}" class="btnInfo" rel="dlg_page10" mask="true">明细</a>
+				</td>
+			</tr>
+			{/foreach}
+			{/if}
+			
+		</tbody>
+	</table>
+	</div>
+	<!--<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak(20)">
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<span>条，共{$page.total}条</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$page.total}" numPerPage="{$page.page_size}" pageNumShown="{$page.page_size}" currentPage="{$page.current_page}"></div>
+
+	</div>-->
+</div>

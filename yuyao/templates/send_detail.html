@@ -1,0 +1,136 @@
+
+<div class="pageContent" id="print_list_send">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<!--<li><a class="icon" id="print_list" ><span>打印送货清单</span></a></li>-->
+			<li><button onclick="print_list()">打印送货清单</button></li>
+		</ul>
+	</div>
+</div>
+<div id="w_list_print_send_order_detail">
+<style type="text/css">
+{literal}
+.title{
+	font-size: 22px;
+	font-weight: bolder;
+	text-align: center;
+	height: 30px;
+}
+.blank{
+	height: 20px;
+}
+.common{
+	font-size: 14px;
+	font-weight: bold;
+}
+.noprint{display : none }
+.title{
+	font-size: 16px;
+	font-weight: bolder;
+}
+{/literal}
+</style>
+	<div class="main">
+		<div class="blank"></div>
+		<div class="title">宇尧实业（上海）有限公司</div>
+		<div class="title">送货清单</div>
+		<table width="100%">
+			<tr>
+				<td width="50%" align="left" class="common">客户地址：{$general.role_name}</td>
+				<td width="50%" align="right" class="common">送货单号：{$general.send_no}</td>
+			</tr>
+			<tr>
+				<td width="50%" align="left" class="common">送货地址：{$general.address}</td>
+				<td width="50%" align="right" class="common">送货日期：{$general.send_time}</td>
+			</tr>
+		</table>
+		<table style="border-collapse:collapse; text-align: center;" border="1px" width="100%">
+			<tr>
+				<td><span class="title">客户名称</span></td>
+				<td colspan="5"><span class="title">{$general.role_name}</span></td>
+				<td><span class="title">订单号</span></td>
+				<td><span class="title">{$general.order_no}</span></td>
+			</tr>
+			<tr>
+				<td>品名</td>
+				<td width="10%">规格</td>
+				<td width="10%">数量</td>
+				<td width="10%">单价</td>
+				<td width="10%">金额（元）</td>
+				<td width="12%">验收数量</td>
+				<td width="12%">核对单价</td>
+				<td width="20%">确认金额</td>
+			</tr>
+			{if $order_goods}
+			{foreach from=$order_goods item=item key=key}
+			<tr>
+				<td>{$item.goods_name}</td>
+				<td>{$item.unit}</td>
+				<td>{$item.goods_num}</td>
+				<td>{$item.good_price}</td>
+				<td>{$item.amount}</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			{/foreach}
+			{/if}
+			<tr>
+				<td>总计金额</td>
+				<td colspan="7" style="text-align: center;">￥{$general.total_amount}元</td>
+			</tr>
+			<tr>
+				<td>备注</td>
+				<td colspan="7" style="text-align: center;">本日配送总计：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;元，经双方确认，最终确认金额为：&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;元</td>
+			</tr>
+			<tr>
+				<td colspan="8" style="text-align: center;">
+					<div style="width: 100%;">
+						<div style="float: left; width: 30%;">制表人：{$general.operator}</div>
+						<div style="float: left; width: 30%;">送货人：</div>
+						<div style="float: left; width: 30%;">收货人：</div>
+					</div>
+					  
+				</td>
+			</tr>
+		</table>
+		<div></div>
+	</div>
+</div>
+<script type="text/javascript">
+{literal}
+$(function(){
+	$("#print_list").click(function(){alert("11");
+		var rel = 'print_list';
+		var _printBoxId = 'printBox2';
+		var $contentBox = rel ? $('#'+rel) : $("body"),
+			$printBox = $('#'+_printBoxId);
+		//console.log($contentBox.html());return false;
+		if ($printBox.size()==0){
+			$printBox = $('<div id="'+_printBoxId+'"></div>').appendTo("body");
+		}
+		
+		window.print();
+		/*
+		var oldstr = document.body.innerHTML; 
+		//console.log(oldstr);return false;
+		newstr = $("#w_list_print_send_order_detail").html();
+		document.body.innerHTML = newstr;
+		document.body.innerHTML.find("[layoutH]").height("auto");
+		window.print();
+		document.body.innerHTML = oldstr;
+		return false;
+		*/
+	});
+});
+
+function print_list()
+{
+	var obj = document.getElementById("print_list_send");
+	obj.setAttribute('style', 'display: none');
+  	//obj.style.display= "none";
+	window.print();
+	obj.setAttribute('style', 'display: block');
+}
+{/literal}
+</script>

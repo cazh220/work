@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>防伪码导入</title>
+    <meta charset="UTF-8">
+	
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/style.css" />
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/ckform.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/common.js"></script>
+
+</head>
+<body>
+<form action="import_act" method="post" class="definewidth m20" enctype="multipart/form-data">
+<table class="table table-bordered table-hover definewidth m10">
+	<tr>
+        <td width="10%" class="tableleft"  style="line-height:27px;">防伪码文件：</td>
+        <td  style="line-height:27px;">
+        	<input id="qrcode_file" name="qrcode_file" value=""  type="file"/>
+        </td>
+   </tr>
+   <tr>
+        <td width="10%" class="tableleft"  style="line-height:27px;">模版：</td>
+        <td  style="line-height:27px;">
+        	<input type="radio" name="type"  value="1" checked="checked"/>模版txt
+        	<input type="radio" name="type"  value="2"/>模版excel
+        </td>
+   </tr>
+   <tr>
+        <td width="10%" class="tableleft"  style="line-height:27px;">防伪码主题：</td>
+        <td  style="line-height:27px;"><input type="text" name="them" placeholder="请输入防伪码主题"/></td>
+    </tr>
+    <tr>
+        <td width="10%" class="tableleft"  style="line-height:27px;">修复体产品：</td>
+        <td  style="line-height:27px;">
+        	<select id="" name="production_title">
+        		{volist id="list" name="list"}
+        		<option value="{$list.false_tooth_id}">{$list.false_tooth_name}</option>
+        	    {/volist}
+        	</select>
+        <!--<input type="text" name="production_title" placeholder="请输入对应产品"/>-->
+        </td>
+    </tr>
+    <tr>
+        <td></td>
+        <td  style="line-height:27px;">
+            <button type="submit" class="btn btn-primary" id="create" type="button">导入</button> &nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+        </td>
+    </tr>
+    
+</table>
+</form>
+</body>
+</html>
+<script>
+    $(function () {       
+		$('#backid').click(function(){
+				window.location.href="index.html";
+		});
+    });
+</script>

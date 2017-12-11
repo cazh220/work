@@ -1,0 +1,87 @@
+
+<div class="pageContent">
+	<form method="post" action="user.php?do=adduseract" class="pageForm required-validate" onsubmit="return validateCallback(this, navTabAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<dl>
+				<dt>用户账号：</dt>
+				<dd>
+					<input type="text" name="username" maxlength="10" class="required" alt="请输入账号" />
+					<span class="info"></span>
+				</dd>
+			</dl>
+			<dl>
+				<dt>密码：</dt>
+				<dd>
+					<input id="w_validation_pwd" type="password" name="password" class="required alphanumeric" minlength="6" maxlength="20" placeholder="字母、数字、下划线 6-20位"/>
+					<span class="info"></span>
+				</dd>
+			</dl>
+			<dl>
+				<dt>确认密码：</dt>
+				<dd>
+					<input type="password" name="repassword" class="required" equalto="#w_validation_pwd" placeholder="请输入确认密码"/>
+					<span class="info"></span>
+				</dd>
+			</dl>
+			<dl>
+				<dt>真实姓名：</dt>
+				<dd>
+					<input type="text" name="realname" maxlength="10" class="required" alt="请输入真实姓名" />
+					<span class="info"></span>
+				</dd>
+			</dl>
+			<dl>
+				<dt>客户分类：</dt>
+				<dd>
+					<select class="combox" name="role">
+						{foreach from=$roles key=key item=item}
+						<option value="{$item.role_id}">{$item.role_name}</option>
+						{/foreach}
+					</select>
+					<span class="info"></span>
+				</dd>
+			</dl>
+			<dl>
+				<dt>公司名称：</dt>
+				<dd>
+					<input type="text" name="company_name" maxlength="30" class="required" alt="请输入公司名称" />
+					<span class="info"></span>
+				</dd>
+			</dl>
+			<dl>
+				<dt>公司地址：</dt>
+				<dd>
+					<input type="text" name="address" maxlength="100" class="required" alt="请输入公司地址" />
+					<span class="info"></span>
+				</dd>
+			</dl>
+			<dl>
+				<dt>联系电话：</dt>
+				<dd>
+					<input type="text" name="mobile" class="phone required" alt="请输入您的电话"/>
+					<span class="info"></span>
+				</dd>
+			</dl>
+			<dl>
+				<dt>配送车量：</dt>
+				<dd>
+					<select class="combox" name="truck">
+						{foreach from=$trucks key=key item=item}
+						<option value="{$item.truck_id}">{$item.truck_name}</option>
+						{/foreach}
+					</select>
+				</dd>
+			</dl>
+			<input type="hidden" name="type" value="{$type}"/>
+		</div>
+		<div class="formBar">
+			<ul>
+				<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

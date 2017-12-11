@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/style.css" />
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/ckform.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/common.js"></script>
+
+ 
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<form action="edit_admin_user" method="post" onsubmit="return check_admin()" class="definewidth m20">
+<input type="hidden" name="admin_id" value="{$data.admin_id}" />
+    <table class="table table-bordered table-hover definewidth m10">
+        <tr>
+            <td width="10%" class="tableleft">登录名</td>
+            <td><input type="text" name="username" id="username" value="{$data.username}"/><span id="username_note"></span></td>
+        </tr>
+        <tr>
+            <td class="tableleft">角色</td>
+            <td>
+				<select name="role_id">
+					<option value="1" {if condition="$data.role_id eq 1"}selected="selected"{/if}>管理员</option>
+					<option value="2" {if condition="$data.role_id eq 2"}selected="selected"{/if}>其它</option>
+				</select>
+			</td>
+        </tr>
+        <tr>
+            <td class="tableleft">手机号</td>
+            <td><input type="text" name="mobile" id="mobile" value="{$data.mobile}"/><span id="mobile_note"></span></td>
+        </tr>
+        <tr>
+            <td class="tableleft">状态</td>
+            <td>
+                <input type="radio" name="is_frozen" value="0" {if condition="$data.is_frozen eq 0"}checked{/if} /> 启用
+				<input type="radio" name="is_frozen" value="1" {if condition="$data.is_frozen eq 1"}checked{/if} /> 禁用
+            </td>
+        </tr>
+        <tr>
+            <td class="tableleft">权限</td>
+            <td>
+				<table border="1" style="border-color:#ccc" width="100%">
+				{volist name="prev_data" id="prev"}
+				<tr>
+					<td width="10%"><label class='checkbox inline'><input type='checkbox' name='permission[]' value='{$prev.action_id}' {if condition = "$prev.checked eq 1"}checked{/if} /><span style="margin-left:18px">{$prev.action_name}</span></label></td>
+					<td>
+					{notempty name="prev.child"}
+					{volist name="prev.child" id="prev_act"}
+					<label class='checkbox inline'><input type='checkbox' name='permission[]' value='{$prev_act.action_id}' {if condition = "$prev_act.checked eq 1"}checked{/if} /><span style="margin-left:18px">{$prev_act.action_name}</span></label>
+					{/volist}
+					{/notempty}
+					</td>
+				</tr>
+				{/volist}
+			</table>
+			</td>
+        </tr>
+        <tr>
+            <td class="tableleft"></td>
+            <td>
+                <button type="submit" class="btn btn-primary" type="button" id="save">保存</button>				 &nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+            </td>
+        </tr>
+    </table>
+</form>
+</body>
+</html>
+<script>
+    $(function () {       
+		$('#backid').click(function(){
+				window.location.href="index";
+		 });
+		 
+		$("#username").blur(function(){
+			var username = $(this).val();
+			//正则校验 数字字母组合4-12个字符
+			var exp = /^\w{4,12}$/;
+			if (!exp.test(username)){
+				$("#username_note").html("<font color='red'>请输入4-12位数字字母或下划线组合</font>");
+				return false;
+			}
+			
+			$.ajax({
+				type:"POST",
+				url:"{$Think.config.host_url}/public/admin.php/admin/admin/check_username",
+				data:"username="+username,
+				dataType:"json",
+				success:function(msg){
+					if (msg.status == 1)
+					{
+						$("#username_note").html("<font color='red'>"+msg.message+"</font>");
+					}
+				}
+			});
+		});
+		
+		$("#username").focus(function(){
+			$("#username_note").html("");
+		});
+		
+		$("#mobile").blur(function(){
+			var phone = $(this).val();
+			
+			if(!(/^1(3|4|5|7|8)\d{9}$/.test(phone))){ 
+		        alert("手机号码不正确，请重填");  
+		        return false; 
+		    } 
+		});
+		
+
+    });
+    
+    function check_admin()
+    {
+    	var username = $("#username").val();
+    	if(username == '')
+    	{
+    		alert('请填用户名');
+    		return false;
+    	}
+    	
+    	var mobile = $("#mobile").val();
+    	if(mobile == '')
+    	{
+    		alert('请填用手机号');
+    		return false;
+    	}
+    	
+    	//$("#save").attr("disabled", false);
+    	
+    }
+</script>

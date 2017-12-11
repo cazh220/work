@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>添加修复体</title>
+    <meta charset="UTF-8">
+	
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/style.css" />
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/ckform.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/common.js"></script>
+
+</head>
+<body>
+<form action="../Fixtype/add_fix_type_action" method="post" class="definewidth m20">
+<table class="table table-bordered table-hover definewidth m10">
+	<tr>
+        <td width="50%" class="tableleft"  style="line-height:27px;">修复体名称：</td>
+        <td  style="line-height:27px;"><input type="text" name="false_tooth_name" value="" placeholder=""/></td>
+  </tr>
+   <tr>
+        <td width="50%" class="tableleft"  style="line-height:27px;">修复体描述：</td>
+        <td  style="line-height:27px;">
+        	<textarea id="fix_type_desc" name="fix_type_desc" cols="30" rows="20"></textarea>
+        	<!--<input type="text" name="fix_type_desc" value="" placeholder=""/>-->
+        </td>
+   </tr>
+    <tr>
+        <td></td>
+        <td  style="line-height:27px;">
+            <button type="submit" class="btn btn-primary" type="button">保存</button> &nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+        </td>
+    </tr>
+</table>
+</form>
+</body>
+</html>
+<script>
+    $(function () {       
+		$('#backid').click(function(){
+				window.location.href="index.html";
+		 });
+
+    });
+</script>

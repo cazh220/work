@@ -1,0 +1,108 @@
+<html class=" js csstransitions">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<title>注册</title>
+<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/index/css/new/style.css">
+<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/index/css/new/index.css">
+<script src="{$Think.config.host_url}/public/static/index/css/new/jquery.min.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/css/new/modernizr.custom.97074.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/my.js"></script>
+	<!--
+	描述：header开始
+-->
+	</head><body><header>
+		<div class="wrap">
+			<h1 class="logo fl">
+				<a href="{$Think.config.host_url}/public/index.php/index/index/"><img src="{$Think.config.host_url}/public/static/index/css/new/hg_logo.png" style="width:100px; height:45px"></a>
+			</h1>
+			<div class="info fr">
+				<div class="login fr">
+					<!--<a href="{$Think.config.host_url}/public/index.php/index/index/register">注册</a><span>|</span>
+					<a href="{$Think.config.host_url}/public/index.php/index/index/login">登录</a>-->
+					<!-- 登录 -->
+					{if condition="$user neq ''"}
+					<font color="#ccc">欢迎您，{$user}! <span>|</span>
+					<!--<a href="http://huge.com/public/index.php/index/index/resetpwd">修改密码</a><span>|</span>-->
+					<a href="{$Think.config.host_url}/public/index.php/index/member/">会员中心</a><span>|</span>
+					<a href="{$Think.config.host_url}/public/index.php/index/index/logout">退出</a></font>
+					{else /}
+					<!--<a href="{$Think.config.host_url}/public/index.php/index/index/register">注册</a><span>|</span>
+					<a href="{$Think.config.host_url}/public/index.php/index/index/login">登录</a>-->
+					<!-- 登录 -->
+					{/if}
+				</div>
+			</div>
+		</div>
+	</header>
+	<!--
+	描述：header结束
+-->
+	<div style="background: url('{$Think.config.host_url}/public/static/index/css/new/lgbg.jpg')no-repeat;background-size: cover;">
+		<div class="wrap">
+			
+			
+			
+			
+			
+		<!--描述：body部分开始-->
+        <div class="bodyBG">
+        	<div class="loginMin">
+        		<div>
+		        	<div class="loginTitle zct">注册</div>
+	                <div class="EmailRegister">
+	                	 <form id="userinfoform" name="userinfoform" method="post" enctype="multipart/form-data" action="do_register">
+							<label>手机</label><input type="text" name="mobile" id="mobile" placeholder="请输入手机号" style="width:202px; color: #FFF;"><span style="color: red; font-size: large;">*</span>&nbsp;&nbsp;<input type="button" onclick="send_sms(this)" id="sendsms" name="sendsms" value="发送验证码" class="submt" style="width:150px"><br>
+							<label>验证码</label><input type="text" name="code" id="code" placeholder="请输入手机验证码" autofocus="autofocus" style="color: #FFF;"><span style="color: red; font-size: large;">*</span><br>
+							<label>密码</label><input type="password" name="password" id="password" placeholder="请输入6-20位组合密码(区分大小写)" onblur="check_pwd(this.value)" style="color: #FFF;"><span style="color: red; font-size: large;">*</span><br>
+	                		<label>确认</label><input type="password" name="repassword" id="repassword" placeholder="请再次输入密码" style="color: #FFF;"><span style="color: red; font-size: large;">*</span><br>
+							<label>类别</label><input type="radio" name="user_type" id="tech" value="1" style="width:95px; height:25px" checked><label>技工</label><input type="radio" name="user_type" id="doctor" value="2" style="width:95px; height:25px"><label>医生</label><span style="color: red; font-size: large;">*</span><br>
+	                		<label>姓名</label><input type="text" name="username" id="username" placeholder="请输入3个字符以上" autofocus="autofocus" style="color: #FFF;"><span style="color: red; font-size: large;">*</span><br>
+	                		<label>名称</label><input type="text" name="company_name" id="company_name" placeholder="请输入单位名称" style="color: #FFF;"><span style="color: red; font-size: large;">*</span><br>
+							<!--<label>地址</label><input type="text" name="company_addr" id="company_addr" placeholder="请输入单位地址" autofocus="autofocus" style="color: #FFF;"><br>-->
+	                		<label>职位</label><input type="text" name="position" id="position" placeholder="请输入职位" style="color: #FFF;"><br>
+							<label style="margin-left: 140px;">区域</label>
+							<select id="province" name="province" style="width:78px; height:50px; margin-top:20px; border-radius: 5px; font-size:18px">
+								<option value=''>请选择</option>
+								{volist id="list" name="province"}
+								<option value='{$list.id}'>{$list.name}</option>
+								{/volist}
+							</select>&nbsp;&nbsp;
+							<select id="city" name="city" style="width:78px; height:50px; border-radius: 5px; font-size:18px">
+								<option value=''>请选择</option>
+							</select>&nbsp;&nbsp;
+							<select id="district" name="district" style="width:78px; height:50px; border-radius: 5px; font-size:18px">
+								<option value=''>请选择</option>
+							</select>&nbsp;&nbsp;<input type="text" name="company_addr" id="company_addr" placeholder="请输入详细单位地址" autofocus="autofocus" style="color: #FFF; width: 250px;"><br>
+	                		<label style="margin-left: 206px;">头像</label><input type="file" name="head" id="head" placeholder="请输入头像" style="text-indent: 0px; height:30px"><span style="color: red; font-size: large;">*</span>(尺寸:160X160,大小不超过1M)<br>
+							                		<label></label><input type="button" name="Submit" onclick="check_user()" value="同意协议并注册" class="submt"><span class="xy"><a href="rule" style="text-decoration: none;" target="_blank">《注册协议》</a></span><br>
+	                	</form>
+	                </div>
+	                
+	               
+	                <div class="securityUser">
+	                	<p>已经账号？<a href="{$Think.config.host_url}/public/index.php/index/index">立即登录</a></p>
+	                   
+	                </div>
+                </div>
+        	</div>
+        </div>
+        
+		<!--描述：body部分结束-->
+			
+
+		</div>
+
+	</div>
+	<div class="footer">
+		<div class="wrap">
+			
+		</div>
+
+		<div class="keep">
+			<div class="wrap">
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>

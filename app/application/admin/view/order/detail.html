@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>订单详情</title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/style.css" />
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-datetimepicker.min.css" />
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/ckform.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/common.js"></script>
+	<script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/locales/bootstrap-datetimepicker.fr.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+
+
+    </style>
+</head>
+<body>
+<label style="margin-left:27px">订单详情</label>
+<!-- <input type="hidden" id="order_id" name="order_id" value="{$detail.0.order_id}"> -->
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <th width="20%">提交会员</th>
+		<td width="30%">{$detail.0.username}</td>
+		<th width="20%">下单时间</th>
+		<td width="30%">{$detail.0.create_time}</td>
+    </tr>
+	<tr>
+		<th width="20%">会员类别</th>
+		<td width="30%">{if $detail.0.user_type == 1}技工所{elseif $detail.0.user_type == 2}医生{else}其他{/if}</td>
+		<th width="20%">积分支付</th>
+		<td width="30%">{$detail.0.total_credits}</td>
+	</tr>	
+	<tr>
+		<th width="20%">订单编号</th>
+		<td width="30%">{$detail.0.order_no}</td>
+		<th width="20%">处理状况</th>
+		<td width="30%"><span id="order_status">{if $detail.0.order_status == 0}<font color="red">待确认</font>{elseif $detail.0.order_status == 1}已发货{else}已完成{/if}</span></td>
+	</tr>
+</table>
+
+<label style="margin-left:27px; margin-top:20px">兑换奖品</label>
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <th width="20%">图片</th>
+		<th width="20%">产品名称</th>
+		<th width="20%">支付积分</th>
+		<th width="20%">数量</th>
+		<th width="20%">小计</th>
+    </tr>
+	{volist name="detail" id="list"}
+	<tr>
+		<td><img src="http://www.yrsyc.cn/app/public/uploads/{$list.gift_pic}" width="76px" height="76px"></td>
+		<td>{$list.gift_name}</td>
+		<td>{$list.price}</td>
+		<td>{$list.amount}</td>
+		<td>{$list.amount*$list.price}</td>
+	</tr>
+	{/volist}
+</table>
+
+<table class="table table-bordered table-hover definewidth m10" id="tb1">
+    <tr>
+        <th width="50%" colspan="2">收货信息</th>
+		<th width="50%" colspan="2">物流信息</th>
+    </tr>
+	<tr>
+		<th width="15%">收货人姓名</th>
+		<td width="35%">{$detail.0.consignee}</td>
+		<th width="15%">运送方式</th>
+		<td width="35%">{$detail.0.ship_way_name}</td>
+	</tr>
+	<tr>
+		<th width="15%">电话</th>
+		<td width="35%">{$detail.0.mobile}</td>
+		<th width="15%">物流公司名称</th>
+		<td width="35%">{$detail.0.ship_company_name}</td>
+	</tr>
+	<tr>
+		<th width="15%">地址</th>
+		<td width="35%">{$detail.0.address}</td>
+		<th width="15%">运单号</th>
+		<td width="35%">{$detail.0.ship_no}</td>
+	</tr>
+	<tr>
+		<td colspan="2"></td>
+		<th width="15%">发货时间</th>
+		<td width="35%">{$detail.0.send_time}</td>
+	</tr>
+	<tr>
+		<td colspan="4">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="4" style="height:40px; text-align:center">{if $detail.0.order_status != 2}<button id="edit_ship" type="submit" class="btn btn-primary">编辑</button>{/if}&nbsp;&nbsp;&nbsp;&nbsp;{if $detail.0.order_status == 0}<button id="confirm_order" type="submit" class="btn btn-primary">确认</button>{/if}</td>
+	</tr>
+</table>
+<form action="detail" method="POST">  
+<input type="hidden" id="order_id" name="order_id" value="{$detail.0.order_id}">
+<table class="table table-bordered table-hover definewidth m10" id="tb2" style="display:none">
+    <tr>
+        <th width="50%" colspan="2">收货信息</th>
+		<th width="50%" colspan="2">物流信息</th>
+    </tr>
+	<tr>
+		<th width="15%">收货人姓名</th>
+		<td width="35%"><input type="text" id="username" name="username" value="{$detail.0.consignee}"></td>
+		<th width="15%">运送方式</th>
+		<td width="35%"><select id="ship_way" name="ship_way">
+							<option value="0" {if $detail.0.ship_way == 0}selected{/if}>快递</option>
+							<option value="1" {if $detail.0.ship_way == 1}selected{/if}>自取</option>
+						</select></td>
+	</tr>
+	<tr>
+		<th width="15%">电话</th>
+		<td width="35%"><input type="text" id="mobile" name="mobile" value="18721225190"></td>
+		<th width="15%">物流公司名称</th>
+		<td width="35%"><select id="ship_name" name="ship_name">
+							<option value="1" {if $detail.0.ship_company == 1}selected{/if}>顺丰快递</option>
+							<option value="2" {if $detail.0.ship_company == 2}selected{/if}>申通快递</option>
+							<option value="3" {if $detail.0.ship_company == 3}selected{/if}>韵达快递</option>
+							<option value="4" {if $detail.0.ship_company == 4}selected{/if}>中通快递</option>
+							<option value="5" {if $detail.0.ship_company == 5}selected{/if}>圆通快递</option>
+							<option value="6" {if $detail.0.ship_company == 6}selected{/if}>邮政快递</option>
+							<option value="7" {if $detail.0.ship_company == 7}selected{/if}>其它</option>
+						</select></td>
+	</tr>
+	<tr>
+		<th width="15%">地址</th>
+		<td width="35%"><input type="text" id="address" name="address" value="{$detail.0.address}"></td>
+		<th width="15%">运单号</th>
+		<td width="35%"><input type="text" id="ship_no" name="ship_no" value="{$detail.0.mobile}"></td>
+	</tr>
+	<!-- <tr> -->
+		<!-- <td colspan="2"></td> -->
+		<!-- <th width="15%">发货时间</th> -->
+		<!-- <td width="35%"><input type="text" id="send_time" name="send_time" value="2017-05-15 12:12:34"></td> -->
+	<!-- </tr> -->
+	<tr>
+		<td colspan="4">&nbsp;</td>
+	</tr>
+	<tr>
+		<td colspan="4" style="height:40px; text-align:center"><button id="confirm" type="submit" class="btn btn-primary">确认</button></td>
+	</tr>
+</table>
+</form>
+</body>
+</html>
+<script>
+    $(function () {
+        
+		var user_id = $("#user_id").val();
+		$('#edit_user').click(function(){
+
+				window.location.href="edit_user?user_id="+user_id;
+		 });
+
+		$("#edit_ship").click(function(){
+			$("#tb1").css("display","none");
+			$("#tb2").css("display","");
+		});
+		
+		var order_id = $("#order_id").val();
+		$("#confirm_order").click(function(){
+
+			$.ajax({
+				type:'POST',
+				url:'confirm_order',
+				data:'order_id='+order_id+"&order_status=1",
+				dataType:'json',
+				success:function(msg){
+					window.location.reload();
+				}
+			});
+		});
+    });
+
+</script>

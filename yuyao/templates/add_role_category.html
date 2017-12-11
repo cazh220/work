@@ -1,0 +1,38 @@
+
+<div class="pageContent">
+	<form method="post" action="role_category.php?do=rolecategoryact" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDoneCategory);">
+		<div class="pageFormContent" layoutH="56">
+			<p>
+				<label>上级分类</label>
+				<input name="last_category" type="text" size="30" value="{$last_category.role_name}" readonly="readonly"/>
+				<input type="hidden" id="last_category_id" name="last_category_id" value="{$last_category.role_id}">
+				<input type="hidden" id="last_deepth" name="last_deepth" value="{$last_category.deepth}">
+				<input type="hidden" id="role_id" name="role_id" value="{$current_category.role_id}">
+			</p>
+			<p>
+				<label>客户分类名称：</label>
+				<input name="role_category_name" class="required" type="text" size="30" value="{$current_category.role_name}" alt="请输入客户分类名称"/>
+			</p>
+			<p style="width: 500px;">
+				<label>操作类别：</label>
+				<label style="width: 300px;">
+					<input type="radio" id="o1" class="operate_type" name="type" value="1" onclick="add_role_same('{$current_category.role_name}')"/>添加同类 
+					<input type="radio" id="o2" class="operate_type" name="type" value="2" onclick="add_role_child('{$current_category.role_name}')"/>添加子类
+					<input type="radio" id="o3" class="operate_type" name="type" value="3" checked onclick="edit_role_cat('{$current_category.role_name}')"/>编辑
+					<input type="radio" id="o4" class="operate_type" name="type" value="4" onclick="delete_role_cat('{$current_category.role_name}')"/>删除
+				</label>
+				<label></label>
+			</p>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

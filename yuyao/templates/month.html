@@ -1,0 +1,106 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$param.page}" />
+	<input type="hidden" name="numPerPage" value="{$param.page_size}" />
+	<input type="hidden" name="orderField" value="" />
+	<input type="hidden" name="orderDirection" value="" />
+</form>
+
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="statistics.php?do=month" method="post">
+	<div class="searchBar">
+		<!--<ul class="searchContent">
+			<li>
+				<label>我的客户：</label>
+				<input type="text"/>
+			</li>
+			<li>
+			<select class="combox" name="province">
+				<option value="">所有省市</option>
+				<option value="北京">北京</option>
+				<option value="上海">上海</option>
+				<option value="天津">天津</option>
+				<option value="重庆">重庆</option>
+				<option value="广东">广东</option>
+			</select>
+			</li>
+		</ul>
+		-->
+		<table class="searchContent">
+			<tr>
+				<td>
+					统计日期：<input type="text" class="date" name="start_time" readonly="true" value="{$start_time}" />
+				</td>
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			
+			<!--<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>-->
+			<li class="line">line</li>
+			<li><a class="icon" href="javascript:$.printBox('w_list_print')"><span>打印</span></a></li>
+			<!--<li><a target="selectedLoad" rel="ids" postType="string" href="demo_page1.html" class="icon"><span>批量Dialog Load逗号分隔</span></a></li>-->
+		</ul>
+	</div>
+	<div id="w_list_print">
+	<table class="table" width="2040" layoutH="138" style="text-align: center;">
+		<thead>
+			<tr>
+				<th rowspan="34" style="text-align: center;"><h1><span style="font-size: x-large; height: 50px;">{$title}销售统计</span></h1></th>
+			</tr>
+		</thead>
+		<thead>
+			<tr>
+				{if $head}
+				{foreach from=$head item=item key=key}
+				<th style="width: 60px; text-align: center;">{$item}</th>
+				{/foreach}
+				{/if}
+			</tr>
+		</thead>
+		<tbody>
+			{if $list}
+			{foreach from=$list item=itema key=keya}
+			<tr target="sid_user" rel={$keya+1}>
+				{foreach from=$itema item=itemb key=keyb}
+				<td style="width: 60px; text-align: center;">{$itemb}</td>
+				{/foreach}
+			</tr>
+			{/foreach}
+			{/if}
+			
+			{if $foot}
+			<tr>
+				{foreach from=$foot item=itemc key=keyc}
+				<td style="width: 60px; text-align: center;">{$itemc}</td>
+				{/foreach}
+			</tr>
+			{/if}
+			
+		</tbody>
+	</table>
+	</div>
+	<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak(20)">
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<span>条，共{$total}条</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$page.total}" numPerPage="{$page.page_size}" pageNumShown="{$page.page_size}" currentPage="{$page.current_page}"></div>
+
+	</div>
+</div>

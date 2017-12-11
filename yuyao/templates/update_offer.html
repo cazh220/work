@@ -1,0 +1,55 @@
+
+<div class="pageContent">
+	<form method="post" action="category.php?do=categoryact" class="pageForm required-validate" onsubmit="return validateCallback(this, dialogAjaxDone);">
+		<div class="pageFormContent" layoutH="56">
+			<p>
+				<label>上级分类</label>
+				<input name="last_category" type="text" size="30" value="{$last_category.cname}" readonly="readonly"/>
+				<input type="hidden" id="last_category_id" name="last_category_id" value="{$last_category.cid}">
+				<input type="hidden" id="last_deepth" name="last_deepth" value="{$last_category.deepth}">
+				<input type="hidden" id="ctype" name="ctype" value="{$last_category.ctype}">
+				<input type="hidden" id="cid" name="cid" value="{$current_category.cid}">
+			</p>
+			<p>
+				<label>分类名称：</label>
+				<input name="category_name" class="required" type="text" size="30" value="{$current_category.cname}" alt="请输入分类名称"/>
+			</p>
+			<p>
+				<label>分类链接：</label>
+				<input name="category_link" class="required" type="text" size="30" value="{$current_category.url}" alt="请输入分类链接"/>
+			</p>
+			<p>
+				<label>分类描述：</label>
+				<input type="text" name="category_desc" size="30" value="{$current_category.description}" />
+			</p>
+			<p>
+				<label>所属供应商：</label>
+				<select name="type" class="required combox">
+					<option value="">请选择</option>
+					<option value="0" {if $current_category.ctype==0 || !$current_category.ctype}selected{/if}>供应商</option>
+					<option value="1" {if $current_category.ctype==1}selected{/if}>公司</option>
+				</select>
+			</p>
+			<p style="width: 500px;">
+				<label>操作类别：</label>
+				<label style="width: 300px;">
+					<input type="radio" id="o1" class="operate_type" name="type" value="1" onclick="add_same()"/>添加同类 
+					<input type="radio" id="o2" class="operate_type" name="type" value="2" onclick="add_child()"/>添加子类
+					<input type="radio" id="o3" class="operate_type" name="type" value="3" checked onclick="edit_cat()"/>编辑
+					<input type="radio" id="o4" class="operate_type" name="type" value="4" onclick="delete_cat()"/>删除
+				</label>
+				<label></label>
+			</p>
+			
+		</div>
+		<div class="formBar">
+			<ul>
+				<!--<li><a class="buttonActive" href="javascript:;"><span>保存</span></a></li>-->
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">保存</button></div></div></li>
+				<li>
+					<div class="button"><div class="buttonContent"><button type="button" class="close">取消</button></div></div>
+				</li>
+			</ul>
+		</div>
+	</form>
+</div>

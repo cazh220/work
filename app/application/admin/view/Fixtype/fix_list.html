@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>修复体明细</title>
+    <meta charset="UTF-8">
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/style.css" />
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-datetimepicker.min.css" />
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/ckform.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/common.js"></script>
+	<script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/clipboard.min.js"></script>
+	<script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap-datetimepicker.min.js"></script>
+	<script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/locales/bootstrap-datetimepicker.fr.js"></script>
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+        
+        input[type="text"]{
+        	height: 33px !important;
+        }
+		
+		.pagination{text-align:center;margin-top:20px;margin-bottom: 20px;} 
+
+    </style>
+</head>
+<body>
+<form class="form-inline definewidth m20" action="index.html" method="get">    
+    <button type="button" class="btn btn-success" id="addnew">新增修复体明细</button>&nbsp;&nbsp;<button type="button" class="btn btn-success" id="delete">删除</button>
+</form>
+<table class="table table-bordered table-hover definewidth m10">
+    <thead>
+    <tr>
+		<th><input type="checkbox" id="all_stock_id" name="all_stock_id" value="">选择</th>
+        <th>编号</th>
+        <th>修复体</th>
+        <th>产品明细</th>
+        <th>机构</th>
+		<th>操作</th>
+    </tr>
+    </thead>
+		{volist id="list" name="list"}
+	     <tr>
+			<td><input type="checkbox" class="c_tooth_id" id="c_tooth_id{$list.id}" name="tooth_id[]" value="{$list.id}"></td>
+			<td>{$list.id}</td>
+            <td>{$list.false_tooth_name}</td>
+            <td>{$list.product_detail}</td>
+			<td>{$list.Institute}</td>
+			<td>
+				<a href="edit_fix_type_detail?id={$list.id}">编辑</a>&nbsp;&nbsp;   
+				<a href="delete_fix_type_detail?id={$list.id}" class="copy">删除</a>&nbsp;&nbsp;
+			</td>
+        </tr>
+		{/volist}		
+</table>
+</body>
+</html>
+<script>	
+    $(function () {
+		$('#addnew').click(function(){
+
+				window.location.href="add_fix_type_detail";
+		 });
+		 
+		 $('#addnew_detail').click(function(){
+
+				window.location.href="add_fix_type_detail";
+		 });
+		 
+		 
+		$("#all_stock_id").click(function(){
+			if ($("#all_stock_id").is(':checked'))
+			{
+				$(".c_tooth_id").each(function(i, n){
+					$(this).prop("checked", true);
+				 });
+			}
+			else
+			{
+				$(".c_tooth_id").each(function(i, n){
+					$(this).prop("checked", false);
+				 });
+			}
+		 });
+		 
+		 $("#delete").click(function(){
+			if(confirm("确定要删除吗？"))
+			{
+				var c_tooth_id = new Array();
+				$(".c_tooth_id").each(function(i, n){
+					if ($(this).is(':checked'))
+					{
+						c_tooth_id.push($(this).val());
+					}
+				});
+				var c_tooth_id_str = c_tooth_id.join(',');
+				var url = "delete_fix_type_detail?c_tooth_id="+c_tooth_id_str;
+				window.location.href=url;		
+			
+			}
+		 });
+
+    });
+	
+	
+	
+</script>

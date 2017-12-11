@@ -1,0 +1,38 @@
+
+<div class="pageContent">
+	<div class="panelBar">
+	</div>
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+			<tr>
+				<th width="100" align="center">商品名称</th>
+				<th width="200" align="center">商品价格</th>
+				<th width="200" align="center">商品数量</th>
+				<th width="150" align="center">商品单位</th>
+				<th width="150" align="center">备注</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $order_goods}
+			{foreach from=$order_goods item=item key=key}
+			<tr>
+				<td>{$item.goods_name}</td>
+				<td>{$item.good_price}</td>
+				<td>{$item.goods_num}</td>
+				<td>{$item.unit}</td>
+				<td>{$item.good_note}</td>
+			</tr>
+			{/foreach}
+		    {/if}
+		</tbody>
+	</table>
+
+</div>
+<script type="text/javascript">
+{literal}
+$(function(){
+
+});
+
+{/literal}
+</script>

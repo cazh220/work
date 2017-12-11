@@ -1,0 +1,99 @@
+
+
+<div class="pageHeader">
+	<form onsubmit="return navTabSearch(this);" action="demo_page1.html" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					我的客户：<input type="text" name="keyword" />
+				</td>
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+	</div>
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+			<tr>
+				<th width="100" align="center">客户分类编号</th>
+				<th width="200" align="center">客户分类</th>
+				<th width="200" align="center">所属上级分类</th>
+				<th width="150" align="center">商品名称</th>
+				<th width="100" align="center">报价</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $offer}
+			{foreach from=$offer item=item key=key}
+			<tr target="sid_user" rel="1" {if $item.type=='base'}style="background-color:#E3FDA7;"{/if} ondblclick="update_offer(this, '{$item.goods_id}', '{$item.user_id}', '{$item.price}', '{$item.role_id}')" id="o_{$item.role_id}">
+				<td>{$item.role_id}</td>
+				<td>{$item.role_name}</td>
+				<td>{$item.parent_role_name}</td>
+				<td>{$item.goods_name}</td>
+				<td>{$item.price}</td>
+			</tr>
+			{/foreach}
+		    {/if}
+		</tbody>
+	</table>
+
+</div>
+<script type="text/javascript">
+{literal}
+$(function(){
+
+});
+
+
+
+function update_offer(o, goods_id, user_id, price, role_id)
+{
+	$(o).children().eq(4).html('<input type="text" id="price_'+user_id+'"  onblur="update_role_price(\''+user_id+'\',\''+goods_id+'\', \''+role_id+'\')" value="'+price+'"/>');
+}
+
+function update_price(goods_id, role_id, price, o)
+{
+	//console.log(goods_id+":"+role_id+":"+price);
+	var price = parseFloat(price);
+	var txt = '<input type="text" id="new_price_'+role_id+'" onblur="update_role_price('+role_id+','+goods_id+')" value="'+price+'"/>';
+	$(o).html(txt);
+}
+
+function update_role_price(user_id, goods_id, role_id)
+{
+	var price = $("#price_"+user_id).val();
+
+	$.ajax({
+		type:"post",
+		//url:"goods.php?do=updateuserroleprice",
+		url:"offer.php?do=updaterolegoodprice",
+		data:"goods_id="+goods_id+"&user_id="+user_id+"&role_id="+role_id+"&price="+price,
+		dataType:"json",
+		success:function(msg)
+		{
+			if(msg.status==1)
+			{
+				$("#o_"+role_id).children().eq(4).html(price);
+				//$("#price_"+role_id).html(price);
+			}
+			else
+			{
+				alert(msg.message);
+				return false;
+			}
+		}
+	});
+	
+}
+
+{/literal}
+</script>

@@ -1,0 +1,79 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$page.current_page}" />
+	<input type="hidden" name="numPerPage" value="{$page.page_size}" />
+	<input type="hidden" name="orderField" value="" />
+	<input type="hidden" name="orderDirection" value="" />
+</form>
+
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="user.php?do=userlist" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					客户账号：<input type="text" name="username" value="{$param.username}" />
+				</td>
+				
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+		</ul>
+	</div>
+	<div id="w_list_print">
+	<table class="table" width="1200" layoutH="138">
+		<thead>
+			<tr>
+				<th width="8%">账号名称</th>
+				<th width="8%">真实姓名</th>
+				<th width="8%">客户分类</th>
+				<th width="10%">公司名称</th>
+				<th width="12%" align="center">公司地址</th>
+				<th width="8%">联系电话</th>
+				<th width="8%">配送分车</th>
+				<th>操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $users}
+			{foreach from=$users item=item key=key}
+			<tr target="sid_user" rel={$key+1}>
+				<td>{$item.username}</td>
+				<td>{$item.realname}</td>
+				<td>{$item.role_name}</td>
+				<td>{$item.company_name}</td>
+				<td>{$item.address}</td>
+				<td>{$item.mobile}</td>
+				<td>{$item.truck_name}</td>
+				<td>
+					<a class="btnSelect" href="javascript:bring_user({$item.user_id})" title="查找带回">选择</a>
+				</td>
+			</tr>
+			{/foreach}
+			{/if}
+			
+		</tbody>
+	</table>
+	</div>
+</div>
+
+{literal}
+<script type="text/javascript">
+function testConfirmMsg(url, data){
+	alertMsg.confirm("您修改的资料未保存，请选择保存或取消！", {
+		okCall: function(){
+			$.post(url, data, DWZ.ajaxDone, "json");
+		}
+	});
+}
+</script>
+{/literal}

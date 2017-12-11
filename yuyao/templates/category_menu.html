@@ -1,0 +1,70 @@
+<div class="accordion" fillSpace="sideBar">
+	<div class="accordionHeader">
+		<h2><span>Folder</span>供应商分类</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder">
+			{if $category}
+				{foreach from=$category item=item key=key}
+				<li><a href="category.php?do=addcategory&last_cat_id=0&current_cat_id={$item.cid}" target="dialog" rel="pagination1" minable="false">{$item.cname}</a>
+					{if $item.child}
+					<ul>
+						{foreach from=$item.child item=itema key=keya}
+						<li><a href="category.php?do=addcategory&last_cat_id={$item.cid}&current_cat_id={$itema.cid}" target="dialog" rel="dlg_page9" minable="false">{$itema.cname}</a>
+							{if $itema.child}
+							<ul>
+								{foreach from=$itema.child item=itemb key=keyb}
+								<li>
+									<a href="category.php?do=addcategory&last_cat_id={$itema.cid}&current_cat_id={$itemb.cid}" target="dialog" rel="dlg_page9" minable="false">{$itemb.cname}</a>
+									{if $itemb.child}
+										<ul>
+											{foreach from=$itemb.child item=itemc key=keyc}
+												<li>
+													<a href="category.php?do=addcategory&last_cat_id={$itemb.cid}&current_cat_id={$itemc.cid}" target="dialog" rel="dlg_page9" minable="false">{$itemc.cname}</a>
+												</li>
+											{/foreach}
+										</ul>
+									{/if}
+								</li>
+								{/foreach}
+							</ul>
+							{/if}
+						</li>
+						{/foreach}
+					</ul>
+					{/if}
+				</li>
+				{/foreach}
+			{/if}
+		</ul>
+	</div>
+	<!--<div class="accordionHeader">
+		<h2><span>Folder</span>我的分类</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder">
+			{if $mycategory}
+				{foreach from=$mycategory item=item key=key}
+				<li><a href="category.php?do=addcategory&last_cat_id=0&current_cat_id={$item.cid}" target="dialog" rel="pagination1" minable="false">{$item.cname}</a>
+					{if $item.child}
+					<ul>
+						{foreach from=$item.child item=itema key=keya}
+						<li><a href="category.php?do=addcategory&last_cat_id={$item.cid}&current_cat_id={$itema.cid}" target="dialog" rel="dlg_page9" minable="false">{$itema.cname}</a>
+							{if $itema.child}
+							<ul>
+								{foreach from=$itema.child item=itemb key=keyb}
+								<li><a href="category.php?do=addcategory&last_cat_id={$itema.cid}&current_cat_id={$itemb.cid}" target="dialog" rel="dlg_page9" minable="false">{$itemb.cname}</a></li>
+								{/foreach}
+							</ul>
+							{/if}
+						</li>
+						{/foreach}
+					</ul>
+					{/if}
+				</li>
+				{/foreach}
+			{/if}
+		</ul>
+
+	</div>-->
+</div>

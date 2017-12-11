@@ -1,0 +1,81 @@
+<html class=" js csstransitions">
+<head>
+<title>忘记密码</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/index/css/new/style.css">
+<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/index/css/new/index.css">
+<script src="{$Think.config.host_url}/public/static/index/css/new/jquery.min.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/css/new/modernizr.custom.97074.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/my.js"></script>
+	<!--
+	描述：header开始
+-->
+	</head><body><header>
+		<div class="wrap">
+			<h1 class="logo fl">
+				<a href="{$Think.config.host_url}/public/index.php/index/index/"><img src="{$Think.config.host_url}/public/static/index/css/new/hg_logo.png" style="width:100px; height:45px"></a>
+			</h1>
+			<div class="info fr">
+				<div class="login fr">
+					{if condition="$user neq ''"}
+					<font color="#ccc">欢迎您，{$user}! <span>|</span>
+					<!--<a href="http://huge.com/public/index.php/index/index/resetpwd">修改密码</a><span>|</span>-->
+					<a href="{$Think.config.host_url}/public/index.php/index/member/">会员中心</a><span>|</span>
+					<a href="{$Think.config.host_url}/public/index.php/index/index/logout">退出</a></font>
+					{else /}
+					<!--<a href="{$Think.config.host_url}/public/index.php/index/index/register">注册</a><span>|</span>
+					<a href="{$Think.config.host_url}/public/index.php/index/index/login">登录</a>-->
+					<!-- 登录 -->
+					{/if}
+
+				</div>
+			</div>
+		</div>
+	</header>
+	<!--
+	描述：header结束
+-->
+	<div style="background: url('{$Think.config.host_url}/public/static/index/css/new/lgbg.jpg')no-repeat;background-size: cover;">
+		<div class="wrap">
+			
+			
+			
+			
+			
+		<!--描述：body部分开始-->
+        <div class="bodyBG">
+        	<div class="loginMin">
+        		<div>
+		        	<div class="loginTitle zct">重置密码</div>
+	                <div class="EmailRegister">
+	                	 <form id="userinfoform" name="userinfoform" method="post"  action="update_pwd">
+							<input type="hidden" id="_mobile" name="_mobile" value="{$mobile}">
+							<label style="width:130px">手机号码</label><input type="text" name="mobile" id="mobile" placeholder="请输入手机号" autofocus="autofocus" value="{$mobile}" style="width:202px; color: #FFF;">&nbsp;<input type="button" onclick="send_code(this)" name="sendsms" value="发送验证码" class="submt" style="width:150px"><br>
+							<label style="width:130px">验证码</label><input type="text" name="code" id="code" placeholder="请输入手机验证码" autofocus="autofocus" style="color: #FFF;"><br>
+							<label style="width:130px">新密码</label><input type="password" name="password" id="password" placeholder="请输入6-20位组合密码(区分大小写)" style="color: #FFF;"><br>
+	                		<label style="width:130px">确认密码</label><input type="password" name="repassword" id="repassword" placeholder="请再次输入密码" style="color: #FFF;"><br>
+							<label></label><input type="button" name="Submit" onclick="update_pwd()" value="确定" class="submt"><br>
+	                	</form>
+	                </div>
+	                
+	               
+	                <br>
+                </div>
+        	</div>
+        </div>
+		</div>
+
+	</div>
+	<div class="footer">
+		<div class="wrap">
+			
+		</div>
+
+		<div class="keep">
+			<div class="wrap">
+				
+			</div>
+		</div>
+	</div>
+</body>
+</html>

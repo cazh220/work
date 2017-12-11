@@ -1,0 +1,38 @@
+<div class="accordion" fillSpace="sideBar">
+	<div class="accordionHeader">
+		<h2><span>Folder</span>客户列表</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree treeFolder treeFolder">
+			{if $category}
+				{foreach from=$category item=item key=key}
+				<li><a href="user_list.php?do=userlist&role_id={$item.role_id}" target="navTab" rel="user_list" minable="false">{$item.role_name}</a>
+					{if $item.child}
+					<ul>
+						{foreach from=$item.child item=itema key=keya}
+						<li><a href="user_list.php?do=userlist&role_id={$itema.role_id}" target="navTab" rel="user_list" minable="false">{$itema.role_name}</a>
+							{if $itema.child}
+							<ul>
+								{foreach from=$itema.child item=itemb key=keyb}
+								<li><a href="user_list.php?do=userlist&role_id={$itemb.role_id}" target="navTab" rel="user_list" fresh="false">{$itemb.role_name}</a></li>
+								{/foreach}
+							</ul>
+							{/if}
+						</li>
+						{/foreach}
+					</ul>
+					{/if}
+				</li>
+				{/foreach}
+			{/if}
+		</ul>
+	</div>
+	<!--<div class="accordionHeader">
+		<h2><span>Folder</span>我的分类</h2>
+	</div>
+	<div class="accordionContent">
+		<ul class="tree">
+			<li><a href="newPage1.html" target="dialog" rel="dlg_page">列表</a></li>
+		</ul>
+	</div>-->
+</div>

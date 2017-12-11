@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title></title>
+    <meta charset="UTF-8">
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/style.css" />
+	
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/wx/css/demo.css" />
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/wx/css/easyui.css" />
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/wx/css/icon.css" />
+
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/ckform.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/common.js"></script>
+	
+	<script type="text/javascript" src="http://www.jeasyui.net/Public/js/jquery.js"></script>
+	<script type="text/javascript" src="http://www.jeasyui.net/Public/js/easyui/jquery.easyui.min.js"></script>
+	
+	<!--<script type="text/javascript" src="js/jquery.easyui.min.js"></script>
+	<script type="text/javascript" src="js/jquery.min.js"></script>-->
+
+
+    <style type="text/css">
+        body {
+            padding-bottom: 40px;
+        }
+        .sidebar-nav {
+            padding: 9px 0;
+        }
+
+        @media (max-width: 980px) {
+            /* Enable use of floated navbar text */
+            .navbar-text.pull-right {
+                float: none;
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+        }
+		.main{
+			padding:20px 40px;
+		}
+		.left{
+			width:40%;
+            border: solid 1px #00868B; 
+            float: left;
+		}
+		.right{
+			width:50%;
+            float:left;
+            border: solid 1px #00868B;
+            margin-left: 100px;
+			display:none;
+		}
+
+
+    </style>
+</head>
+<body>
+
+<hr>
+<div class="main">
+<div class="left">
+	
+	<div style="margin:20px 0;"><h4>微信菜单索引：</h4></div>
+	<div class="easyui-panel" style="padding:5px">
+		<ul id="tt" class="easyui-tree" data-options="
+				url: 'http://www.yrsyc.cn/app/public/admin.php/admin/Weixin/get_menu',
+				method: 'get',
+				animate: true,
+				onClick:function(node){
+					console.log(node);
+					$('.right').css('display','block');
+					$('#menu_name').val(node.text);
+					$('#menu_id').val(node.id);
+					
+					if(node.id == 0)
+					{
+						$('#url').val(node.url);
+						$('#menu_name').attr('disabled', true);
+						$('#menu_flag').css('display','none');
+						$('#menu_url').css('display','none');
+						$('#menu_type').css('display','none');
+						$('#create').css('display','');
+						$('#save').css('display','none');
+					}else if(node.type=='view')
+					{
+						$('#url').val(node.url);
+						$('#menu_name').attr('disabled', false);
+						$('#menu_type').css('display','');
+						$('#menu_type_view').attr('checked', true);
+						$('#menu_flag').css('display','none');
+						$('#menu_url').css('display','');
+						$('#create').css('display','none');
+						$('#save').css('display','');
+					}
+					else
+					{
+						$('#flag').val(node.key);
+						$('#menu_type').css('display','');
+						$('#menu_name').attr('disabled', false);
+						$('#menu_type_qrcode').attr('checked', true);
+						$('#menu_url').css('display','none');
+						$('#menu_flag').css('display','');
+						$('#create').css('display','none');
+						$('#save').css('display','');
+					}
+				},
+				/*
+				onDblClick: function(node){
+					$(this).tree('beginEdit',node.target);
+					console.log(node);
+				},*/
+				onAfterEdit: function(node) {
+					var node_parent=$(this).tree('getParent',node.target);
+					var data = {'id':node['id'],'text':node['text'],'parent_id':node_parent['id']};
+					$.ajax({
+						url:'http://www.yrsyc.cn/app/public/admin.php/admin/Weixin/add_menu',
+						method:'POST',
+						data:data,
+						dataType:'json',
+						success:function(msg){
+							//console.log(msg);
+							$('#menu_id').val(msg.id);
+							$('#menu_id_a').val(msg.id);
+							if(msg.status)
+							{
+								//alert(msg.message);
+							}
+						}
+					});
+				},
+				onCancelEdit: function(node) {
+					var node_parent=$(this).tree('getParent',node.target);
+					console.log(node_parent);
+				},
+				onContextMenu: function(e,node){
+					e.preventDefault();
+					$(this).tree('select',node.target);
+					$('#mm').menu('show',{
+						left: e.pageX,
+						top: e.pageY
+					});
+				}
+			"></ul>
+	</div>
+	<div id="mm" class="easyui-menu" style="width:120px;">
+		<div onclick="append()" data-options="iconCls:'icon-add'">Append</div>
+		<div onclick="removeit()" data-options="iconCls:'icon-remove'">Remove</div>
+		<div onclick="edit()" data-options="iconCls:'icon-edit'">Edit</div>
+		<div class="menu-sep"></div>
+		<div onclick="expand()">Expand</div>
+		<div onclick="collapse()">Collapse</div>
+	</div>
+    
+
+</div>
+<div class="right">
+    <form action="edit_menu" method="post" class="definewidth m20">
+        <table class="table table-bordered table-hover m10">
+            <tr>
+                <td class="tableleft">菜单名称</td>
+                <td><input type="text" name="menu_name" id="menu_name" value="" /></td>
+				<input type="hidden" id="menu_id" name="menu_id" value="">
+				<input type="hidden" id="menu_id_a" name="menu_id_a" value="">
+            </tr>
+			<tr id="menu_type">
+                <td class="tableleft">菜单类型</td>
+                <td><input type="radio" id="menu_type_view" name="menu_type" value="view">链接&nbsp;&nbsp;&nbsp;&nbsp;<input type="radio" id="menu_type_qrcode" name="menu_type" value="scancode_push">二维码扫描</td>
+            </tr>
+			<tr id="menu_flag">
+                <td class="tableleft">菜单标识</td>
+                <td><input type="text" name="flag" id="flag" value=""/></td>
+            </tr>
+            <tr id="menu_url">
+                <td class="tableleft">链接地址</td>
+                <td><input type="text" name="url" id="url" value="view"/></td>
+            </tr>
+            <tr>
+                <td class="tableleft"></td>
+                <td>
+                    <button type="submit" class="btn btn-primary"id="save" type="button">保存</button>
+					<button type="button" class="btn btn-primary" id="create" type="button">微信菜单生成</button>
+                </td>
+            </tr>
+        </table>
+    </form>
+</div>
+</div>
+
+</body>
+</html>
+<script>
+    $(function () {
+		$("#menu_type_qrcode").click(function(){
+			$('#menu_url').css('display','none');
+			$('#menu_flag').css('display','');
+		});
+		
+		$("#menu_type_view").click(function(){
+			$('#menu_url').css('display','');
+			$('#menu_flag').css('display','none');
+		});
+    });
+	
+	function append(){
+		var t = $('#tt');
+		var node = t.tree('getSelected');
+		var parent_id = node.id;
+		$.ajax({
+			type:'GET',
+			url:'http://www.yrsyc.cn/app/public/admin.php/admin/Weixin/check_item',
+			data:'parent_id='+parent_id,
+			dataType:'json',
+			success:function(msg){
+				if(msg.status)
+				{
+					alert(msg.message);
+					return false;
+				}
+				else
+				{
+					t.tree('append', {
+						parent: (node?node.target:null),
+						data: [{
+							text: '新菜单项'
+						}],
+					});
+				}
+			}
+		});
+		
+		
+	}
+	function removeit(){
+		var node = $('#tt').tree('getSelected');
+		$('#tt').tree('remove', node.target);
+		var id = node.id;
+		$.ajax({
+			type:'GET',
+			url:'http://www.yrsyc.cn/app/public/admin.php/admin/Weixin/delete_menu',
+			data:'id='+id,
+			dataType:'json',
+			success:function(msg){
+			console.log(msg);
+				alert(msg.message);
+			}
+		});
+	}
+	function collapse(){
+		var node = $('#tt').tree('getSelected');
+		$('#tt').tree('collapse',node.target);
+	}
+	function expand(){
+		var node = $('#tt').tree('getSelected');
+		$('#tt').tree('expand',node.target);
+	}
+	
+	function edit(){
+		var node = $('#tt').tree('getSelected');
+		$('#tt').tree('beginEdit',node.target);
+		
+	}
+	
+	$("#create").click(function(){
+		$.ajax({
+			type:'GET',
+			url:'http://www.yrsyc.cn/app/public/admin.php/admin/Weixin/create_menu',
+			//data:'body=1234',
+			dataType:'json',
+			success:function(msg){
+			console.log(msg);
+				if(msg.errcode==0)
+				{
+					alert('菜单生成成功');
+				}
+				else
+				{
+					alert('菜单生成失败');
+				}
+			}
+		});
+	});
+	
+	
+</script>

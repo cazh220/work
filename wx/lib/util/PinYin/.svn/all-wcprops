@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 54
+/svn/!svn/ver/4/trunk/stock.lyceem.com/lib/util/PinYin
+END
+PinYin.class.php
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/4/trunk/stock.lyceem.com/lib/util/PinYin/PinYin.class.php
+END
+PinYin_UTF8.db
+K 25
+svn:wc:ra_dav:version-url
+V 69
+/svn/!svn/ver/4/trunk/stock.lyceem.com/lib/util/PinYin/PinYin_UTF8.db
+END
+pinyin_GB2312.db
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/!svn/ver/4/trunk/stock.lyceem.com/lib/util/PinYin/pinyin_GB2312.db
+END

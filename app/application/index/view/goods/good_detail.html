@@ -1,0 +1,192 @@
+<!DOCTYPE html>
+<html lang="en" style="height:700px;">
+<head>
+<meta charset="utf-8">
+<title>礼品详情</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="description" content="" />
+<meta name="author" content="" />
+<!-- css -->
+<link href="{$Think.config.host_url}/public/static/index/css/bootstrap.min.css" rel="stylesheet" />
+<link href="{$Think.config.host_url}/public/static/index/css/fancybox/jquery.fancybox.css" rel="stylesheet"> 
+<link href="{$Think.config.host_url}/public/static/index/css/flexslider.css" rel="stylesheet" /> 
+<link href="{$Think.config.host_url}/public/static/index/css/style.css" rel="stylesheet" />
+<link href="{$Think.config.host_url}/public/static/index/css/mystyle.css" rel="stylesheet" />
+
+<link href="{$Think.config.host_url}/public/static/index/css/css.css" rel="stylesheet" />
+
+<!-- Theme style  -->
+<link rel="stylesheet" href="{$Think.config.host_url}/public/static/login/css/style.css">
+
+	
+<!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+<!--[if lt IE 9]>
+      <script src="http://html5shim.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+</head>
+<body>
+<header>
+	<div class="wrap1">
+		<h1 class="logo fl">
+				<img src="{$Think.config.host_url}/public/static/index/css/new/hg_logo.png" style="width:100px; height:45px">
+		</h1>
+		
+		
+		<div class="info fr2">
+			<div class="login fr2">
+				{if condition="$user neq ''"}
+				<font color="#ccc">欢迎您，{$user}! <span>|</span>
+				<!--<a href="http://huge.com/public/index.php/index/index/resetpwd">修改密码</a><span>|</span>-->
+				<a href="{$Think.config.host_url}/public/index.php/index/member/">会员中心</a><span>|</span>
+				<a href="{$Think.config.host_url}/public/index.php/index/index/logout">退出</a></font>
+				{else /}
+				<!--<a href="{$Think.config.host_url}/public/index.php/index/index/register">注册</a><span>|</span>
+					<a href="{$Think.config.host_url}/public/index.php/index/index/login">登录</a>-->
+				<!-- 登录 -->
+				{/if}
+				
+
+			</div>
+		</div>
+	</div>
+</header>
+
+<div id="wrapper" class="home-page">
+	<!-- start header -->
+	<!-- end header -->
+	<section id="" style="width: 1000px; margin: 0 auto; height: auto;">
+	 
+		<div class="main" style="width: 100%;">
+			<div class="up">
+				<div class="up_left" style="width: 60%; float: left; padding-top: 50px;">
+					<!--
+                    	作者：502677118@qq.com
+                    	时间：2017-08-30
+                    	描述：幻灯片
+                    -->
+                    <div id="playBox" style="width: 500px; height: 300px; margin:0 auto;">
+					    <div class="pre"></div>
+					    <div class="next"></div>
+					    <div class="smalltitle">
+					      <ul>
+					        <li class="thistitle"></li>
+					        <li></li>
+					        <li></li>
+					        <li></li>
+					        <li></li>
+					        <li></li>
+					      </ul>
+					    </div>
+					    <ul class="oUlplay">
+					       {volist name="pics" id="picture"}
+					       <li><a href="#" target="_blank"><img width="500px" height="300px" src="{$Think.config.host_url}/public/uploads/{$picture}"></a></li>
+					       {/volist}
+					    </ul>
+					</div>
+                    <!--
+                    	幻灯片结束
+                    -->
+				</div>
+				<div class="up_right" style="width: 40%; float: left; margin: 50px auto;">
+					<table style="line-height: 40px;">
+						<tr>
+							<th>商品名称：</th>
+							<td>{$good.gift_name}</td>
+						</tr>
+						<tr>
+							<th>商品规格：</th>
+							<td>{$good.attribute}</td>
+						</tr>
+						<tr>
+							<th>库存：</th>
+							<td>{$good.num}</td>
+						</tr>
+						<tr>
+							<th>商品积分：</th>
+							<td>{$good.credits}</td>
+						</tr>
+						<tr>
+							<th>兑换有效期：</th>
+							<td>{if condition="$good.validity_time neq ''"}截止{$good.validity_time}{else}永久{/if}</td>
+						</tr>
+						<tr>
+							<td colspan="2" style="line-height: 20px;">&nbsp;</td>
+						</tr>
+						<tr>
+							<td colspan="2"><div><input id="exchange" type="button" onclick='add_to_cart({$good.gift_id})' value="加入购物车" style="width: 120px; background-color:#EEA236; color: #FFF;"></div><input type="hidden" id="buy" name="buy" value="{$buy}"></td>
+						</tr>
+					</table>
+				</div>
+			</div>
+			
+			<div class="content_down" style="width: 100%; float: left;">
+				<div style="margin: 0 auto; width: 200px; margin-top: 30px;"><h3>礼品介绍</h3></div>
+				<div style="border: dashed 1px #00868B; margin: 10px auto;"></div>
+				<div style="width:100%; line-height: 30px;">{$good.gift_intro}</div>
+				
+			</div>
+			
+		</div>
+	</section>
+
+	<section id="events" style="height:1000px">
+
+	</section> 
+	<footer style="height:100px;border-top: 6px solid #7fb926;">
+	<div class="container" style="height:100px;">
+		
+	</div>
+	
+	</footer>
+</div>
+<a href="#" class="scrollup"><i class="fa fa-angle-up active"></i></a>
+<!-- javascript
+    ================================================== -->
+<!-- Placed at the end of the document so the pages load faster -->
+<script src="{$Think.config.host_url}/public/static/index/js/jquery.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/jquery.easing.1.3.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/bootstrap.min.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/jquery.fancybox.pack.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/jquery.fancybox-media.js"></script> 
+<script src="{$Think.config.host_url}/public/static/index/js/portfolio/jquery.quicksand.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/portfolio/setting.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/jquery.flexslider.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/animate.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/custom.js"></script> 
+<script src="{$Think.config.host_url}/public/static/index/js/my.js"></script>
+<script src="{$Think.config.host_url}/public/static/index/js/zzsc.js"></script>
+
+
+<!-- jQuery -->
+<script src="{$Think.config.host_url}/public/static/login/js/jquery.min.js"></script>
+<!-- jQuery Easing -->
+<script src="{$Think.config.host_url}/public/static/login/js/jquery.easing.1.3.js"></script>
+<!-- Bootstrap -->
+<script src="{$Think.config.host_url}/public/static/login/js/bootstrap.min.js"></script>
+<!-- Waypoints -->
+<script src="{$Think.config.host_url}/public/static/login/js/jquery.waypoints.min.js"></script>
+<!-- Carousel -->
+<script src="{$Think.config.host_url}/public/static/login/js/owl.carousel.min.js"></script>
+<!-- countTo -->
+<script src="{$Think.config.host_url}/public/static/login/js/jquery.countTo.js"></script>
+<!-- Magnific Popup -->
+<script src="{$Think.config.host_url}/public/static/login/js/jquery.magnific-popup.min.js"></script>
+<script src="{$Think.config.host_url}/public/static/login/js/magnific-popup-options.js"></script>
+<!-- Main -->
+<script src="{$Think.config.host_url}/public/static/login/js/main.js"></script>
+<script type="text/javascript">
+$(function(){
+	var buy = $("#buy").val();
+	if(buy == 1)
+	{
+		$("#exchange").attr("disabled", false)
+	}
+	else
+	{
+		$("#exchange").css("disabled", true);
+	}
+});
+</script>
+</body>
+</html>

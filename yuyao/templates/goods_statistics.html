@@ -1,0 +1,259 @@
+<form id="pagerForm" method="post" action="#rel#">
+
+</form>
+
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="statistics.php?do=goodsstatistic" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					统计日期：<input type="text" class="date" name="confirm_time" readonly="true" value="{$confirm_time}" />
+				</td>
+				<td>
+					<label>商品分类：</label>
+					<select name="category_id" class="required combox">
+						<ul class="tree treeFolder treeFolder">
+							{if $category}
+								{foreach from=$category item=item key=key}
+								<li><option value="{$item.cid}" {if $category_id == $item.cid}selected="selected"{/if}>{$item.cname}</option>
+									{if $item.child}
+									<ul>
+										{foreach from=$item.child item=itema key=keya}
+										<li>
+											<option value="{$itema.cid}" {if $category_id == $itema.cid}selected="selected"{/if}>&nbsp;&nbsp;∟{$itema.cname}</option>
+											{if $itema.child}
+											<ul>
+												{foreach from=$itema.child item=itemb key=keyb}
+												<li>
+													<option value="{$itemb.cid}" {if $category_id == $itemb.cid}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemb.cname}</option>
+													{if $itemb.child}
+														<ul>
+															{foreach from=$itemb.child item=itemc key=keyc}
+																<li>
+																	<option value="{$itemc.cid}" {if $category_id == $itemc.cid}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemc.cname}</option>
+																</li>
+															{/foreach}
+														</ul>
+													{/if}
+												
+												</li>
+												{/foreach}
+											</ul>
+											{/if}
+										</li>
+										{/foreach}
+									</ul>
+									{/if}
+								</li>
+								{/foreach}
+							{/if}
+						</ul>
+					</select>
+				</td>
+				<td>
+					<label>下单客户：</label>
+					<select name="user_id">
+						<option value="0">所有客户</option>
+						{if $role_show}
+						{foreach from=$role_show item=item key=key}
+							<option value="rid{$item.role_id}" style="font-weight: bolder;" {if $order_role_id == $itema.role_id}selected="selected"{/if}>{$item.role_name}</option>
+							<!--<optgroup label='{$item.role_name}'></optgroup>-->
+							{if $item.users}
+							{foreach from=$item.users item=itema key=keya}
+								&nbsp;&nbsp;<option value='{$itema.user_id}' {if $user_id == $itema.user_id}selected="selected"{/if}>{$itema.username}</option>
+							{/foreach}
+							{/if}
+							
+							{if $item.child}
+							{foreach from=$item.child item=itemb key=keyb}
+								<option value="rid{$itemb.role_id}" style="font-weight: bolder;" {if $order_role_id == $itemb.role_id}selected="selected"{/if}>&nbsp;&nbsp;∟{$itemb.role_name}</option>
+								<!--<optgroup label='&nbsp;&nbsp;∟{$itemb.role_name}'></optgroup>-->
+								{if $itemb.users}
+									{foreach from=$itemb.users item=itemc key=keyc}
+										<option value='{$itemc.user_id}' {if $user_id == $itemc.user_id}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$itemc.username}</option>
+									{/foreach}
+								{/if}
+								
+								
+								{if $itemb.child}
+									{foreach from=$itemb.child item=itemd key=keyd}
+									<option value="rid{$itemd.role_id}" style="font-weight: bolder;" {if $order_role_id == $itemd.role_id}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemd.role_name}</option>
+										<!--<optgroup label='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemd.role_name}'></optgroup>-->
+										{if $itemd.users}
+										{foreach from=$itemd.users item=iteme key=keye}
+											<option value='{$iteme.user_id}' {if $user_id == $iteme.user_id}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$iteme.username}</option>
+										{/foreach}
+										{/if}
+									{/foreach}
+								{/if}
+							{/foreach}
+							{/if}
+						{/foreach}
+						{/if}
+						<!--<option value="0">所有客户</option>
+						{if $role_show}
+						{foreach from=$role_show item=item key=key}
+							<optgroup label='{$item.role_name}'></optgroup>
+							{if $item.users}
+							{foreach from=$item.users item=itema key=keya}
+								&nbsp;&nbsp;<option value='{$itema.user_id}' {if $user_id == $itema.user_id}selected="selected"{/if}>{$itema.username}</option>
+							{/foreach}
+							{/if}
+							
+							{if $item.child}
+							{foreach from=$item.child item=itemb key=keyb}
+								<optgroup label='&nbsp;&nbsp;∟{$itemb.role_name}'></optgroup>
+								{if $itemb.users}
+									{foreach from=$itemb.users item=itemc key=keyc}
+										<option value='{$itemc.user_id}' {if $user_id == $itemc.user_id}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$itemc.username}</option>
+									{/foreach}
+								{/if}
+								
+								
+								{if $itemb.child}
+									{foreach from=$itemb.child item=itemd key=keyd}
+										<optgroup label='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemd.role_name}'></optgroup>
+										{if $itemd.users}
+										{foreach from=$itemd.users item=iteme key=keye}
+											<option value='{$iteme.user_id}' {if $user_id == $iteme.user_id}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$iteme.username}</option>
+										{/foreach}
+										{/if}
+									{/foreach}
+								{/if}
+							{/foreach}
+							{/if}
+						{/foreach}
+						{/if}-->
+					</select>
+					<!--<select name="order_role_id" class="required combox">
+						<ul class="tree treeFolder treeFolder">
+							{if $role_show}
+							{foreach from=$role_show item=item key=key}
+							<li>
+								<option value="{$item.role_id}" {if $order_role_id == $item.role_id}selected="selected"{/if}>{$item.role_name}</option>
+								{if $item.child}
+								<ul>
+									{foreach from=$item.child item=itema key=keya}
+									<li>
+										<option value="{$itema.role_id}" {if $order_role_id == $item.role_id}selected="selected"{/if}>&nbsp;&nbsp;∟{$itema.role_name}</option>
+										{if $itema.child}
+										<ul>
+											{foreach from=$itema.child item=itemb key=keyb}
+											<li>
+												<option value="{$itemb.role_id}" {if $order_role_id == $item.role_id}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemb.role_name}</option>
+											</li>
+											{/foreach}
+										</ul>
+										{/if}
+									</li>
+									{/foreach}
+								</ul>
+								{/if}
+							</li>
+							{/foreach}
+							{/if}
+						</ul>
+					</select>-->
+				</td>
+			</tr>
+			
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="icon" href="javascript:$.printBox('w_list_print')"><span>简介客户打印模式</span></a></li>
+			<li><a class="icon" href="order.php?do=customerbuy&confirm_time={$confirm_time}&category_id={$category_id}&user_id={$user_id}" target="_blank"><span>客户明细打印模式</span></a></li>
+		</ul>
+	</div>
+	<div id="w_list_print">
+		<div class="pageFormContent" layoutH="110">
+			<table style="margin: 0 auto; text-align: center;" width="600px">
+				<tr>
+					<td colspan="2" style="font-size: 20px; font-weight: bolder;">{$title}</td>
+				</tr>
+				<tr>
+					<td width="60%" height="40px"></td>
+					<td width="40%">统计日期:{$confirm_time}</td>
+				</tr>
+				<tr>
+					<td width="100" colspan="2" height="40px" style="font-size: 15px; font-weight: bolder;">{if $category_name}{$category_name}----{/if}{if $order_role_name}{$order_role_name}{/if}<!--；   总金额：￥{$total_amount}--></td>
+				</tr>
+				
+			</table>
+			
+			<table style="margin-top: 20px; margin-left: 0px;" width="50%">
+				{if $goods}
+				{foreach from=$goods key=key item=item}
+					{if $item.list}
+						{foreach from=$item.list key=keya item=itema}
+						
+						<tr>
+							<td width="25%"></td>
+							<td width="20%">{$itema.order_user_name}</td>
+							<td width="35%" height="30px" style="text-align: left;">{$itema.goods_name}{if $itema.good_note}({$itema.good_note}){/if}</td>
+							<td width="20%">{$itema.goods_num} {$itema.unit}</td>
+						</tr>
+						{/foreach}
+					{/if}
+				
+				{/foreach}
+				{/if}
+			</table>
+		</div>
+		
+	</div>
+</div>
+
+<script type="text/javascript">
+{literal}
+function check_num(num, stock, o)
+{
+	//判断整数
+	var reg = /^\+?[1-9]\d*$/;
+	if(!reg.test(num))
+	{
+		alert('请输入大于0的正整数');
+		$(o).addClass("error");
+		return false;
+	}else if(num > stock){
+		alert('库存不足');
+		$(o).addClass("error");
+		return false;
+	}
+
+}
+
+function remove_goods(o, goods_id, order_id)
+{
+	$(o).parent().parent().css("display","none");
+	$("#goods_num_"+goods_id).attr("disabled", true);
+	$("#order_id_"+goods_id).attr("disabled", true);
+	$("#goods_id_"+goods_id).attr("disabled", true);
+	//url = "myorder.php?do=removegood&goods_id={$item.goods_id}&order_id={$item.order_id}";
+	//console.log($(o).parent().parent().css("display","none"));
+	$.ajax({
+		type:"get",
+		url:"myorder.php?do=removegood",
+		data:"order_id="+order_id+"&goods_id="+goods_id,
+		dataType:"json",
+		success:function(msg){
+			if(msg.status==1)
+			{
+				alert(msg.message);
+				return false;
+			}
+		}
+	});
+	
+}
+{/literal}
+</script>

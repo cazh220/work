@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>出库</title>
+    <meta charset="UTF-8">
+	
+	<link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap.min.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/bootstrap-responsive.css" />
+    <link rel="stylesheet" type="text/css" href="{$Think.config.host_url}/public/static/Css/style.css" />
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/jquery.sorted.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/bootstrap.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/ckform.js"></script>
+    <script type="text/javascript" src="{$Think.config.host_url}/public/static/Js/common.js"></script>
+
+</head>
+<body>
+<form id="stock_out" action="doStockOut" method="post" class="definewidth m20">
+<table class="table table-bordered table-hover definewidth m10">
+    <tr>
+        <td width="20%" class="tableleft"  style="line-height:27px;">录入时间：</td>
+        <td  style="line-height:27px;"><input type="text" name="record_time" id="record_time" value="{$record_time}" disabled="disabled"/>(以实时录入时间为准)</td>
+    </tr>
+	<tr>
+        <td class="tableleft"  style="line-height:27px;">客户单位：</td>
+        <td style="line-height:27px;">
+        	<select id="company" name="company" onchange="select_company(this.value)">
+        		<option value="">请选择</option>
+        		{volist name="company" id="items"}
+        		<option value="{$items.cid}">{$items.company_name}</option>
+        		{/volist}
+        		<option value="-1">没有？</option>
+        	</select>
+        	<input type="text" id="other_company" name="other_company" value="" style="display: none;" placeholder="请填写单位名称"/>
+        </td>
+    </tr>
+	<tr>
+        <td class="tableleft"  style="line-height:27px;">操作人：</td>
+        <td  style="line-height:27px;"><input type="text" name="stoker" value="{$username}" disabled="disabled"/></td>
+  </tr>
+  <tr>
+        <td class="tableleft"  style="line-height:27px;">关联会员手机号：</td>
+        <td  style="line-height:27px;"><input type="text" name="mobile" value="" onblur="check_mobile(this.value)" placeholder="请输入关联会员手机号"/></td>
+  </tr>
+    <tr>
+        <td class="tableleft"  style="line-height:27px;">待出库防伪码：</td>
+        <td  style="line-height:27px;"><textarea id="code_list" name="code_list" cols="40" rows="5"  placeholder="请输入防伪码,每行一个"></textarea>(已录入<span id="code_num">0</span>个)</td>
+    </tr>
+    <tr>
+        <td></td>
+        <td  style="line-height:27px;">
+        	<input type="hidden" id="error_flag" value="0"/>
+            <button id="stock_out_btn" type="button" onclick="stockout()" class="btn btn-primary"  type="button">出库</button> &nbsp;&nbsp;<button type="button" class="btn btn-success" name="backid" id="backid">返回列表</button>
+        </td>
+    </tr>
+</table>
+</form>
+</body>
+</html>
+<script>
+    $(function () {       
+		$('#backid').click(function(){
+				window.location.href="index.html";
+		 });
+		 
+		 
+		 $("#code_list").blur(function(){
+		 	var code = new Array();
+		 	var code_str = $(this).val();
+		 	code = code_str.split('\n')
+		 	var len = code.length;
+		 	//console.log(len);
+		 	$("#code_num").html(len);
+		 });
+
+    });
+    
+    function check_mobile(mobile)
+    {
+    	if(mobile)
+    	{
+    		//ajax校验
+    		$.ajax({
+				type:'POST',
+				url:'check_mobile',
+				data:'mobile='+mobile,
+				dataType:'json',
+				success:function(msg){
+					if(msg.status == 0)
+					{
+						$("#error_flag").val(1);
+					}
+					else
+					{
+						$("#error_flag").val(0);
+					}
+				}
+			});
+    		//$("#stock_out_btn").attr("disabled", true);
+    	}
+    	else
+    	{
+    		$("#error_flag").val(0);
+    		//$("#stock_out_btn").attr("disabled", false);
+    	}
+    }
+    
+    function select_company(val)
+    {
+    	if(val==-1)
+    	{
+    		$("#other_company").css("display", "");
+    	}
+    	else
+    	{
+    		$("#other_company").css("display", "none");
+    	}
+    }
+    
+    function stockout()
+    {
+    	var comnpany_name = $("#company").val();
+    	if(comnpany_name == '')
+    	{
+    		alert('请选择客户单位');
+    		return false;
+    	}
+    	else if(comnpany_name == -1)
+    	{
+    		var other_company = $("#other_company").val();
+    		if(other_company == '')
+    		{
+    			alert('请填写客户单位');
+    			return false;
+    		}
+    	}
+    	
+    	var flag = $("#error_flag").val();
+    	if(flag == 1)
+    	{
+    		alert('会员手机号不存在');
+    		return false;
+    	}
+    	
+    	var code = $("#code_list").val();
+    	if(code == '')
+    	{
+    		alert('请填写要出库的防伪码');
+    		return false;
+    	}
+    	
+    	$("#stock_out").submit();
+    }
+</script>

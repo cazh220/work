@@ -1,0 +1,83 @@
+
+<div class="pageContent" id="print_list_send">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<!--<li><a class="icon" id="print_list" ><span>打印送货清单</span></a></li>-->
+			<li><button onclick="print_list()">打印客户明细采购清单</button></li>
+		</ul>
+	</div>
+</div>
+<div id="w_list_print_send_order_detail">
+<style type="text/css">
+{literal}
+.title{
+	font-size: 22px;
+	font-weight: bolder;
+	text-align: center;
+	height: 30px;
+}
+.blank{
+	height: 20px;
+}
+.common{
+	font-size: 14px;
+	font-weight: bold;
+}
+.noprint{display : none }
+.title{
+	font-size: 16px;
+	font-weight: bolder;
+}
+{/literal}
+</style>
+<div class="main">
+	<div class="blank"></div>
+	{if $data}
+		{foreach from=$data key=key item=item}
+		<div style="line-height: 30px; height: 30px; margin-left: 30px;">
+			{$key}  ---  {$item.list.goods_name}: &nbsp;&nbsp;&nbsp;&nbsp;共订购：&nbsp;&nbsp;&nbsp;&nbsp;{$item.total}{$item.list.unit}&nbsp;&nbsp;&nbsp;&nbsp;库存：{$item.list.stock}
+		</div>
+		<div style="line-height: 30px; height: 30px; margin-left: 30px;">
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$item.detail}
+		</div>
+		{/foreach}
+	{/if}
+	
+</div>
+<script type="text/javascript">
+{literal}
+$(function(){
+	$("#print_list").click(function(){
+		var rel = 'print_list';
+		var _printBoxId = 'printBox2';
+		var $contentBox = rel ? $('#'+rel) : $("body"),
+			$printBox = $('#'+_printBoxId);
+		//console.log($contentBox.html());return false;
+		if ($printBox.size()==0){
+			$printBox = $('<div id="'+_printBoxId+'"></div>').appendTo("body");
+		}
+		
+		window.print();
+		/*
+		var oldstr = document.body.innerHTML; 
+		//console.log(oldstr);return false;
+		newstr = $("#w_list_print_send_order_detail").html();
+		document.body.innerHTML = newstr;
+		document.body.innerHTML.find("[layoutH]").height("auto");
+		window.print();
+		document.body.innerHTML = oldstr;
+		return false;
+		*/
+	});
+});
+
+function print_list()
+{
+	var obj = document.getElementById("print_list_send");
+	obj.setAttribute('style', 'display: none');
+  	//obj.style.display= "none";
+	window.print();
+	obj.setAttribute('style', 'display: block');
+}
+{/literal}
+</script>

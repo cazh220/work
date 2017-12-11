@@ -1,0 +1,49 @@
+
+<div class="pageContent">
+	<div class="panelBar">
+		<table class="table" width="100%" layoutH="138">
+		<tbody>
+			<tr>
+				<td>分车：{$list.truck_name}</td>
+				<td>订单号：{$list.order}</td>
+			</tr>
+			<tr>
+				<td>总金额</td>
+				<td>时间</td>
+			</tr>
+			
+		</tbody>
+	</table>
+	</div>
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+			<tr>
+				<th width="100" align="center">商品名称</th>
+				<th width="200" align="center">商品价格</th>
+				<th width="200" align="center">商品数量</th>
+				<th width="150" align="center">商品单位</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $list}
+			{foreach from=$list.goods item=item key=key}
+			<tr>
+				<td>{$item.goods_name}</td>
+				<td>{$item.good_price}</td>
+				<td>{$item.goods_num}</td>
+				<td>{$item.unit}</td>
+			</tr>
+			{/foreach}
+		    {/if}
+		</tbody>
+	</table>
+
+</div>
+<script type="text/javascript">
+{literal}
+$(function(){
+
+});
+
+{/literal}
+</script>

@@ -1,0 +1,135 @@
+<form id="pagerForm" method="post" action="#rel#">
+	<input type="hidden" name="pageNum" value="{$page.current_page}" />
+	<input type="hidden" name="numPerPage" value="{$page.page_size}" />
+	<input type="hidden" name="orderField" value="" />
+	<input type="hidden" name="orderDirection" value="" />
+</form>
+
+<div class="pageHeader">
+	<form rel="pagerForm" onsubmit="return navTabSearch(this);" action="user.php?do=userlist" method="post">
+	<div class="searchBar">
+		<table class="searchContent">
+			<tr>
+				<td>
+					客户账号：<input type="text" name="username" value="{$param.username}" />
+				</td>
+				{if $cat != 1}
+				<td>
+					<select name="role_id" class="required combox">
+					<ul class="tree treeFolder treeFolder">
+						{if $category}
+							{foreach from=$category item=item key=key}
+							<li><option value="{$item.role_id}">{$item.role_name}</option>
+								{if $item.child}
+								<ul>
+									{foreach from=$item.child item=itema key=keya}
+									<li>
+										<option value="{$itema.role_id}">&nbsp;&nbsp;∟{$itema.role_name}</option>
+										{if $itema.child}
+										<ul>
+											{foreach from=$itema.child item=itemb key=keyb}
+											<li><option value="{$itemb.role_id}">&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemb.role_name}</option></li>
+											{/foreach}
+										</ul>
+										{/if}
+									</li>
+									{/foreach}
+								</ul>
+								{/if}
+							</li>
+							{/foreach}
+						{/if}
+					</ul>
+				</select>
+				</td>
+				{/if}
+			</tr>
+		</table>
+		<div class="subBar">
+			<ul>
+				<li><div class="buttonActive"><div class="buttonContent"><button type="submit">检索</button></div></div></li>
+			</ul>
+		</div>
+	</div>
+	</form>
+</div>
+<div class="pageContent">
+	<div class="panelBar">
+		<ul class="toolBar">
+			<li><a class="add" href="user.php?do=adduser&type={$type}" target="navTab" rel="user_add"><span>添加</span></a></li>
+			<li class="line">line</li>
+			<!--<li><a class="icon" href="demo/common/dwz-team.xls" target="dwzExport" targetType="navTab" title="实要导出这些记录吗?"><span>导出EXCEL</span></a></li>-->
+			<li class="line">line</li>
+			<li><a class="icon" href="javascript:$.printBox('w_list_print')"><span>打印</span></a></li>
+		</ul>
+	</div>
+	<div id="w_list_print">
+	<table class="table" width="1200" layoutH="138">
+		<thead>
+			<tr>
+				<th width="5%"><input type="checkbox" group="ids" class="checkboxCtrl"></th>
+				<th width="5%" orderField="accountNo" class="asc">用户编号</th>
+				<th>账号名称</th>
+				<th width="8%">真实姓名</th>
+				<th width="8%">客户分类</th>
+				<th width="10%">公司名称</th>
+				<th width="14%" align="center">公司地址</th>
+				<th width="8%">联系电话</th>
+				<th width="12%">配送分车</th>
+				<th width="10%">创建时间</th>
+				<th width="12%">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $users}
+			{foreach from=$users item=item key=key}
+			<tr target="sid_user" rel={$key+1}>
+				<td><input name="ids" value="{$item.goods_id}" type="checkbox"></td>
+				<td>{$item.user_id}</td>
+				<td>{$item.username}</td>
+				<td>{$item.realname}</td>
+				<td>{$item.role_name}</td>
+				<td>{$item.company_name}</td>
+				<td>{$item.address}</td>
+				<td>{$item.mobile}</td>
+				<td>{$item.truck_name}</td>
+				<td>{$item.create_time}</td>
+				<td>
+					<a callback="dialogAjaxDoneThis" target="ajaxTodo" title="确定要删除吗?" fresh="true" href="user.php?do=removeuser&user_id={$item.user_id}&type={$type}" class="btnDel">删除</a>
+					<a title="修改" target="navTab" href="user.php?do=edituser&user_id={$item.user_id}"  class="btnEdit">修改</a>
+				</td>
+			</tr>
+			{/foreach}
+			{/if}
+			
+		</tbody>
+	</table>
+	</div>
+	<!--<div class="panelBar">
+		<div class="pages">
+			<span>显示</span>
+			<select class="combox" name="numPerPage" onchange="navTabPageBreak(20)">
+				<option value="20">20</option>
+				<option value="50">50</option>
+				<option value="100">100</option>
+				<option value="200">200</option>
+			</select>
+			<span>条，共{$page.total}条</span>
+		</div>
+		
+		<div class="pagination" targetType="navTab" totalCount="{$page.total}" numPerPage="{$page.page_size}" pageNumShown="{$page.page_size}" currentPage="{$page.current_page}"></div>
+
+	</div>-->
+</div>
+
+{literal}
+<script type="text/javascript">
+function testConfirmMsg(url, data){
+	alertMsg.confirm("您修改的资料未保存，请选择保存或取消！", {
+		okCall: function(){
+			$.post(url, data, DWZ.ajaxDone, "json");
+		}
+	});
+}
+</script>
+{/literal}

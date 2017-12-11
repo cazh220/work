@@ -1,0 +1,87 @@
+
+<div class="pageContent">
+	<div class="panelBar">
+	</div>
+	<table class="table" width="100%" layoutH="138">
+		<thead>
+			<tr>
+				<th width="100" align="center">商品名称</th>
+				<th width="200" align="center">商品价格</th>
+				<th width="200" align="center">商品数量</th>
+				<th width="150" align="center">商品单位</th>
+				<th width="100" align="center">操作</th>
+			</tr>
+		</thead>
+		<tbody>
+			{if $order_goods}
+			{foreach from=$order_goods item=item key=key}
+			<tr>
+				<td>{$item.goods_name}</td>
+				<td>{$item.good_price}</td>
+				<td title="双击修改数量">{$item.goods_num}</td>
+				<td>{$item.unit}</td>
+				<td>
+					<a title="移除" target="navTab" href="goods.php?do=updateofferprice&goods_id={$item.goods_id}" class="btnEdit" rel="dlg_page10" mask="true">移除</a>
+				</td>
+				
+			</tr>
+			{/foreach}
+		    {/if}
+		</tbody>
+	</table>
+
+</div>
+<script type="text/javascript">
+{literal}
+$(function(){
+
+});
+
+
+
+function update_offer(o, goods_id, role_id, price)
+{
+	//var txt = '<input type="text" name="startDate" class="date" size="30" /><a class="inputDateButton" href="javascript:;">选择</a>';
+	$(o).children().eq(3).html('<input type="text" id="price_'+role_id+'"  onblur="update_role_price('+role_id+','+goods_id+')" value="'+price+'"/>');
+	//$(o).children().eq(4).html('<input type="text" id="start_time_'+role_id+'" placeholder="请输入开始日期，如：2017-09-01"  onblur="update_role_price('+role_id+','+goods_id+')" value="'+start_time+'"/>');
+	//$(o).children().eq(5).html('<input type="text" id="end_time_'+role_id+'" placeholder="请输入结束日期，如：2017-09-01"  onblur="update_role_price('+role_id+','+goods_id+')" value="'+end_time+'"/>');
+	//var data = $(o).children().eq(0).text();  
+	//console.log(data);
+}
+
+function update_price(goods_id, role_id, price, o)
+{
+	//console.log(goods_id+":"+role_id+":"+price);
+	var price = parseFloat(price);
+	var txt = '<input type="text" id="new_price_'+role_id+'" onblur="update_role_price('+role_id+','+goods_id+')" value="'+price+'"/>';
+	$(o).html(txt);
+}
+
+function update_role_price(role_id, goods_id)
+{
+	var price = $("#price_"+role_id).val();
+
+	$.ajax({
+		type:"post",
+		url:"goods.php?do=updateroleprice",
+		data:"goods_id="+goods_id+"&role_id="+role_id+"&price="+price,
+		dataType:"json",
+		success:function(msg)
+		{
+			if(msg.status==1)
+			{
+				$("#o_"+role_id).children().eq(3).html(price);
+				//$("#price_"+role_id).html(price);
+			}
+			else
+			{
+				alert(msg.message);
+				return false;
+			}
+		}
+	});
+	
+}
+
+{/literal}
+</script>
