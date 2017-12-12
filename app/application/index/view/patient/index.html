@@ -1,198 +1,266 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
-<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+<html><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">	
+<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
+<title>患者列表</title>
+<style>
+	a {
+		text-decoration: none;
+		color: #002280
+	}
+	
+	a:hover {
+		text-decoration: underline
+	}
+	
+	body {
+		font-size: 9pt;
+	}
+	
+	table {
+		font: 9pt Tahoma, Verdana;
+		color: #002280
+	}
+	
+	input,
+	select,
+	textarea {
+		font: 9pt Tahoma, Verdana;
+		font-weight: normal;
+	}
+	
+	select {
+		font: 9pt Tahoma, Verdana;
+		font-weight: normal;
+	}
+	
+	.category {
+		font: 9pt Tahoma, Verdana;
+		color: #000000;
+		background-color: #fcfcfc
+	}
+	
+	.singleborder {
+		font-size: 0px;
+		line-height: 1px;
+		padding: 0px;
+		background-color: #F8F8F8
+	}
+	
+	.bold {
+		font-weight: bold
+	}
+	/*修改主要色调*/
+	
+	header table {
+		color: #a1a1a1
+	}
+	
+	header strong {
+		color: red
+	}
+	
+	header a {
+		color: #a1a1a1
+	}
+	
+	.header {
+		font: 9pt Tahoma, Verdana;
+		color: #FFFFFF;
+		font-size: 16px;
+		background-color: #5da708
+	}
+	
+	.header a {
+		color: #FFFFFF
+	}
+	
+	.tableborder {
+		background: #7fb926;
+		border: 1px solid #5da708
+	}
+	td {height:32px;text-indent: 8px;}
+	/*分页样式*/
+	
+	.epages {
+		margin: 3px 0;
+		font: 11px/12px Tahoma
+	}
+	
+	.epages * {
+		vertical-align: middle;
+	}
+	
+	.epages a {
+		padding: 1px 4px 1px;
+		border: 1px solid #A6CBE7;
+		margin: 0 1px 0 0;
+		text-align: center;
+		text-decoration: none;
+		font: normal 12px/14px verdana;
+	}
+	
+	.epages a:hover {
+		border: #659B28 1px solid;
+		background: #f3f8ef;
+		text-decoration: none;
+		color: #004c7d
+	}
+	
+	.epages input {
+		margin-bottom: 0px;
+		border: 1px solid #659B28;
+		height: 15px;
+		font: bold 12px/15px Verdana;
+		padding-bottom: 1px;
+		padding-left: 1px;
+		margin-right: 1px;
+		color: #659B28;
+	}
+	.tableborder img{
+		vertical-align:baseline;
+		margin-right: 5px;
+	}
+     .header{
+     	text-indent: 0;
+     }           
+
+</style>
+<script src="{$Think.config.host_url}/public/static/index/js/jquery.js"></script>
+<script lanuage="JScript">
+	function DisplayImg(ss, imgname, phome) {
+		if(imgname == "menumemberimg") {
+			img = todisplay(domenumember, phome);
+			document.images.menumemberimg.src = img;
+		} else if(imgname == "menumsgimg") {
+			img = todisplay(domenumsg, phome);
+			document.images.menumsgimg.src = img;
+		} else if(imgname == "menuinfoimg") {
+			img = todisplay(domenuinfo, phome);
+			document.images.menuinfoimg.src = img;
+		} else if(imgname == "menuspaceimg") {
+			img = todisplay(domenuspace, phome);
+			document.images.menuspaceimg.src = img;
+		} else if(imgname == "menupayimg") {
+			img = todisplay(domenupay, phome);
+			document.images.menupayimg.src = img;
+		} else if(imgname == "menushopimg") {
+			img = todisplay(domenushop, phome);
+			document.images.menushopimg.src = img;
+		} else {}
+		DisplayAllMenu(imgname);
+	}
+
+	function todisplay(ss, phome) {
+		if(ss.style.display == "") {
+			ss.style.display = "none";
+			theimg = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
+		} else {
+			ss.style.display = "";
+			theimg = "{$Think.config.host_url}/public/static/index/css/new/noadd.gif";
+		}
+		return theimg;
+	}
+
+	function turnit(ss, img) {
+		DisplayImg(ss, img, 0);
+	}
+
+	function DisplayAllMenu(imgname) {
+		if(imgname != 'menumemberimg' && domenumember.style.display == "") {
+			domenumember.style.display = "none";
+			document.images.menumemberimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
+		}
+		if(imgname != 'menumsgimg' && domenumsg.style.display == "") {
+			domenumsg.style.display = "none";
+			document.images.menumsgimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
+		}
+		if(imgname != 'menuinfoimg' && domenuinfo.style.display == "") {
+			domenuinfo.style.display = "none";
+			document.images.menuinfoimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
+		}
+		if(imgname != 'menuspaceimg' && domenuspace.style.display == "") {
+			domenuspace.style.display = "none";
+			document.images.menuspaceimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
+		}
+		if(imgname != 'menupayimg' && domenupay.style.display == "") {
+			domenupay.style.display = "none";
+			document.images.menupayimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
+		}
+		if(imgname != 'menushopimg' && domenushop.style.display == "") {
+			domenushop.style.display = "none";
+			document.images.menushopimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
+		}
+	}
+	
+	function CheckAll()
+	{
+		var checked = $("input[name=chkall]").attr("checked");
+		if(checked == 'checked')
+		{
+			//不勾选
+			$("input[name=chkall]").attr("checked", true);
+			$(".patient_checkbox").each(function(){
+				$(this).attr("checked", true);
+			});
+		}
+		else
+		{
+			//勾选
+			$("input[name=chkall]").attr("checked", false);
+			$(".patient_checkbox").each(function(){
+				$(this).attr("checked", false);
+			});
+		}
+
+	}
+	
+	function delete_patient()
+	{
+		//获取要删除的id
+		var id = new Array();
+		$(".patient_checkbox").each(function(){
+			var c = $(this).attr("checked");
+			if(c=='checked')
+			{
+				id.push($(this).val())
+			}
+		});
 		
-		<meta http-equiv="X-UA-Compatible" content="IE=EmulateIE7">
-		<title>患者列表</title>
-		<style>
-			a {
-				text-decoration: none;
-				color: #002280
-			}
-			
-			a:hover {
-				text-decoration: underline
-			}
-			
-			body {
-				font-size: 9pt;
-			}
-			
-			table {
-				font: 9pt Tahoma, Verdana;
-				color: #002280
-			}
-			
-			input,
-			select,
-			textarea {
-				font: 9pt Tahoma, Verdana;
-				font-weight: normal;
-			}
-			
-			select {
-				font: 9pt Tahoma, Verdana;
-				font-weight: normal;
-			}
-			
-			.category {
-				font: 9pt Tahoma, Verdana;
-				color: #000000;
-				background-color: #fcfcfc
-			}
-			
-			.singleborder {
-				font-size: 0px;
-				line-height: 1px;
-				padding: 0px;
-				background-color: #F8F8F8
-			}
-			
-			.bold {
-				font-weight: bold
-			}
-			/*修改主要色调*/
-			
-			header table {
-				color: #a1a1a1
-			}
-			
-			header strong {
-				color: red
-			}
-			
-			header a {
-				color: #a1a1a1
-			}
-			
-			.header {
-				font: 9pt Tahoma, Verdana;
-				color: #FFFFFF;
-				font-size: 16px;
-				background-color: #5da708
-			}
-			
-			.header a {
-				color: #FFFFFF
-			}
-			
-			.tableborder {
-				background: #7fb926;
-				border: 1px solid #5da708
-			}
-			td {height:32px;text-indent: 8px;}
-			/*分页样式*/
-			
-			.epages {
-				margin: 3px 0;
-				font: 11px/12px Tahoma
-			}
-			
-			.epages * {
-				vertical-align: middle;
-			}
-			
-			.epages a {
-				padding: 1px 4px 1px;
-				border: 1px solid #A6CBE7;
-				margin: 0 1px 0 0;
-				text-align: center;
-				text-decoration: none;
-				font: normal 12px/14px verdana;
-			}
-			
-			.epages a:hover {
-				border: #659B28 1px solid;
-				background: #f3f8ef;
-				text-decoration: none;
-				color: #004c7d
-			}
-			
-			.epages input {
-				margin-bottom: 0px;
-				border: 1px solid #659B28;
-				height: 15px;
-				font: bold 12px/15px Verdana;
-				padding-bottom: 1px;
-				padding-left: 1px;
-				margin-right: 1px;
-				color: #659B28;
-			}
-			.tableborder img{
-				vertical-align:baseline;
-				margin-right: 5px;
-			}
-             .header{
-             	text-indent: 0;
-             }           
-
-		</style>
-
-		<script lanuage="JScript">
-			function DisplayImg(ss, imgname, phome) {
-				if(imgname == "menumemberimg") {
-					img = todisplay(domenumember, phome);
-					document.images.menumemberimg.src = img;
-				} else if(imgname == "menumsgimg") {
-					img = todisplay(domenumsg, phome);
-					document.images.menumsgimg.src = img;
-				} else if(imgname == "menuinfoimg") {
-					img = todisplay(domenuinfo, phome);
-					document.images.menuinfoimg.src = img;
-				} else if(imgname == "menuspaceimg") {
-					img = todisplay(domenuspace, phome);
-					document.images.menuspaceimg.src = img;
-				} else if(imgname == "menupayimg") {
-					img = todisplay(domenupay, phome);
-					document.images.menupayimg.src = img;
-				} else if(imgname == "menushopimg") {
-					img = todisplay(domenushop, phome);
-					document.images.menushopimg.src = img;
-				} else {}
-				DisplayAllMenu(imgname);
-			}
-
-			function todisplay(ss, phome) {
-				if(ss.style.display == "") {
-					ss.style.display = "none";
-					theimg = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
-				} else {
-					ss.style.display = "";
-					theimg = "{$Think.config.host_url}/public/static/index/css/new/noadd.gif";
+		$.ajax({
+			type:"GET",
+			url:"{$Think.config.host_url}/public/index.php/index/patient/delete_patient",
+			data:"list="+id,
+			dataType:'json',
+			success:function(msg){
+				alert(msg.message);
+				if(msg.status)
+				{
+					window.location.href="{$Think.config.host_url}/public/index.php/index/patient/";
 				}
-				return theimg;
+				else
+				{
+					return false;
+				}
+				
 			}
-
-			function turnit(ss, img) {
-				DisplayImg(ss, img, 0);
+		});
+		console.log(id);
+	}
+	
+	$(function(){
+		$(".patient_checkbox").click(function(){
+			if($(this).attr("checked"))
+			{
+				$(this).attr("checked", true);
 			}
-
-			function DisplayAllMenu(imgname) {
-				if(imgname != 'menumemberimg' && domenumember.style.display == "") {
-					domenumember.style.display = "none";
-					document.images.menumemberimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
-				}
-				if(imgname != 'menumsgimg' && domenumsg.style.display == "") {
-					domenumsg.style.display = "none";
-					document.images.menumsgimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
-				}
-				if(imgname != 'menuinfoimg' && domenuinfo.style.display == "") {
-					domenuinfo.style.display = "none";
-					document.images.menuinfoimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
-				}
-				if(imgname != 'menuspaceimg' && domenuspace.style.display == "") {
-					domenuspace.style.display = "none";
-					document.images.menuspaceimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
-				}
-				if(imgname != 'menupayimg' && domenupay.style.display == "") {
-					domenupay.style.display = "none";
-					document.images.menupayimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
-				}
-				if(imgname != 'menushopimg' && domenushop.style.display == "") {
-					domenushop.style.display = "none";
-					document.images.menushopimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
-				}
+			else
+			{
+				$(this).attr("checked", false);
 			}
-		</script>
+			
+		});
+	});
+</script>
 	</head>
 
 	<body leftmargin="0" topmargin="0">
@@ -308,17 +376,8 @@
 							</tr>
 						</tbody></table>
 											</td>
-					<td width="80%" height="420" valign="top" bgcolor="#FFFFFF"><script>
-function CheckAll(form)
-  {
-  for (var i=0;i<form.elements.length;i++)
-    {
-    var e = form.elements[i];
-    if (e.name != 'chkall')
-       e.checked = form.chkall.checked;
-    }
-  }
-</script> 
+					<td width="80%" height="420" valign="top" bgcolor="#FFFFFF">
+
         <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
             <tbody><tr>
               <td width="50%" height="30" bgcolor="#FFFFFF">&nbsp;</td>
@@ -327,7 +386,6 @@ function CheckAll(form)
         </tbody></table>
         <br>
         <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
-          <form name="listmsg" method="post" action="http://www.zhulu.com/e/member/doaction.php" onsubmit="return confirm(&#39;确认要删除?&#39;);"></form>
             <tbody><tr class="header"> 
               <td width="4%" height="23"> <div align="center"></div></td>
               <td width="5%"><div align="center">序号</div></td>
@@ -343,12 +401,12 @@ function CheckAll(form)
 			  <td width="10%"><div align="center">患者手机号</div></td>
             </tr>
             <tr bgcolor="#FFFFFF"> 
-              <td><div align="center"> <input type="checkbox" name="chkall" value="on" onclick="CheckAll(this.form)"></div></td>
-              <td colspan="12"><input type="submit" name="Submit2" value="删除选中"><input name="enews" type="hidden" value="DelMsg_all"></td>
+              <td><div align="center"> <input type="checkbox" name="chkall" value="on" onclick="CheckAll()"></div></td>
+              <td colspan="12"><input type="button" onclick="delete_patient()" name="delete_patient" value="删除选中"></td>
             </tr>
 			{volist name='list' id='item'}
             <tr bgcolor="#FFFFFF"> 
-              <td><div align="center"><input type="checkbox" id="patient_c"></div></td>
+              <td><div align="center"><input type="checkbox" id="patient_checkbox{$item.patient_id}" name="patient_checkbox" class="patient_checkbox" value="{$item.patient_id}"></div></td>
 			  <td>{$item.patient_id}</td>
 			  <td>{$item.security_code}</td>
 			  <td>{$item.production_unit}</td>

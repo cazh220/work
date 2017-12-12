@@ -169,5 +169,30 @@ class Patient
 		exit(json_encode($return_data));
 	}
 	
+	//删除
+	public function delete_patient()
+	{
+		$list_id	= !empty($_GET['list']) ? trim($_GET['list']) : '';
+
+		if(empty($list_id))
+		{
+			$return = array('status'=>false, 'message'=>'未选择患者');
+			exit(json_encode($return));
+		}
+		$res = false;
+		$Patient = model('Patient');
+		$res = $Patient->delete_patient($list_id);
+		if($res)
+		{
+			$return = array('status'=>true, 'message'=>'删除成功');
+		}
+		else
+		{
+			$return = array('status'=>false, 'message'=>'删除失败');
+			
+		}
+		exit(json_encode($return));
+	}
+	
 
 }

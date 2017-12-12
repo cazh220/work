@@ -66,7 +66,6 @@ class User extends Model
 	public function check_user($mobile, $password)
 	{
 		$res = Db::query("SELECT * FROM hg_user WHERE (mobile = :mobile OR username = :username) AND password = :password AND status = 1", ['mobile'=>$mobile, 'username'=>$mobile, 'password'=>$password]);
-		
 		return !empty($res) ? $res : array();
 	}
 	

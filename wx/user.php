@@ -24,6 +24,39 @@ class user extends Action {
 				//判断账号是否异常
 				importModule("userInfo","class");
 				$obj_user = new userInfo;
+				//查询表的password
+				$user_query = $obj_user->get_user_detail($login_arr['user_id']);
+				if($user_query[0]['password'] == $login_arr['password'])
+				{
+					$res = $obj_user->check_user_status($login_arr['user_id']);
+				
+					if($res)
+					{
+						file_put_contents("user.txt", date("Y-m-d H:i:s")."获取WX：111111\n", FILE_APPEND); 
+						//跳转到个人中心
+						if(empty($_SESSION['wx']))
+						{
+							$this->get_wx_base();//获取微信基本用户信息
+						}
+						$this->update_wx_user($login_arr['user_id']);
+						$redirect_url = HOST."/user.php?do=ucenter&user_id=".$login_arr['user_id'];
+						header("location:".$redirect_url);
+						exit();
+					}
+					else
+					{
+						setcookie("access", "", time()-3600);
+						echo "<script>alert('您的账号异常！');</script>";
+					}
+					
+				}
+				
+			}
+			
+			/*
+			if(!empty($login_arr['user_id']))
+			{
+				
 				$res = $obj_user->check_user_status($login_arr['user_id']);
 				
 				if($res)
@@ -45,8 +78,7 @@ class user extends Action {
 					echo "<script>alert('您的账号异常！');</script>";
 				}
 				
-			}
-			
+			}*/
 		}
 		
 		file_put_contents("user.txt", date("Y-m-d H:i:s")."获取SESSION：".json_encode($_SESSION)."\n", FILE_APPEND); 

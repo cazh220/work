@@ -334,6 +334,7 @@
     <input type="hidden" name="enews" value="EditInfo">
 	<input type="hidden" name="user_id" value="{$user_id}">
 	<input type="hidden" name="security_code" value="{$security_code}">
+	<input type="hidden" name="patient_id" value="{$patient.patient_id}">
     <tbody><tr class="header"> 
       <td height="25" colspan="2">技工录入</td>
     </tr>
@@ -343,25 +344,25 @@
 			<tbody>
 			<tr>
 				<td width="25%" height="25" bgcolor="ffffff">医疗机构:</td><td bgcolor="ffffff">
-				<input name="hospital" type="text" id="hospital" value=""><span style="color:red">*</span>
+				<input name="hospital" type="text" id="hospital" value="{$patient.hospital}"><span style="color:red">*</span>
 				</td>
 			</tr>
 			
 			<tr>
 				<td width="25%" height="25" bgcolor="ffffff">医疗专家:</td><td bgcolor="ffffff">
-				<input name="doctor" type="text" id="doctor" value=""><span style="color:red">*</span>
+				<input name="doctor" type="text" id="doctor" value="{$patient.doctor}"><span style="color:red">*</span>
 				</td>
 			</tr>
 			<tr>
 				<td width="25%" height="25" bgcolor="ffffff">患者姓名:</td><td bgcolor="ffffff">
-				<input name="name" type="text" id="name" value=""><span style="color:red">*</span>
+				<input name="name" type="text" id="name" value="{$patient.name}"><span style="color:red">*</span>
 				</td>
 			</tr>
 			<tr>
 				<td width="16%" height="25" bgcolor="ffffff">患者性别:</td>
 				<td bgcolor="ffffff">
-					<input name="sex" type="radio" id="sex1" value="1" checked="checked">男
-					<input name="sex" type="radio" id="sex2" value="2">女
+					<input name="sex" type="radio" id="sex1" value="1" {if $patient.sex == 1}checked="checked"{/if}>男
+					<input name="sex" type="radio" id="sex2" value="2" {if $patient.sex == 2}checked="checked"{/if}>女
 				</td>
 			</tr>
 			
@@ -393,12 +394,12 @@
 				<td width="16%" height="25" bgcolor="ffffff">选择牙位:</td>
 				<td bgcolor="ffffff">
 					<div>
-						<input name="tooth_position1" type="text" id="tooth_position1" value="">
-						<input name="tooth_position2" type="text" id="tooth_position2" value="">
+						<input name="tooth_position1" type="text" id="tooth_position1" value="{$patient.tooth_position1}">
+						<input name="tooth_position2" type="text" id="tooth_position2" value="{$patient.tooth_position2}">
 					</div>
 					<div style="float: left;">
-						<input name="tooth_position3" type="text" id="tooth_position3" value="">
-						<input name="tooth_position4" type="text" id="tooth_position4" value="">
+						<input name="tooth_position3" type="text" id="tooth_position3" value="{$patient.tooth_position3}">
+						<input name="tooth_position4" type="text" id="tooth_position4" value="{$patient.tooth_position4}">
 					</div>
 					<div style="color:red; float: left; vertical-align: middle;">*</div>
 				<!--<input name="company_addr" type="text" id="company_addr" value=""><span style="color:red">*</span>-->
@@ -417,8 +418,8 @@
 				<td width="16%" height="25" bgcolor="ffffff">修复体类别:</td>
 				<td bgcolor="ffffff">
 					<select id="false_tooth" name="false_tooth">
-						<option value="1">美晶瓷全牙</option>
-						<option value="2">氧化锆全牙</option>
+						<option value="1" {if $patient.false_tooth == 1}selected="selected"{/if}>美晶瓷全牙</option>
+						<option value="4" {if $patient.false_tooth == 4}selected="selected"{/if}>氧化锆全牙</option>
 					</select>
 					<span style="color:red">*</span>
 				</td>
@@ -427,6 +428,12 @@
 				<td width="16%" height="25" bgcolor="ffffff">修复体图片：</td>
 				<td bgcolor="ffffff"><input type="file" name="repairosome_pic">（尺寸：160X160，大小不超过1M）&nbsp;&nbsp;</td><span style="color:red">*</span>
 			</tr>
+			{if $patient.repairosome_pic}
+			<tr>
+				<td width="16%" height="25" bgcolor="ffffff">修复体图片预览：</td>
+				<td bgcolor="ffffff"><img src="http://www.yrsyc.cn/app/public/uploads/{$patient.repairosome_pic}" width="50px" height="50px"></td>
+			</tr>
+			{/if}
 		</tbody>
 		</table>      
 		</td>

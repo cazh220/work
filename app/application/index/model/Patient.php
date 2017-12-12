@@ -26,6 +26,78 @@ class Patient extends Model
 		}
 		return array();
 	}
+	
+	//删除
+	public function delete_patient($list)
+	{
+		if(!empty($list))
+		{
+			$sql = "DELETE FROM hg_patient WHERE patient_id IN (".$list.")";
+			try{
+				$res = Db::execute($sql);
+			}catch(exception $e){
+				echo $e->getMessage();
+				return false;
+			}
+		}
+		return true;
+	}
+	
+	
+	//插入患者
+	public function insert_patient($data)
+	{
+		if(empty($data))
+		{
+			return false;
+		}
+		
+		$sql = "INSERT INTO hg_patient SET ";
+		
+		foreach($data as $key => $val)
+		{
+			$sql .= $key."='".$val."',";
+		}
+		
+		$sql .= " create_time = NOW()";
+
+		try{
+			$res = Db::execute($sql);
+		}catch(exception $e){
+			echo $e->getMessage();
+			return false;
+		}
+		
+		return true;
+	}
+	
+	//更新患者
+	public function update_patient($data, $patient_id)
+	{
+		if(empty($data) || empty($patient_id))
+		{
+			return false;
+		}
+		
+		$sql = "UPDATE hg_patient SET ";
+		foreach($data as $key => $val)
+		{
+			$sql .= $key."='".$val."',";
+		}
+		
+		$sql .= " update_time = NOW()";
+		
+		$sql .= " WHERE patient_id = ".$patient_id;
+		try{
+			$res = Db::execute($sql);
+		}catch(exception $e){
+			echo $e->getMessage();
+			return false;
+		}
+		
+		return true;
+		
+	}
 
 	
 }

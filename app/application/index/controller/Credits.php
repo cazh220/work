@@ -72,8 +72,37 @@ class Credits
 		$Member = model('Member');
 		$user = $Member->get_my_detail($user_id);
 		$Patient = model('Patient');
+		$patient_detail = array();
 		$patient_detail = $Patient->get_patient_detail($security_code);
 		
+		$tooth_position = !empty($patient_detail['tooth_position']) ? explode('|', $patient_detail['tooth_position']) : array();
+		
+		if(empty($patient_detail))
+		{
+			$patient_detail['hospital'] = '';
+			$patient_detail['doctor'] = '';
+			$patient_detail['name'] = '';
+			$patient_detail['sex'] = '';
+			$patient_detail['year'] = '';
+			$patient_detail['month'] = '';
+			$patient_detail['day'] = '';
+			$patient_detail['tooth_position1'] = '';
+			$patient_detail['tooth_position2'] = '';
+			$patient_detail['tooth_position3'] = '';
+			$patient_detail['tooth_position4'] = '';
+			$patient_detail['false_tooth'] = '';
+			$patient_detail['repairosome_pic'] = '';
+			$patient_detail['patient_id'] = '';
+		}
+		else
+		{
+			$patient_detail['tooth_position1'] = !empty($tooth_position[0]) ? $tooth_position[0] : '';
+			$patient_detail['tooth_position2'] = !empty($tooth_position[1]) ? $tooth_position[1] : '';
+			$patient_detail['tooth_position3'] = !empty($tooth_position[2]) ? $tooth_position[2] : '';
+			$patient_detail['tooth_position4'] = !empty($tooth_position[3]) ? $tooth_position[3] : '';
+		}
+		
+	
 		$year = range(1950, 2040);
 		$month = range(1, 12);
 		$day = range(1, 31);
@@ -117,15 +146,16 @@ class Credits
 		
 		$birthday = $_POST['year'].'-'.$_POST['month'].'-'.$_POST['day'].' 00:00:00';
 		$tooth_position = $_POST['tooth_position1'].'|'.$_POST['tooth_position2'].'|'.$_POST['tooth_position3'].'|'.$_POST['tooth_position4'];
-		
+			
 		//获取录入人信息
 		$user_id = $_POST['user_id'];
 		$Member = model('Member');
 		$user = $Member->get_my_detail($user_id);
-
+		
 		$data = array(
 			'hospital'	=> $_POST['hospital'],
 			'doctor'	=> $_POST['doctor'],
+			'name'		=> $_POST['name'],
 			'sex'		=> $_POST['sex'],
 			'operator'	=> $user[0]['realname'],
 			'birthday'	=> $birthday,
@@ -139,14 +169,23 @@ class Credits
 		);
 
 		//$where['user_id'] = $user_id;
-		
 		if(isset($head_img))
 		{
 			$data['repairosome_pic'] = addslashes($head_img);
 		}
-
 		$Patient = model('Patient');
-		$res  = $Patient->insert_patient($data);
+		//print_r($data);die;
+		$patient_id = $_POST['patient_id'];
+		if($patient_id)
+		{
+			//更新
+			$res  = $Patient->update_patient($data, $patient_id);
+		}
+		else
+		{
+			$res  = $Patient->insert_patient($data);
+		}
+		
 		//var_dump($res);die;
 		if(empty($res))
 		{

@@ -820,6 +820,7 @@ class order extends Action {
 		//获取商品报价
 		importModule("OfferInfo","class");
 		$obj_offer = new OfferInfo;
+		
 		if($goods)
 		{
 			foreach($goods as $key => $val)
@@ -992,7 +993,7 @@ class order extends Action {
 				'order_user_name'	=> $customer_name,
 				'order_time'		=> date("Y-m-d H:i:s", strtotime("+1 day"))
 			);
-
+			//print_r($order_title);print_r($items);die;
 			$res = $obj_order->create_user_order($order_title, $items);
 			
 			if($res)
