@@ -25,7 +25,9 @@ class customer extends Action {
 		$s_order_no	= !empty($_POST['order_no']) ? trim($_POST['order_no']) : '';
 		$s_order_id	= !empty($_POST['order_id']) ? intval($_POST['order_id']) : 0;
 		$order_day_id = !empty($_POST['order_day_id']) ? intval($_POST['order_day_id']) : 1;
-		//print_r($_POST);
+		$order_role_id= !empty($_POST['order_role_id']) ? intval($_POST['order_role_id']) : '';
+		$order_user_id= !empty($_POST['order_user_id']) ? intval($_POST['order_user_id']) : '';
+		
 		$param = array(
 			'customer'		=> $user,
 			'order_time'	=> $date,
@@ -111,6 +113,8 @@ class customer extends Action {
 		$page->value('order_day_id',$order_day_id);
 		$page->value('user_order',$user_order_id_set);
 		$page->value('general',$general);
+		$page->value('order_user_id',$order_user_id);
+		$page->value('order_role_id',$order_role_id);
 		$page->params['template'] = 'customer_order_index.html';
 		$page->output();
 	}
