@@ -33,7 +33,9 @@ class index extends Action {
 		*/
 		//$this->authorization();
 		
-	    
+	    $page = $this->app->page();
+		$page->params['template'] = 'canvas/index.html';
+		$page->output();
 	}
 	
 	
@@ -144,6 +146,9 @@ class index extends Action {
 	//中间页
 	public function doMiddlePage()
 	{
+		//判断是否已关注
+		
+		
 		$security_code = !empty($_GET['security_code']) ? trim($_GET['security_code']) : '';
 		$headimgurl = !empty($_GET['headimgurl']) ? trim($_GET['headimgurl']) : '';
 		$urlencode_head = urlencode($headimgurl);

@@ -689,7 +689,6 @@ class order extends Action {
 		$category_id 	= !empty($_REQUEST['category_id']) ? intval($_REQUEST['category_id']) : 0;
 		$goods_name		= !empty($_REQUEST['goods_name']) ? trim($_REQUEST['goods_name']) : '';
 		
-		
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
 		
@@ -700,7 +699,7 @@ class order extends Action {
 			'category_id'	=> $category_id,
 			'goods_name'	=> $goods_name
 		);	
-		
+
 		//获取订单商品id
 		$ids = array();
 		if(!empty($order_id))

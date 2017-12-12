@@ -291,7 +291,6 @@ class OrderInfo
     	}
     	
     	$sql = "SELECT * FROM yy_order a LEFT JOIN yy_order_goods b ON a.order_id = b.order_id LEFT JOIN yy_goods c ON b.goods_id = c.goods_id WHERE a.order_id = ".$order_id;
-    	//echo $sql;die;
     	$res = $this->db->getArray($sql);
     	
     	return $res ? $res : array();
