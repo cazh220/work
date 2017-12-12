@@ -71,7 +71,12 @@ class Order extends Model
 		$start = ($param['page']-1)*$param['page_size'];
 		$size = $param['page_size'];
 		$user_id = $param['user_id'];
-		$sql = "SELECT * FROM hg_order  ORDER BY order_id DESC LIMIT $start, $size";
+		$sql = "SELECT * FROM hg_order ";
+		if(!empty($user_id))
+		{
+			$sql .= " WHERE user_id = ".$user_id;
+		}
+		$sql .= " ORDER BY order_id DESC LIMIT $start, $size";
 
 		$res = Db::query($sql);
 		return !empty($res) ? $res : array();

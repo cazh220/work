@@ -25,7 +25,6 @@ class Order
 				$order_list[$key]['colums'] = count($goods);
 			}
 		}
-		//print_r($order_list);die;
 		$view = new View();
 		$view->assign('list', $order_list);
 		$view->assign('user', Session::get('user.mobile'));
