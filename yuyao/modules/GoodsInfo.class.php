@@ -54,7 +54,7 @@ class GoodsInfo
     	}
     	
     	
-    	$sql = "SELECT * FROM yy_goods a LEFT JOIN yy_category b ON a.category_id = b.cid WHERE {$where}  ORDER BY goods_id DESC LIMIT 10";//echo $sql;die;
+    	$sql = "SELECT * FROM yy_goods a LEFT JOIN yy_category b ON a.category_id = b.cid WHERE {$where}  ORDER BY goods_id DESC LIMIT 100";//echo $sql;die;
     	
     	$sql_count = "SELECT COUNT(*) as cnt FROM yy_goods a LEFT JOIN yy_category b ON a.category_id = b.cid WHERE {$where}";
     	

@@ -690,6 +690,12 @@ class order extends Action {
 		$goods_name		= !empty($_REQUEST['goods_name']) ? trim($_REQUEST['goods_name']) : '';
 		$order_role_id	= !empty($_REQUEST['order_role_id']) ? intval($_REQUEST['order_role_id']) : '';
 		$order_user_id	= !empty($_REQUEST['order_user_id']) ? intval($_REQUEST['order_user_id']) : '';
+		
+		if(empty($order_role_id) || empty($order_user_id))
+		{
+			echo "<script>alert('请选择客户新建或查询订单，方可添加商品');$.pdialog.closeCurrent();</script>";
+			exit();
+		}
 	
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
