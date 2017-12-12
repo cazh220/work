@@ -746,6 +746,9 @@ class order extends Action {
 		$goods_num		= !empty($_GET['goods_num']) ? intval($_GET['goods_num']) : 0;
 		$good_note		= !empty($_GET['good_note']) ? trim($_GET['good_note']) : '';
 		$n_good_note	= !empty($_GET['n_good_note']) ? trim($_GET['n_good_note']) : '';
+		
+		$order_user_id	= !empty($_GET['order_user_id']) ? $_GET['order_user_id'] : '';
+		$order_role_id	= !empty($_GET['order_role_id']) ? $_GET['order_role_id'] : '';
 		//$unit			= !empty($_POST['unit']) ? trim($_POST['unit']) : '';
 		//获取商品详情和报价
 		$good = array();
@@ -759,6 +762,12 @@ class order extends Action {
 		
 		if($good)
 		{
+			//获取报价
+			importModule("OfferInfo","class");
+			$obj_offer = new OfferInfo;
+			$role_price = $obj_offer->get_good_offer_price($goods_id, $order_user_id, $order_role_id);
+			$good['price']	= $role_price;
+				
 			$sales = 0;
 			$diff = 0;
 			$sales = $good['price']*$good['goods_num'];
@@ -784,6 +793,8 @@ class order extends Action {
 	{
 		//print_r($_GET['goods_list']);die;
 		$goods_list		= !empty($_GET['goods_list']) ? $_GET['goods_list'] : '';
+		$order_user_id	= !empty($_GET['order_user_id']) ? $_GET['order_user_id'] : '';
+		$order_role_id	= !empty($_GET['order_role_id']) ? $_GET['order_role_id'] : '';
 		
 		$goods = array();
 		$goods_list_arr = json_decode($goods_list, true);
@@ -795,15 +806,22 @@ class order extends Action {
 				$goods[$key] = $good;
 			}
 		}
-		
+
 		//获取商品详情和报价
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
+		
+		//获取商品报价
+		importModule("OfferInfo","class");
+		$obj_offer = new OfferInfo;
 		if($goods)
 		{
 			foreach($goods as $key => $val)
 			{
 				$good = $obj_good->get_good_detail($val[0]);
+				//获取报价
+				$role_price = $obj_offer->get_good_offer_price($val[0], $order_user_id, $order_role_id);
+				$good['price']	= $role_price;
 				
 				$sales = 0;
 				$diff = 0;
@@ -816,6 +834,7 @@ class order extends Action {
 				$goods[$key]['diff'] = $diff;
 				$goods[$key]['goods_num']	= $val[1];
 				$goods[$key]['good_note']	= $val[2];
+				$goods[$key]['n_good_note']	= $val[3];
 			}
 			
 			exit(json_encode(array('status'=>1, 'list'=>$goods)));

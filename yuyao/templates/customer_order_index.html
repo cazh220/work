@@ -45,8 +45,8 @@
 	</div>
 	<input type="hidden" id="act" name="act" value="{$act}" />
 	<input type="hidden" id="operater_id" name="operater_id" value="{$param.customer_id}" />
-	<input type="hidden" id="order_user_id" name="order_user_id" value="{$param.order_user_id}" />
-	<input type="hidden" id="order_role_id" name="order_role_id" value="{$param.order_role_id}" />
+	<input type="hidden" id="order_user_id" name="order_user_id" value="{$order_user_id}" />
+	<input type="hidden" id="order_role_id" name="order_role_id" value="{$order_role_id}" />
 	</form>
 </div>
 
@@ -497,10 +497,13 @@ function bring_goods(id)
 	var good_note	= $("#good_note"+id).val();
 	var n_good_note	= $("#n_good_note"+id).val();
 	
+	var order_user_id = $("#order_user_id").val();
+	var order_role_id = $("#order_role_id").val();
+	
 	$.ajax({
 		type:"get",
 		url:"order.php",
-		data:"do=addgoodsact&goods_id="+id+"&goods_num="+goods_num+"&good_note="+good_note+"&n_good_note="+n_good_note,
+		data:"do=addgoodsact&goods_id="+id+"&goods_num="+goods_num+"&good_note="+good_note+"&n_good_note="+n_good_note+"&order_user_id="+order_user_id+"&order_role_id="+order_role_id,
 		dataType:"json",
 		success:function(msg){
 			
@@ -526,23 +529,28 @@ function add_goods()
 	var goods=new Array()
 	$("input:checked").each(function(i, n){
 		var id = $(n).val();
+		
 		var goods_num 	= $("#goods_num"+id).val();
 		var good_note	= $("#good_note"+id).val();
-		var info = id+'@'+goods_num+'@'+good_note;
+		var n_good_note = $("#n_good_note"+id).val();
+		var info = id+'@'+goods_num+'@'+good_note+'@'+n_good_note;
 		goods.push(info);
 		
 	});
 	//console.log(goods);
 	goods_list = JSON.stringify(goods);
 	//console.log(goods_list);return false;
+	//获取order_user_id和order_role_id
+	var order_user_id = $("#order_user_id").val();
+	var order_role_id = $("#order_role_id").val();
 	$.ajax({
 		type:"get",
 		url:"order.php",
-		data:"do=addgoodsbatchact&goods_list="+goods_list,
+		data:"do=addgoodsbatchact&goods_list="+goods_list+"&order_role_id="+order_role_id+"&order_user_id="+order_user_id,
 		dataType:"json",
 		success:function(msg){
 			
-			//console.log(msg.list);
+			console.log(msg.list);
 			//return false;
 			if(msg.status == 1)
 			{
