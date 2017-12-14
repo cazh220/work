@@ -1166,7 +1166,7 @@ class user extends Action {
 		
 		if(empty($mobile))
 		{
-			exit(json_encode(array('status'=>false, 'message'=>'参数有误')));
+			exit(json_encode(array('status'=>true, 'message'=>'参数有误')));
 		}
 
 		if(!preg_match("/^1[34578]{1}\d{9}$/",$mobile))

@@ -83,7 +83,7 @@ function send_sms(obj)
 				//手机号可用
 				$.ajax({
 					url:"user.php?do=SendSms",
-					data:'mobile='+mobile,
+					data:'send=1&mobile='+mobile,
 					method:'get',
 					dataType:'json',
 					success:function(msg){
