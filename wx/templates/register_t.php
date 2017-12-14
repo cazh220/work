@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
+<meta name="viewport" content="width=device-width,initial-scale=1.0, minimum-s cale=1.0, maximum-scale=1.0, user-scalable=no,minimal-ui">
 <title>会员注册</title>
 <link rel="stylesheet" href="public/mobile_themes/themes/skyd.min.css" />
 <link rel="stylesheet" href="public/mobile_themes/themes/jquery.mobile.icons.min.css" />
@@ -34,25 +34,25 @@
 		
 		<table width="100%">
 			<tr>
-				<td width="30%" align="right"><span style="color: red;">*</span>真实姓名：</td>
+				<td width="30%" align="right"><span style="color: red;">*</span>真实姓名:</td>
 				<td width="70%" colspan="2"><input type="text" name="realname" id="realname" placeholder="注册人真实姓名"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right"><span style="color: red;">*</span>密码：</td>
+				<td width="30%" align="right"><span style="color: red;">*</span>密码:</td>
 				<td width="70%" colspan="2"><input type="password" name="password1" id="password1" placeholder="请输入密码(6-20个字符，由字母和数字或符号组成)" autocomplete="off"></td>
 			</tr>
 			<tr>
 				<td width="30%" align="right"></td>
 				<td width="70%" colspan="2"><span style="font-size:xx-small; color: #aaa;">6-20个字符，由字母和数字或符号组成<br><span id="note" style="font-size:xx-small; color: red;"></span></span>
-					<br><img id="img1" src='public/themes/images/6.png' width="70px" height="24px"/><img id="img2" src='public/themes/images/5.png' width="70px" height="24px"/><img id="img3" src='public/themes/images/4.png' width="70px" height="24px"/>
+					<br><img id="img1" src='public/themes/images/6.png' width="65px" height="24px"/><img id="img2" src='public/themes/images/5.png' width="65px" height="24px"/><img id="img3" src='public/themes/images/4.png' width="65px" height="24px"/>
 				</td>
 			</tr>
 			<tr>
-				<td width="30%" align="right"><span style="color: red;">*</span>确认密码：</td>
+				<td width="30%" align="right"><span style="color: red;">*</span>确认密码:</td>
 				<td width="70%" colspan="2"><input type="password" name="password2" id="password2" placeholder="确认密码" autocomplete="off"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right"><span style="color: red;">*</span>用户类型：</td>
+				<td width="30%" align="right"><span style="color: red;">*</span>用户类型:</td>
 				<td width="70%" colspan="2">
 					<fieldset data-role="controlgroup">
 						<label for="techer">技工</label>
@@ -63,38 +63,38 @@
 				</td>
 			</tr>
 			<tr>
-				<td width="30%" align="right"><span style="color: red;">*</span>电子邮箱：</td>
+				<td width="30%" align="right"><span style="color: red;">*</span>电子邮箱:</td>
 				<td width="70%" colspan="2"><input type="text" name="email" id="email" placeholder="邮箱"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right"><span style="color: red;">*</span>单位全称：</td>
+				<td width="30%" align="right"><span style="color: red;">*</span>单位全称:</td>
 				<td width="70%" colspan="2"><input type="text" name="company_name" id="company_name" placeholder="单位全称"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right">部门：</td>
+				<td width="30%" align="right">部门:</td>
 				<td width="70%" colspan="2"><input type="text" name="department" id="department" placeholder="请输入部门"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right">职位：</td>
+				<td width="30%" align="right">职位:</td>
 				<td width="70%" colspan="2"><input type="text" name="position" id="position" placeholder="请输入职位"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right"><span style="color: red;">*</span>出生年月：</td>
+				<td width="30%" align="right"><span style="color: red;">*</span>出生年月:</td>
 				<td width="70%" colspan="2"><input  type="date" name="birthday" id="birthday" value="" placeholder="出生年月" onfocus="this.removeAttribute('placeholder')"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right">椅位数：</td>
+				<td width="30%" align="right">椅位数:</td>
 				<td width="70%" colspan="2"><input type="text" name="seats" id="seats" placeholder="椅位数"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right">员工数：</td>
+				<td width="30%" align="right">员工数:</td>
 				<td width="70%" colspan="2"><input type="text" name="persons_num" id="persons_num" placeholder="员工数"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right"><span style="color: red;">*</span>区域：</td>
+				<td width="30%" align="right"><span style="color: red;">*</span>区域:</td>
 				<td width="70%" colspan="2">
 					<fieldset data-role="controlgroup" data-type="horizontal">
-						<label for="province">选择省：</label>
+						<label for="province">选择省:</label>
 						<select name="province" id="province">
 						<option value="0">省</option>
 						{if $province}
@@ -104,11 +104,11 @@
 						{/if}
 						</select>
 
-						<label for="city">选择市：</label>
+						<label for="city">选择市:</label>
 						<select name="city" id="city">
 						  <option value="0">市</option>
 						</select>
-						<label for="district">选择区：</label>
+						<label for="district">选择区:</label>
 						<select name="district" id="district">
 						  <option value="0">区</option>
 						</select>
@@ -116,15 +116,15 @@
 				</td>
 			</tr>
 			<tr>
-				<td width="30%" align="right"><span style="color: red;">*</span>详细地址：</td>
+				<td width="30%" align="right"><span style="color: red;">*</span>详细地址:</td>
 				<td width="70%" colspan="2"><input type="text" name="address" id="address" placeholder="详细地址"></td>
 			</tr>
 			<tr>
-				<td width="30%" align="right">单位图片：</td>
+				<td width="30%" align="right">单位图片:</td>
 				<td width="70%" colspan="2"><input type="file" name="cfile" id="fileInput" value="单位图片" style="color: darkgray;"></td>
 			</tr>
 			<tr id="yulan" style="display: none;">
-				<td width="30%" align="right">预览图片：</td>
+				<td width="30%" align="right">预览图片:</td>
 				<td width="70%" colspan="2">
 					<img id="resultImage" style="display:none">
 					<canvas id="resultCanvas1"></canvas>
@@ -132,7 +132,7 @@
 				</td>
 			</tr>
 			<tr>
-				<td width="30%" align="right">单位介绍：</td>
+				<td width="30%" align="right">单位介绍:</td>
 				<td width="70%" colspan="2"><textarea name="addinfo" id="info" placeholder="单位介绍"></textarea></td>
 			</tr>
 			<tr>
@@ -283,8 +283,8 @@ $("#register").click(function(){
 		show("请填写出生年月");
 		return false;
 	}
-
-	if (district == '')
+	
+	if (district == 0)
 	{
 		show("请选择省市区");
 		return false;
@@ -302,7 +302,7 @@ $("#register").click(function(){
 	  show('请接受用户注册协议');
 		return false;
 	}	
-	
+
 	var mobile = $("#mobile").val();
 	var username = $("#username").val();
 	
@@ -316,8 +316,16 @@ $("#register").click(function(){
 		success:function(msg){
 			if(msg.status == 1)
 			{
-				show(msg.message);
-				window.location.href='user.php?register=1';
+				layer.open({
+				    content: msg.message//您的纠错信息已提交，我们会尽快通知技工会员更正相关信息，感谢您的支持！
+				    ,btn: '我知道了'
+				    ,end:function(){
+				    	window.location.href="user.php?register=1";
+				    }
+				});
+				
+				//show(msg.message);
+				//window.location.href='user.php?register=1';
 			}
 			else
 			{
