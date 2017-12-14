@@ -136,7 +136,6 @@ class offer extends Action {
 			'operator_id'	=> $operator_id,
 			'operator'		=> $operator,
 		);
-		
 		importModule("OfferInfo","class");
 		$obj_offer = new OfferInfo;
 		$res = $obj_offer->update_user_good_price($offer);

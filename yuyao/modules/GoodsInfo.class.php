@@ -40,7 +40,25 @@ class GoodsInfo
     	$where = ' a.is_delete = 0 AND a.is_show = 0';
     	if($param['category_id'])
     	{
-    		$where .= " AND a.category_id = ".$param['category_id'];
+    		//获取子分类
+    		$sql = "SELECT cid FROM yy_category WHERE parent_id = ".$param['category_id'];
+    		$res_cat = $this->db->getArray($sql);
+    		if($res_cat)
+    		{
+    			$cat_array = array();
+				foreach($res_cat as $key => $value)
+				{
+					$cat_array[] = $value['cid'];
+				}
+				$cat_list = implode(',', $cat_array);
+    		}
+    		else
+    		{
+    			$cat_list = $param['category_id'];
+    		}
+    		
+    		//$where .= " AND a.category_id = ".$param['category_id'];
+    		$where .= " AND a.category_id IN (".$cat_list.")";
     	}
     	
     	if($param['goods_name'])
@@ -53,9 +71,8 @@ class GoodsInfo
     		$where .= " AND goods_id NOT IN (".implode(',', $param['ids']).")";
     	}
     	
-    	
     	$sql = "SELECT * FROM yy_goods a LEFT JOIN yy_category b ON a.category_id = b.cid WHERE {$where}  ORDER BY goods_id DESC LIMIT 100";//echo $sql;die;
-    	
+    	//echo $sql;die;
     	$sql_count = "SELECT COUNT(*) as cnt FROM yy_goods a LEFT JOIN yy_category b ON a.category_id = b.cid WHERE {$where}";
     	
     	$res_count = $this->db->getValue($sql_count);

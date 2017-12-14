@@ -116,7 +116,7 @@
 				<td><div id="d_send_num{$item.goods_id}">{$item.send_num}</div></td>
 				<td><div id="d_received_num{$item.goods_id}">{$item.received_num}</div></td>
 				<td>{$item.unit}</td>
-				<td>{$item.good_price}</td>
+				<td><div id="d_goods_price{$item.goods_id}">{$item.good_price}</div></td>
 				<td>{$item.good_price*$item.received_num}</td>
 				<td><span id="diff{$item.goods_id}">{$item.good_price*$item.goods_num-$item.good_price*$item.received_num}</span></td>
 				<td><span id="d_good_note{$item.goods_id}">{$item.good_note}</span></td>
@@ -297,6 +297,12 @@ function save_order()
 			{
 				received_num = 0;
 			}
+			//商品价格
+			var goods_price = $("#d_goods_price"+goods_id).html();
+			if(isNaN(goods_price))
+			{
+				goods_price = 0;
+			}
 			//备注
 			var good_note = $("#d_good_note"+goods_id).html();
 			if(typeof(good_note) == 'undefined')
@@ -321,6 +327,11 @@ function save_order()
 			{
 				received_num = 0;
 			}
+			var goods_price = $("#goods_price"+goods_id).val();
+			if(typeof(goods_price) == 'undefined')
+			{
+				goods_price = 0;
+			}
 			var good_note = $("#good_note"+goods_id).val();
 			var n_good_note = $("#n_good_note"+goods_id).val();
 		}
@@ -328,7 +339,7 @@ function save_order()
 		var send_status = 0;
 		send_status = $("#send_status"+goods_id).data("id");
 		//console.log(send_status);return false;
-		goods_list[i] = goods_id+':'+goods_num+':'+send_num+':'+received_num+':'+good_note+':'+send_status+':'+n_good_note;
+		goods_list[i] = goods_id+':'+goods_num+':'+send_num+':'+received_num+':'+good_note+':'+send_status+':'+n_good_note+':'+goods_price;
 	});
 	var act =  $("#act").val();//1create  0query
 	
@@ -369,6 +380,7 @@ function save_order()
 					$("#d_received_num"+n.goods_id).html(n.received_num);
 					$("#d_good_note"+n.goods_id).html(n.good_note);
 					$("#dn_good_note"+n.goods_id).html(n.n_good_note);
+					$("#d_goods_price"+n.goods_id).html(n.good_price);
 				});
 			}
 			
@@ -402,6 +414,7 @@ function edit_info(goods_id, goods_num, send_num, received_num, good_note, good_
 	$("#d_received_num"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+received_num+"' name='received_num[]' id='received_num"+goods_id+"' onblur='diff("+goods_id+", "+good_price+")' />");
 	$("#d_good_note"+goods_id).html("<input type='text' style='width:100px' class='center' value='"+good_note+"' name='good_note[]' id='good_note"+goods_id+"' />");
 	$("#dn_good_note"+goods_id).html("<input type='text' style='width:100px' class='center' value='"+n_good_note+"' name='n_good_note[]' id='n_good_note"+goods_id+"' />");
+	$("#d_goods_price"+goods_id).html("<input type='text' style='width:100px' class='center' value='"+good_price+"' name='good_price[]' id='goods_price"+goods_id+"' onblur='diff("+goods_id+", "+good_price+")' />");
 	//console.log(goods_id+":"+goods_num+":"+send_num+":"+received_num+":"+good_note);
 }
 
@@ -496,6 +509,7 @@ function bring_goods(id)
 	var goods_num 	= $("#goods_num"+id).val();
 	var good_note	= $("#good_note"+id).val();
 	var n_good_note	= $("#n_good_note"+id).val();
+	var goods_price	= $("#goods_price"+id).val();
 	
 	var order_user_id = $("#order_user_id").val();
 	var order_role_id = $("#order_role_id").val();
@@ -503,13 +517,13 @@ function bring_goods(id)
 	$.ajax({
 		type:"get",
 		url:"order.php",
-		data:"do=addgoodsact&goods_id="+id+"&goods_num="+goods_num+"&good_note="+good_note+"&n_good_note="+n_good_note+"&order_user_id="+order_user_id+"&order_role_id="+order_role_id,
+		data:"do=addgoodsact&goods_id="+id+"&goods_num="+goods_num+"&goods_price="+goods_price+"&good_note="+good_note+"&n_good_note="+n_good_note+"&order_user_id="+order_user_id+"&order_role_id="+order_role_id,
 		dataType:"json",
 		success:function(msg){
 			
 			if(msg.status == 1)
 			{
-				$(".goods_list").append("<tr id='tr_"+msg.list.goods_id+"'><td align='center' width='5%'>"+msg.list.goods_id+"</td><td align='center' width='8%'>"+msg.list.goods_name+"</td><td align='center' width='8%'><span id='d_goods_num"+msg.list.goods_id+"'><input type='text' id='goods_num"+msg.list.goods_id+"' name='goods_num[]' style='width:50px' value='"+msg.list.goods_num+"' onblur='calc("+msg.list.goods_id+","+msg.list.price+")'></span></td><td align='center' width='7%'>"+msg.list.unit+"</td><td align='center' width='7%'><span id='d_send_num"+msg.list.goods_id+"'><input type='text' id='send_num"+msg.list.goods_id+"' name='send_num[]' style='width:50px' value=''></span></td><td align='center' width='7%'><span id='d_received_num"+msg.list.goods_id+"'><input type='text' id='received_num"+msg.list.goods_id+"' name='received_num[]' style='width:50px' value='' onblur='calc("+msg.list.goods_id+","+msg.list.price+")'></span></td><td	width='7%' align='center'>"+msg.list.unit+"</td><td width='7%' align='center'>"+msg.list.price+"</td><td width='7%' align='center'><span id='sales"+msg.list.goods_id+"'>"+msg.list.sales+"</span></td><td width='6%' align='center'><span id='diff"+msg.list.goods_id+"'>"+msg.list.diff+"</span></td><td align='center' width='10%'><span id='d_good_note"+msg.list.goods_id+"'><input type='text' id='good_note"+msg.list.goods_id+"' name='good_note[]' style='width:100px' value='"+msg.list.good_note+"'></span></td><td align='center' width='10%'><span id='dn_good_note"+msg.list.goods_id+"'><input type='text' id='n_good_note"+msg.list.goods_id+"' name='n_good_note[]' style='width:100px' value='"+msg.list.n_good_note+"'></span></td> <td width='5%' align='center'><i onclick='change("+msg.list.goods_id+")'  id='send_status"+msg.list.goods_id+"' class='fa fa-times' style='color: red;' data-id='0'></i></td><td class='center'><a href='#' onclick='delete_good("+msg.list.goods_id+")' style='color:dodgerblue;'>删除</a></td></tr>");
+				$(".goods_list").append("<tr id='tr_"+msg.list.goods_id+"'><td align='center' width='5%'>"+msg.list.goods_id+"</td><td align='center' width='8%'>"+msg.list.goods_name+"</td><td align='center' width='8%'><span id='d_goods_num"+msg.list.goods_id+"'><input type='text' id='goods_num"+msg.list.goods_id+"' name='goods_num[]' style='width:50px' value='"+msg.list.goods_num+"' onblur='calc("+msg.list.goods_id+","+msg.list.price+")'></span></td><td align='center' width='7%'>"+msg.list.unit+"</td><td align='center' width='7%'><span id='d_send_num"+msg.list.goods_id+"'><input type='text' id='send_num"+msg.list.goods_id+"' name='send_num[]' style='width:50px' value=''></span></td><td align='center' width='7%'><span id='d_received_num"+msg.list.goods_id+"'><input type='text' id='received_num"+msg.list.goods_id+"' name='received_num[]' style='width:50px' value='' onblur='calc("+msg.list.goods_id+","+msg.list.price+")'></span></td><td	width='7%' align='center'>"+msg.list.unit+"</td><td width='7%' align='center'><span id='d_goods_price"+msg.list.goods_id+"'><input type='text' id='goods_price"+msg.list.goods_id+"' name='goods_price[]' style='width:50px' value='"+msg.list.price+"')'></span></td><td width='7%' align='center'><span id='sales"+msg.list.goods_id+"'>"+msg.list.sales+"</span></td><td width='6%' align='center'><span id='diff"+msg.list.goods_id+"'>"+msg.list.diff+"</span></td><td align='center' width='10%'><span id='d_good_note"+msg.list.goods_id+"'><input type='text' id='good_note"+msg.list.goods_id+"' name='good_note[]' style='width:100px' value='"+msg.list.good_note+"'></span></td><td align='center' width='10%'><span id='dn_good_note"+msg.list.goods_id+"'><input type='text' id='n_good_note"+msg.list.goods_id+"' name='n_good_note[]' style='width:100px' value='"+msg.list.n_good_note+"'></span></td> <td width='5%' align='center'><i onclick='change("+msg.list.goods_id+")'  id='send_status"+msg.list.goods_id+"' class='fa fa-times' style='color: red;' data-id='0'></i></td><td class='center'><a href='#' onclick='delete_good("+msg.list.goods_id+")' style='color:dodgerblue;'>删除</a></td></tr>");
 			}
 			else
 			{
@@ -533,7 +547,8 @@ function add_goods()
 		var goods_num 	= $("#goods_num"+id).val();
 		var good_note	= $("#good_note"+id).val();
 		var n_good_note = $("#n_good_note"+id).val();
-		var info = id+'@'+goods_num+'@'+good_note+'@'+n_good_note;
+		var goods_price	= $("#goods_price"+id).val();
+		var info = id+'@'+goods_num+'@'+good_note+'@'+n_good_note+'@'+goods_price;
 		goods.push(info);
 		
 	});
@@ -556,7 +571,7 @@ function add_goods()
 			{
 				var txt = "";
 				$.each(msg.list, function(i, n){
-					txt += "<tr id='tr_"+n.goods_id+"'><td align='center' width='5%'>"+n.goods_id+"</td><td align='center' width='8%'>"+n.goods_name+"</td><td align='center' width='7%'><span id='d_goods_num"+n.goods_id+"'><input type='text' id='goods_num"+n.goods_id+"' name='goods_num[]' style='width:50px' value='"+n.goods_num+"' onblur='calc("+n.goods_id+","+n.price+")'></span></td><td align='center' width='7%'>"+n.unit+"</td><td align='center' width='7%'><span id='d_send_num"+n.goods_id+"'><input type='text' id='send_num"+n.goods_id+"' name='send_num[]' style='width:50px' value=''></span></td><td align='center' width='7%'><span id='d_received_num"+n.goods_id+"'><input type='text' id='received_num"+n.goods_id+"' name='received_num[]' style='width:50px' value='' onblur='calc("+n.goods_id+","+n.price+")'></span></td><td	width='7%' align='center'>"+n.unit+"</td><td width='8%' align='center'>"+n.price+"</td><td width='7%' align='center'><span id='sales"+n.goods_id+"'>"+n.sales+"</span></td><td width='7%' align='center'><span id='diff"+n.goods_id+"'>"+n.diff+"</span></td><td align='center' width='10%'><span id='d_good_note"+n.goods_id+"'><input type='text' id='good_note"+n.goods_id+"' name='good_note[]' style='width:100px' value='"+n.good_note+"'></span></td><td align='center' width='10%'><span id='dn_good_note"+n.goods_id+"'><input type='text' id='n_good_note"+n.goods_id+"' name='n_good_note[]' style='width:100px' value='"+n.n_good_note+"'></span></td><td width='5%' align='center'><i onclick='change("+n.goods_id+")'  id='send_status"+n.goods_id+"' class='fa fa-times' style='color: red;' data-id='0'></i></td><td class='center'><a href='#' onclick='delete_good("+n.goods_id+")' style='color:dodgerblue;'>删除</a></td></tr>"
+					txt += "<tr id='tr_"+n.goods_id+"'><td align='center' width='5%'>"+n.goods_id+"</td><td align='center' width='8%'>"+n.goods_name+"</td><td align='center' width='7%'><span id='d_goods_num"+n.goods_id+"'><input type='text' id='goods_num"+n.goods_id+"' name='goods_num[]' style='width:50px' value='"+n.goods_num+"' onblur='calc("+n.goods_id+","+n.price+")'></span></td><td align='center' width='7%'>"+n.unit+"</td><td align='center' width='7%'><span id='d_send_num"+n.goods_id+"'><input type='text' id='send_num"+n.goods_id+"' name='send_num[]' style='width:50px' value=''></span></td><td align='center' width='7%'><span id='d_received_num"+n.goods_id+"'><input type='text' id='received_num"+n.goods_id+"' name='received_num[]' style='width:50px' value='' onblur='calc("+n.goods_id+","+n.price+")'></span></td><td	width='7%' align='center'>"+n.unit+"</td><td width='8%' align='center'><span id='d_goods_price"+n.goods_id+"'><input type='text' id='goods_price"+n.goods_id+"' name='goods_Price[]' style='width:50px' value='"+n.price+"'></span></td><td width='7%' align='center'><span id='sales"+n.goods_id+"'>"+n.sales+"</span></td><td width='7%' align='center'><span id='diff"+n.goods_id+"'>"+n.diff+"</span></td><td align='center' width='10%'><span id='d_good_note"+n.goods_id+"'><input type='text' id='good_note"+n.goods_id+"' name='good_note[]' style='width:100px' value='"+n.good_note+"'></span></td><td align='center' width='10%'><span id='dn_good_note"+n.goods_id+"'><input type='text' id='n_good_note"+n.goods_id+"' name='n_good_note[]' style='width:100px' value='"+n.n_good_note+"'></span></td><td width='5%' align='center'><i onclick='change("+n.goods_id+")'  id='send_status"+n.goods_id+"' class='fa fa-times' style='color: red;' data-id='0'></i></td><td class='center'><a href='#' onclick='delete_good("+n.goods_id+")' style='color:dodgerblue;'>删除</a></td></tr>"
 					
 				});
 				

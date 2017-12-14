@@ -57,7 +57,6 @@ class OfferInfo
 			$sql .= " create_time = NOW(), update_time = NOW()";
     		
     	}
-    	
     	//开启事务
     	$this->db->exec("START TRANSACTION");
     	try{

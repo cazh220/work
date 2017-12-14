@@ -59,7 +59,10 @@
 				<td>{$item.goods_name}</td>
 				<td>{$item.cname}</td>
 				<td>{$item.unit}</td>
-				<td>{$item.price}</td>
+				<td>
+					<input type="text" id="goods_price{$item.goods_id}" name="goods_price{$item.goods_id}" value="{$item.price}" size="3" placeholder="请输入价格">
+					
+				</td>
 				<td>{$item.stock}</td>
 				<td>
 					<input type="text" id="goods_num{$item.goods_id}" name="goods_num{$item.goods_id}" value="" size="5" placeholder="请输入数量">

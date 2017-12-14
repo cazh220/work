@@ -59,7 +59,7 @@
 				<th align="center">是否发送</th>
 				{if $permission == 1 || ($permission == 2 AND $item.send_status == 0)}<th align="center">操作</th>{/if}
 		</thead>
-		<tbody class="goods_list">
+		<tbody class="goods_list_a">
 			{if $order_goods}
 			{foreach from=$order_goods item=item key=key}
 			<tr id="tr_{$item.goods_id}">
@@ -70,7 +70,7 @@
 				<td><div id="d_send_num_{$item.goods_id}">{$item.send_num}</div></td>
 				<td><div id="d_received_num_{$item.goods_id}">{$item.received_num}</div></td>
 				<td>{$item.unit}</td>
-				<td>{$item.good_price}</td>
+				<td><div id="d_goods_price_{$item.goods_id}">{$item.good_price}</div></td>
 				<td>{$item.good_price*$item.received_num}</td>
 				<td><span id="diff_{$item.goods_id}">{$item.good_price*$item.goods_num-$item.good_price*$item.received_num}</span></td>
 				<td><div id="d_good_note_{$item.goods_id}">{$item.good_note}</div></td>
@@ -144,7 +144,7 @@ function print()
 function save_info()
 {
 	var goods_list=new Array()
-	$(".goods_list tr").each(function(i){
+	$(".goods_list_a tr").each(function(i){
 		var goods_id = $(this).find("td").eq(0).find("div").html();
 		var goods_num = $("#goods_num_"+goods_id).val();
 		if(typeof(goods_num) == 'undefined')
@@ -153,8 +153,9 @@ function save_info()
 			var goods_num = 0;
 			var send_num = 0;
 			var received_num = 0;
-			var good_note = '';n_good_note
+			var good_note = '';
 			var n_good_note = '';
+			var good_price = '';
 		}
 		else
 		{
@@ -162,8 +163,9 @@ function save_info()
 			var received_num = $("#received_num_"+goods_id).val();
 			var good_note = $("#good_note_"+goods_id).val();
 			var n_good_note = $("#n_good_note_"+goods_id).val();
+			var good_price = $("#goods_price"+goods_id).val();
 		}
-		goods_list[i] = goods_id+':'+goods_num+':'+send_num+':'+received_num+':'+good_note+':'+n_good_note;
+		goods_list[i] = goods_id+':'+goods_num+':'+send_num+':'+received_num+':'+good_note+':'+n_good_note+':'+good_price;
 	});
 	var send_no = $("#send_no").val();//发货单号
 	var order_id = $("#mine_order_id").val();
@@ -193,6 +195,7 @@ function save_info()
 				$("#d_received_num_"+n.goods_id).html(n.received_num);
 				$("#d_good_note_"+n.goods_id).html(n.good_note);
 				$("#dn_good_note_"+n.goods_id).html(n.n_good_note);
+				$("#d_goods_price_"+n.goods_id).html(n.good_price);
 			});
 		}
 	});
@@ -212,14 +215,16 @@ function edit_info(goods_id, goods_num, send_num, received_num, good_note, good_
 	$("#d_received_num_"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+received_num+"' name='received_num[]' id='received_num_"+goods_id+"' onblur='diff("+goods_id+", "+good_price+")' />");
 	$("#d_good_note_"+goods_id).html("<input type='text' style='width:100px' class='center' value='"+good_note+"' name='good_note[]' id='good_note_"+goods_id+"' />");
 	$("#dn_good_note_"+goods_id).html("<input type='text' style='width:100px' class='center' value='"+n_good_note+"' name='good_note[]' id='n_good_note_"+goods_id+"' />");
+	$("#d_goods_price_"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+good_price+"' name='goods_price[]' id='goods_price"+goods_id+"' onblur='diff("+goods_id+", "+good_price+")' />");
 	//console.log(goods_id+":"+goods_num+":"+send_num+":"+received_num+":"+good_note);
 }
 
 function diff(id, price)
-{
+{  
 	var diff = 0;
 	var goods_num = $("#goods_num_"+id).val();
 	var received_num = $("#received_num_"+id).val();
+	console.log(received_num);console.log(goods_num);
 	if(received_num >= goods_num)
 	{
 		diff = 0;
@@ -261,7 +266,7 @@ function bring(id)
 		data:"do=getgoods&goods_id="+id,
 		dataType:"json",
 		success:function(msg){
-			$(".goods_list").append("<tr id='tr_"+id+"'><td class='center' style='width:53px'><div>"+id+"</div></td><td class='center'>"+msg.goods.goods_name+"</td><td class='center' style='width:53px'><span id='d_goods_num_"+id+"'><input type='text' id='goods_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:53px'>"+msg.goods.unit+"</td><td class='center' style='width:53px'><span id='d_send_num_"+id+"'><input type='text' id='send_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:53px'><span id='d_received_num_"+id+"'><input type='text' id='received_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:53px'>"+msg.goods.unit+"</td><td class='center' style='width:53px'>"+msg.goods.price+"</td><td class='center' style='width:53px'>"+msg.goods.price+"</td><td class='center' style='width:53px'>0</td><td class='center' style='width:178px'><span id='d_good_note_"+id+"'><input type='text' id='good_note_"+id+"'></span></td><td class='center' style='width:62px'><a href='#' onclick='delete_good("+id+")' style='color:dodgerblue;'>删除</a></td></tr>");
+			$(".goods_list").append("<tr id='tr_"+id+"'><td class='center' style='width:53px'><div>"+id+"</div></td><td class='center'>"+msg.goods.goods_name+"</td><td class='center' style='width:53px'><span id='d_goods_num_"+id+"'><input type='text' id='goods_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:53px'>"+msg.goods.unit+"</td><td class='center' style='width:53px'><span id='d_send_num_"+id+"'><input type='text' id='send_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:53px'><span id='d_received_num_"+id+"'><input type='text' id='received_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:53px'>"+msg.goods.unit+"</td><td class='center' style='width:53px'>"+msg.goods.price+"</td><td class='center' style='width:53px'><span id='d_send_num_"+id+"'><input type='text' id='goods_price_"+id+"' style='width:50px' value='"+msg.goods.price+"'></span></td><td class='center' style='width:53px'>0</td><td class='center' style='width:178px'><span id='d_good_note_"+id+"'><input type='text' id='good_note_"+id+"'></span></td><td class='center' style='width:62px'><a href='#' onclick='delete_good("+id+")' style='color:dodgerblue;'>删除</a></td></tr>");
 		}
 	});
 	//document.getElementById("aa").value = 'aa';

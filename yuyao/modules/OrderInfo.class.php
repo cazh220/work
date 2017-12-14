@@ -817,7 +817,7 @@ class OrderInfo
 		$amount = !empty($order_title['total_amount']) ? $order_title['total_amount'] : 0;
 		$count = !empty($order_title['total_num']) ? $order_title['total_num'] : 0;
     	
-		$sql = "UPDATE yy_order SET total_amount = ".$amount.", total_num =  ".$count.", jg_date = '".$order_title['jg_date']."', send_no = '".$order_title['send_no']."', send_time = '".$order_title['send_time']."', pay_type = ".$order_title['pay_type'].", processing_time = '".$order_title['processing_time']."', order_time = '".$order_title['processing_time']."', update_time = NOW() WHERE order_id = ".$order_id;
+		$sql = "UPDATE yy_order SET total_amount = '".$amount."', total_num =  ".$count.", jg_date = '".$order_title['jg_date']."', send_no = '".$order_title['send_no']."', send_time = '".$order_title['send_time']."', pay_type = ".$order_title['pay_type'].", processing_time = '".$order_title['processing_time']."', order_time = '".$order_title['processing_time']."', update_time = NOW() WHERE order_id = ".$order_id;
 		//echo $sql;die;
 		try{
 			$res = $this->db->exec($sql);

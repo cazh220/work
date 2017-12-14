@@ -513,6 +513,8 @@ class order extends Action {
 					{
 						$offer_price = $obj_good->get_good_price($goods[0]);
 					}
+					
+					$offer_price = !empty($goods[6]) ? $goods[6] : '';
 
 					//更新订单
 					$items[] = array(
@@ -542,7 +544,7 @@ class order extends Action {
 				}
 			}
 		}
-
+		//print_r($order_title);print_r($items);die;
 		$res = $obj_order->replace_order($order_title, $items);
 		
 		if($res)
@@ -752,6 +754,7 @@ class order extends Action {
 		$goods_num		= !empty($_GET['goods_num']) ? intval($_GET['goods_num']) : 0;
 		$good_note		= !empty($_GET['good_note']) ? trim($_GET['good_note']) : '';
 		$n_good_note	= !empty($_GET['n_good_note']) ? trim($_GET['n_good_note']) : '';
+		$goods_price	= !empty($_GET['goods_price']) ? floatval($_GET['goods_price']) : '';
 		
 		$order_user_id	= !empty($_GET['order_user_id']) ? $_GET['order_user_id'] : '';
 		$order_role_id	= !empty($_GET['order_role_id']) ? $_GET['order_role_id'] : '';
@@ -765,14 +768,13 @@ class order extends Action {
 		$good['goods_num']	= $goods_num;
 		$good['good_note']	= $good_note;
 		$good['n_good_note']= $n_good_note;
-		
 		if($good)
 		{
 			//获取报价
 			importModule("OfferInfo","class");
 			$obj_offer = new OfferInfo;
 			$role_price = $obj_offer->get_good_offer_price($goods_id, $order_user_id, $order_role_id);
-			$good['price']	= $role_price;
+			$good['price']	= !empty($goods_price) ? $goods_price : $role_price;
 				
 			$sales = 0;
 			$diff = 0;
@@ -812,7 +814,6 @@ class order extends Action {
 				$goods[$key] = $good;
 			}
 		}
-
 		//获取商品详情和报价
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
@@ -828,8 +829,8 @@ class order extends Action {
 				$good = $obj_good->get_good_detail($val[0]);
 				//获取报价
 				$role_price = $obj_offer->get_good_offer_price($val[0], $order_user_id, $order_role_id);
-				$good['price']	= $role_price;
-				
+				$good['price']	=  !empty($val['4']) ? $val['4'] : $role_price;
+
 				$sales = 0;
 				$diff = 0;
 				$sales = $good['price']*$good['goods_num'];
@@ -932,7 +933,7 @@ class order extends Action {
 		{
 			exit(json_encode(array('status'=>false, 'msg'=>'获取商品失败', 'data'=>$items)));
 		}
-		
+
 		if(empty($order_id))
 		{
 			//新建
@@ -950,7 +951,7 @@ class order extends Action {
 					$offer_price = $obj_good->get_good_price($goods[0]);
 				}
 				
-
+				$offer_price = !empty($goods[7]) ? $goods[7] : $offer_price;
 				//更新订单
 				$items[] = array(
 					'goods_id'		=> $goods[0],
@@ -960,7 +961,7 @@ class order extends Action {
 					'good_note'		=> $goods[4],
 					'send_status'	=> $goods[5],
 					'n_good_note'	=> $goods[6],
-					'good_price'	=> $offer_price
+					'good_price'	=> $offer_price,
 				);
 				$total_num++;
 				$total_amount += $goods[1]*$offer_price;
@@ -995,7 +996,6 @@ class order extends Action {
 			);
 			//print_r($order_title);print_r($items);die;
 			$res = $obj_order->create_user_order($order_title, $items);
-			
 			if($res)
 			{
 				exit(json_encode(array('status'=>true, 'msg'=>'下单成功成功', 'data'=>$items)));
@@ -1023,6 +1023,7 @@ class order extends Action {
 					$offer_price = $obj_good->get_good_price($goods[0]);
 				}
 
+				$offer_price = !empty($goods[7]) ? $goods[7] : $offer_price;
 				//更新订单
 				$items[] = array(
 					'goods_id'		=> $goods[0],
@@ -1032,7 +1033,7 @@ class order extends Action {
 					'good_note'		=> $goods[4],
 					'send_status'	=> $goods[5],
 					'n_good_note'	=> $goods[6],
-					'good_price'	=> $offer_price
+					'good_price'	=> $offer_price,
 				);
 				$total_num++;
 				$total_amount += $goods[1]*$offer_price;
@@ -1060,6 +1061,7 @@ class order extends Action {
 			//print_r($order_title);print_r($items);die;
 			
 			$res = $obj_order->update_sales_order($order_title, $items);
+			
 			
 			if($res)
 			{
