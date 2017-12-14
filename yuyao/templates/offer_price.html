@@ -37,7 +37,7 @@
 		<tbody>
 			{if $offer}
 			{foreach from=$offer item=item key=key}
-			<tr target="sid_user" rel="1" {if $item.type=='base'}style="background-color:#E3FDA7;"{/if} ondblclick="update_offer(this, {$item.goods_id}, {$item.user_id}, {$item.price}, {$item.role_id})" id="o_{$item.user_id}">
+			<tr target="sid_user" rel="1" {if $item.type=='base'}style="background-color:#E3FDA7;"{/if} ondblclick="update_offer(this, {$item.goods_id}, {$item.user_id}, {$item.role_id}, {$item.price})" id="o_{$item.user_id}">
 				<td>{$item.user_id}</td>
 				<td>{$item.role_name}</td>
 				<td>{$item.username}</td>
@@ -66,7 +66,7 @@ $(function(){
 
 
 
-function update_offer(o, goods_id, user_id, price, role_id)
+function update_offer(o, goods_id, user_id, role_id, price)
 {
 	$(o).children().eq(4).html('<input type="text" id="price_'+user_id+'"  onblur="update_role_price('+user_id+','+goods_id+', '+role_id+')" value="'+price+'"/>');
 }
