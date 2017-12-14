@@ -32,12 +32,12 @@
 
 		<table width="100%">
 			<tr>
-				<td width="35%" align="right"><span style="color: red;">*</span>真实姓名:</td>
-				<td width="65%" colspan="2"><input type="text" name="realname" id="realname" placeholder="真实姓名" value="{$mine.realname}"></td>
+				<td width="30%" align="right"><span style="color: red;">*</span>真实姓名:</td>
+				<td width="70%" colspan="2"><input type="text" name="realname" id="realname" placeholder="真实姓名" value="{$mine.realname}"></td>
 			</tr>
 			<tr>
-				<td width="35%" align="right"><span style="color: red;">*</span>用户类型:</td>
-				<td width="65%" colspan="2">
+				<td width="30%" align="right"><span style="color: red;">*</span>用户类型:</td>
+				<td width="70%" colspan="2">
 					<fieldset data-role="controlgroup">
 						<label for="techer">技工</label>
 						<input type="radio" name="typer" id="techer" value="1" {if $mine.user_type == 1 || !$mine.user_type}checked="checked" style="color:#000000"{/if} disabled>
@@ -47,28 +47,28 @@
 				</td>
 			</tr>
 			<tr>
-				<td width="35%" align="right"><span style="color: red;">*</span>电子邮箱:</td>
-				<td width="65%" colspan="2"><input type="text" name="email" id="email" placeholder="邮箱" value="{$mine.email}"></td>
+				<td width="30%" align="right"><span style="color: red;">*</span>电子邮箱:</td>
+				<td width="70%" colspan="2"><input type="text" name="email" id="email" placeholder="邮箱" value="{$mine.email}"></td>
 			</tr>
 			<tr>
-				<td width="35%" align="right"><span style="color: red;">*</span>单位全称:</td>
-				<td width="65%" colspan="2"><input type="text" name="company_name" id="company_name" placeholder="单位全称" value="{$mine.company_name}"></td>
+				<td width="30%" align="right"><span style="color: red;">*</span>单位全称:</td>
+				<td width="70%" colspan="2"><input type="text" name="company_name" id="company_name" placeholder="单位全称" value="{$mine.company_name}"></td>
 			</tr>
 			<tr>
-				<td width="35%" align="right">职位:</td>
-				<td width="65%" colspan="2"><input type="text" name="job" id="job" placeholder="部门职位" value="{$mine.position}"></td>
+				<td width="30%" align="right">职位:</td>
+				<td width="70%" colspan="2"><input type="text" name="job" id="job" placeholder="部门职位" value="{$mine.position}"></td>
 			</tr>
 			<tr>
-				<td width="35%" align="right"><span style="color: red;">*</span>出生年月:</td>
-				<td width="65%" colspan="2"><input type="date" name="create_time" id="create_time" value="{$mine.birthday}" {if $mine.birthday}disabled="disabled" style="color:#000000"{/if}></td>
+				<td width="30%" align="right"><span style="color: red;">*</span>出生年月:</td>
+				<td width="70%" colspan="2"><input type="date" name="create_time" id="create_time" value="{$mine.birthday}" {if $mine.birthday}disabled="disabled" style="color:#000000"{/if}></td>
 			</tr>
 			<tr>
-				<td width="35%" align="right">员工数量:</td>
-				<td width="65%" colspan="2"><input type="text" name="employee_num" id="employee_num" placeholder="椅位数/员工数" value="{if $mine.persons_num}{$mine.persons_num}{/if}"></td>
+				<td width="30%" align="right">员工数量:</td>
+				<td width="70%" colspan="2"><input type="text" name="employee_num" id="employee_num" placeholder="椅位数/员工数" value="{if $mine.persons_num}{$mine.persons_num}{/if}"></td>
 			</tr>
 			<tr>
-				<td width="35%" align="right"><span style="color: red;">*</span>区域:</td>
-				<td width="65%" colspan="2">
+				<td width="30%" align="right"><span style="color: red;">*</span>区域:</td>
+				<td width="70%" colspan="2">
 					<fieldset data-role="controlgroup" data-type="horizontal">
 						<label for="province">选择省：</label>
 						<select name="province" id="province">
@@ -99,12 +99,12 @@
 				</td>
 			</tr>
 			<tr>
-				<td width="35%" align="right"><span style="color: red;">*</span>详细地址:</td>
-				<td width="65%" colspan="2"><input type="text" name="address" id="address" placeholder="详细地址" value="{$mine.company_addr}"></td>
+				<td width="30%" align="right"><span style="color: red;">*</span>详细地址:</td>
+				<td width="70%" colspan="2"><input type="text" name="address" id="address" placeholder="详细地址" value="{$mine.company_addr}"></td>
 			</tr>
 			<tr>
-				<td width="35%" align="right">单位图片:</td>
-				<td width="65%" colspan="2">
+				<td width="30%" align="right">单位图片:</td>
+				<td width="70%" colspan="2">
 				<form id="myform" data-ajax="false" enctype="multipart/form-data">
 					<input type="file" name="cfile" id="fileInput" value="单位图片">
 				</form>		
@@ -116,8 +116,8 @@
 			</tr>-->
 			
 			<tr id="yulan" {if $mine.head_img == ''}style="display: none;"{/if}>
-				<td width="35%" align="right">图片预览:</td>
-				<td width="65%" colspan="2">
+				<td width="30%" align="right">图片预览:</td>
+				<td width="70%" colspan="2">
 					
 					<span id="id_canvas" style="display: none;">
 						<img id="resultImage" style="display:none">
@@ -129,21 +129,21 @@
 			</tr>
 			
 			<tr>
-				<td width="35%" align="right">单位介绍:</td>
-				<td width="65%" colspan="2"><textarea name="addinfo" id="info" placeholder="单位介绍">{$mine.company_info}</textarea></td>
+				<td width="30%" align="right">单位介绍:</td>
+				<td width="70%" colspan="2"><textarea name="addinfo" id="info" placeholder="单位介绍">{$mine.company_info}</textarea></td>
 			</tr>
 			{if $address}
 			<tr>
-				<td width="35%" align="right">收货地址:</td>
-				<td width="65%" colspan="2">
-					
-				    <ul data-role="listview" data-inset="true">
-				      <li><a href="area.php?do=addresslist&user_id={$mine.user_id}&act=member">
-				      	地址：{$address_select.province_name}{$address_select.city_name}{$address_select.district_name}{$address_select.address}
+				<td width="30%" align="right">收货地址:</td>
+				<td width="70%" colspan="2">
+				    <ul data-role="listview" data-inset="true" style="width: 100%;">
+				      <li><a href="area.php?do=addresslist&user_id={$mine.user_id}&act=member" style="font-size: 12px; line-height: 20px; width: 80%; word-wrap: normal|break-word;" data-ajax="false">
+				      	地址:{$address_select.province_name}{$address_select.city_name}{$address_select.district_name}
+				      	<br/>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;{$address_select.address}
 				      	<br/>
-				      	收货人：{$address_select.receiver}
+				      	收货人:{$address_select.receiver}
 				      	<br/>
-				      	电话：{$address_select.mobile}
+				      	电话:{$address_select.mobile}
 				      </a></li>
 				    </ul>
 				</td>
@@ -160,6 +160,7 @@
 		<input type="hidden" id="username" name="username" value="{$mine.username}" >
 		<input type="hidden" id="company_pic" name="company_pic" value="{$mine.head_img}" >
 		<input type="hidden" id="user_id" name="user_id" value="{$mine.user_id}" >
+			<input type="hidden" id="address_id" name="address_id" value="{$mine.address_id}" >
     <!--</form>-->
   </div>
 </div>
@@ -251,10 +252,10 @@ $("#perfect").click(function(){
 	var province 	= $("#province").val();	
 	var city 		= $("#city").val();
 	var user_id 	= $("#user_id").val();
-	var address_id 	= $("input[name=address]:checked").val();//收货地址
+	var address_id 	= $("#address_id").val();//收货地址
 	var district	= $("#district").val();
 	var username	= $("#username").val();
-
+    
 	var realname 	= $("#realname").val();
 	var email 		= $("#email").val();
 	var company_name= $("#company_name").val();

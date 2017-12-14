@@ -66,7 +66,6 @@ $(function(){
 		var user_id = $("#user_id").val();
 		var act = $("#act").val();
 		var order_id = $("#order_id").val();
-		
 		$.ajax({
 			type:"get",
 			url:"area.php?do=selectaddress",
@@ -96,6 +95,7 @@ $(function(){
 				}
 			}
 		});
+		
 	});
 });
 {/literal}

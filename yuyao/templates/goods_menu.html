@@ -6,7 +6,7 @@
 		<ul class="tree treeFolder treeFolder">
 			{if $category}
 				{foreach from=$category item=item key=key}
-				<li><a href="goods.php?do=goodslist&category_id={$itemb.cid}" target="navTab" rel="goods_list" minable="false">{$item.cname}</a>
+				<li><a href="goods.php?do=goodslist&category_id={$item.cid}" target="navTab" rel="goods_list" minable="false">{$item.cname}</a>
 					{if $item.child}
 					<ul>
 						{foreach from=$item.child item=itema key=keya}

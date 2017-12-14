@@ -6,21 +6,21 @@
 		<ul class="tree treeFolder treeFolder">
 			{if $category}
 				{foreach from=$category item=item key=key}
-				<li><a href="offer.php?do=offerlist&category_id={$itemb.cid}" target="navTab" rel="page1" minable="false">{$item.cname}</a>
+				<li><a href="offer.php?do=offerlist&category_id={$item.cid}" target="navTab" rel="goods_list" minable="false">{$item.cname}</a>
 					{if $item.child}
 					<ul>
 						{foreach from=$item.child item=itema key=keya}
-						<li><a href="offer.php?do=offerlist&category_id={$itemb.cid}" target="navTab" rel="page1" minable="false">{$itema.cname}</a>
+						<li><a href="offer.php?do=offerlist&category_id={$itema.cid}" target="navTab" rel="goods_list" minable="false">{$itema.cname}</a>
 							{if $itema.child}
 							<ul>
 								{foreach from=$itema.child item=itemb key=keyb}
 								<li>
-									<a href="offer.php?do=offerlist&category_id={$itemb.cid}" target="navTab" rel="page1" fresh="false">{$itemb.cname}</a>
+									<a href="offer.php?do=offerlist&category_id={$itemb.cid}" target="navTab" rel="goods_list" fresh="false">{$itemb.cname}</a>
 									{if $itemb.child}
 										<ul>
 											{foreach from=$itemb.child item=itemc key=keyc}
 												<li>
-													<a href="offer.php?do=offerlist&category_id={$itemc.cid}" target="navTab" rel="page1" fresh="false">{$itemc.cname}</a>
+													<a href="offer.php?do=offerlist&category_id={$itemc.cid}" target="navTab" rel="goods_list" fresh="false">{$itemc.cname}</a>
 												</li>
 											{/foreach}
 										</ul>

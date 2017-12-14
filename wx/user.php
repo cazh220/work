@@ -1055,7 +1055,7 @@ class user extends Action {
 				}
 			}
 		}
-		
+
 		$page = $this->app->page();
 		$page->value('mine',$user[0]);
 		$page->value('province',$province);
@@ -1119,6 +1119,7 @@ class user extends Action {
 			'receiver'		=> $realname,
 			'mobile'		=> $mobile
 		);
+
 		importModule("AddressInfo","class");
 		$obj_address = new AddressInfo;
 		$obj_address->update_address($param, $address_id);

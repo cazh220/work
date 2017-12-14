@@ -10,7 +10,14 @@ class Patient extends Model
 	{
 		$start = ($param['page']-1)*$param['page_size'];
 		$page_size = $param['page_size'];
-		$res = Db::query("SELECT * FROM hg_patient a left join hg_false_tooth b on a.false_tooth = b.false_tooth_id ORDER BY patient_id DESC LIMIT $start, $page_size");
+		$sql = "SELECT * FROM hg_patient a left join hg_false_tooth b on a.false_tooth = b.false_tooth_id";
+		if(!empty($param['tech_id']))
+		{
+			$sql .= " WHERE a.tech_id = ".$param['tech_id'];
+		}
+		$sql .= " ORDER BY a.patient_id DESC LIMIT $start, $page_size";
+		
+		$res = Db::query($sql);
 		
 		return !empty($res) ? $res : array();
 	}

@@ -14,7 +14,7 @@ class Patient
 		//获取我的信息
 		$user_id = Session::get('user.user_id');
 		
-		$param = array('page'=>1, 'page_size'=>10);
+		$param = array('page'=>1, 'page_size'=>10, 'tech_id'=>$user_id);
 		$Patient = model('Patient');
 		$res = $Patient->patient_list($param);
 		//print_r($res);die;

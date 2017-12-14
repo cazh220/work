@@ -108,10 +108,10 @@ class Credits
 		$day = range(1, 31);
 		
 		$temp = $user[0]['birthday'] ? explode('-', $user[0]['birthday']) : array();
+
 		$year_s = !empty($temp[0]) ? intval($temp[0]) : '';
 		$month_s = !empty($temp[1]) ? intval($temp[1]) : '';
-		$day_s = !empty($temp[2]) ? intval($temp[2]) : '';
-		
+		$day_s = !empty($temp[2]) ? intval(substr($temp[2], 0, 2)) : '';
 		$view = new View();
 		$view->assign('patient', $patient_detail);
 		$view->assign('users', Session::get('user.mobile'));
@@ -144,7 +144,7 @@ class Credits
 			}
 		}
 		
-		$birthday = $_POST['year'].'-'.$_POST['month'].'-'.$_POST['day'].' 00:00:00';
+		//$birthday = $_POST['year'].'-'.$_POST['month'].'-'.$_POST['day'].' 00:00:00';
 		$tooth_position = $_POST['tooth_position1'].'|'.$_POST['tooth_position2'].'|'.$_POST['tooth_position3'].'|'.$_POST['tooth_position4'];
 			
 		//获取录入人信息
@@ -158,7 +158,8 @@ class Credits
 			'name'		=> $_POST['name'],
 			'sex'		=> $_POST['sex'],
 			'operator'	=> $user[0]['realname'],
-			'birthday'	=> $birthday,
+			//'birthday'	=> date("Y-m-d H:i:s", strtotime($birthday)),
+			'birthday'	=> intval($_POST['birthday']),
 			'tooth_position'=> $tooth_position,
 			'false_tooth'	=> $_POST['false_tooth'],
 			//'repairosome_pic'	=> $head_img,
@@ -193,7 +194,8 @@ class Credits
 		}
 		else
 		{
-			header("Location:http://www.yrsyc.cn/app/public/index.php/index/credits/write_security_code");
+			echo "<script>alert('录入成功');window.location.href='http://www.yrsyc.cn/app/public/index.php/index/credits/write_security_code';</script>";
+			//header("Location:http://www.yrsyc.cn/app/public/index.php/index/credits/write_security_code");
 			exit();
 		}
 		

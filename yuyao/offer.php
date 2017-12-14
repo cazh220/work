@@ -37,7 +37,7 @@ class offer extends Action {
 		//导入工具类
 		import('util.CategoryShow');
 		$category_show = CategoryShow::category_show($category_list);
-		
+
 		$page = $this->app->page();
 		$page->value('category',$category_show);
 		$page->params['template'] = 'offer_menu.html';

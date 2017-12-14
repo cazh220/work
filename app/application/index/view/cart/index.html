@@ -175,7 +175,8 @@
 					{
 						//console.log(msg);
 						alert(msg.message);
-						window.location.href="index";
+						$("#tr"+id).css("display","none");
+						//window.location.href="index";
 					}
 				});
 			}
@@ -191,7 +192,7 @@
 					{
 						//console.log(msg);
 						alert(msg.message);
-						window.location.href="cart/index";
+						window.location.href="index";
 					}
 				});
 			}
@@ -516,7 +517,7 @@ function CheckAll(form)
 				</tr>
 			{else /}
 				{volist name='goods' id='item'}
-				<tr bgcolor="#FFFFFF"> 
+				<tr bgcolor="#FFFFFF" id="tr{$item.goods_id}"> 
 				  <td>{$item.id}</td>
 				  <td>{$item.gift_name}</td>
 				  <td>{$item.credits}</td>

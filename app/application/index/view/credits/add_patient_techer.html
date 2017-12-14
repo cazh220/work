@@ -367,26 +367,31 @@
 			</tr>
 			
 			<tr>
-				<td width="16%" height="25" bgcolor="ffffff">出生年月:</td>
+				<!--<td width="16%" height="25" bgcolor="ffffff">出生年月:</td>
 				<td bgcolor="ffffff">
 					<select id="year" name="year" >
 						<option value="">请选择</option>
 						{volist name="year" id="_year"}
-						<option value="{$_year}" {if condition="$_year eq $year_s"}selected{/if}>{$_year}</option>
+						<option value="{$_year}" {if $_year == $year_s}selected{/if}>{$_year}</option>
 						{/volist}
 					</select>年
 					<select id="month" name="month" >
 						<option value="">请选择</option>
 						{volist name="month" id="_month"}
-						<option value="{$_month}" {if condition="$_month eq $month_s"}selected{/if}>{$_month}</option>
+						<option value="{$_month}" {if $_month == $month_s}selected{/if}>{$_month}</option>
 						{/volist}
 					</select>月
 					<select id="day" name="day" >
 						<option value="">请选择</option>
 						{volist name="day" id="_day"}
-						<option value="{$_day}" {if condition="$_day eq $day_s"}selected{/if}>{$_day}</option>
+						<option value="{$_day}" {if $_day == $day_s}selected{/if}>{$_day}</option>
 						{/volist}
 					</select>日
+					<span style="color:red">*</span>
+				</td>-->
+				<td width="16%" height="25" bgcolor="ffffff">年龄:</td>
+				<td bgcolor="ffffff">
+					<input  type="text"  id="birthday" name="birthday" value="{$patient.birthday}"/>
 					<span style="color:red">*</span>
 				</td>
 			</tr>

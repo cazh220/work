@@ -16,6 +16,7 @@ class Cart
 		$param = array('page'=>1, 'page_size'=>10);
 		$Cart = model('Cart');
 		$cart_goods_list = $Cart->good_cart_goods($param);
+		
 		//消耗总积分
 		$need_total_credits = 0;
 		if($cart_goods_list)
