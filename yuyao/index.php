@@ -41,16 +41,26 @@ class index extends Action {
 			echo "<script>alert('账号或密码错误');history.go(-1);</script>";
 			exit();
 		}
+		$clent_ip = $_SERVER['REMOTE_ADDR'];
 		
 		//获取登录信息
 		importModule("UserInfo","class");
 		$obj_user = new UserInfo;
 		$user = $obj_user->get_user_info($username, $password);
+		if(!empty($user['login_ip']) && $clent_ip != $user['login_ip'])
+		{
+			echo "<script>alert('此账号已在另一台电脑上登录');window.location.href='index.php?do=login'</script>";
+			exit();
+		}
+
 		if(empty($user))
 		{
 			echo "<script>alert('账号或者密码错误');window.location.href='index.php?do=login'</script>";
 			exit();
 		}
+
+		//更新ip
+		$obj_user->update_client_ip($user['user_id'], $clent_ip);
 		
 		$_SESSION = $user;
 		echo "<script>window.location.href='myorder.php'</script>";
@@ -61,6 +71,7 @@ class index extends Action {
  	public function doLogout()
  	{
  		unset($_SESSION);
+ 		$obj_user->update_client_ip($user['user_id'], '');
  		$page = $this->app->page();
 		//$page->value('user_id',$user_id);
 		$page->params['template'] = 'login.html';

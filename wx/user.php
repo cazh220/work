@@ -96,9 +96,12 @@ class user extends Action {
 	{
 		$code = $_GET['code'];
 		$state = $_GET['state'];
-		$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxa02a6a965b89a9c0&secret=93039a23ef6f5bfd3b6f6f39c636ad78&code={$code}&grant_type=authorization_code";
+		file_put_contents("user.txt", date("Y-m-d H:i:s")."微信接口param：".json_encode($_GET)."\n", FILE_APPEND); 
+		//$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxa02a6a965b89a9c0&secret=93039a23ef6f5bfd3b6f6f39c636ad78&code={$code}&grant_type=authorization_code";
+		$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2ccfb6af79958896&secret=90e0b21ebb265d871d22a57d7c1162d0&code={$code}&grant_type=authorization_code";
 		import('util.RequestCurl');
 		$json_ticket = RequestCurl::curl_get($url);
+		file_put_contents("user.txt", date("Y-m-d H:i:s")."微信接口ticket：".$json_ticket."\n", FILE_APPEND); 
 		$ticket = json_decode($json_ticket, true);
 		//$access_token = $ticket['access_token'];
 		$open_id = $ticket['openid'];
@@ -108,6 +111,7 @@ class user extends Action {
 		$jssdk = new JSSDK();
 		$access_token = $jssdk->getAccessToken();
 		$url = "https://api.weixin.qq.com/cgi-bin/user/info?access_token={$access_token}&openid={$open_id}";
+		file_put_contents("user.txt", date("Y-m-d H:i:s")."微信接口URL：".$url."\n", FILE_APPEND); 
 		$json_wx_user = RequestCurl::curl_get($url);
 		file_put_contents("user.txt", date("Y-m-d H:i:s")."微信接口获取：".$json_wx_user."\n", FILE_APPEND); 
 		$wx_user = json_decode($json_wx_user, true);
