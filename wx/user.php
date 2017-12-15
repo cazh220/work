@@ -1087,6 +1087,41 @@ class user extends Action {
 		$company_pic	= !empty($_POST['company_pic']) ? trim($_POST['company_pic']) : '';
 		$info			= !empty($_POST['info']) ? trim($_POST['info']) : '';
 		
+		//插入新的到地址列表
+		//获取手机号
+		importModule("userInfo","class");
+		$obj_user = new userInfo;
+		$user = $obj_user->get_user_detail($user_id);
+		$mobile = $user[0]['mobile'] ? $user[0]['mobile'] : 0;
+		
+		//完善资料增加积分
+		//获取积分参考值
+		importModule("CreditInfo","class");
+		$obj_credit = new CreditInfo;
+		$credit_list = $obj_credit->get_credits_list();
+		$score = 0;//积分
+		if(!empty($credit_list))
+		{
+			$credit_item = array();
+			foreach($credit_list as $key => $item)
+			{
+				$credit_item[$item['id']] = $item['credits'];
+			}
+			
+			if(!empty($upload_pic) && empty($user[0]['head_img']))
+			{
+				$score += $credit_item[1];
+			}
+			if(!empty($company_info) && empty($user[0]['company_info']))
+			{
+				$score += $credit_item[2];
+			}
+			if(!empty($position) && empty($user[0]['position']))
+			{
+				$score += $credit_item[5];
+			}
+		}
+		
 		$data = array(
 			'realname'		=> $realname,
 			'position'		=> $position,
@@ -1100,15 +1135,11 @@ class user extends Action {
 			'city'			=> $city,
 			'district'		=> $district,
 			'address_id'	=> $address_id,
-			'user_id'		=> $user_id
+			'user_id'		=> $user_id,
+			'total_credits'	=> $user[0]['total_credits']+$score,
+			'left_credits'	=> $user[0]['left_credits']+$score,
 		);
 		
-		//插入新的到地址列表
-		//获取手机号
-		importModule("userInfo","class");
-		$obj_user = new userInfo;
-		$user = $obj_user->get_user_detail($user_id);
-		$mobile = $user[0]['mobile'] ? $user[0]['mobile'] : 0;
 		//更新地址
 		$param = array(
 			'user_id'		=> $user_id,
@@ -1117,7 +1148,7 @@ class user extends Action {
 			'district'		=> $district,
 			'address'		=> $address,
 			'receiver'		=> $realname,
-			'mobile'		=> $mobile
+			'mobile'		=> $mobile,
 		);
 
 		importModule("AddressInfo","class");

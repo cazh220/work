@@ -82,7 +82,7 @@ class Credits
 			$patient_detail['hospital'] = '';
 			$patient_detail['doctor'] = '';
 			$patient_detail['name'] = '';
-			$patient_detail['sex'] = '';
+			$patient_detail['sex'] = 1;
 			$patient_detail['year'] = '';
 			$patient_detail['month'] = '';
 			$patient_detail['day'] = '';
@@ -93,6 +93,7 @@ class Credits
 			$patient_detail['false_tooth'] = '';
 			$patient_detail['repairosome_pic'] = '';
 			$patient_detail['patient_id'] = '';
+			$patient_detail['birthday'] = '';
 		}
 		else
 		{
