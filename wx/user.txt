@@ -1,0 +1,5 @@
+2017-12-15 14:06:46获取SESSION：{"sess_id":"k7l0jicjrron28s1iffv4cg633"}
+2017-12-15 14:06:46微信接口param：{"register":"1"}
+2017-12-15 14:06:46微信接口ticket：{"errcode":41008,"errmsg":"missing code, hints: [ req_id: 8DPWDa0006th50 ]"}
+2017-12-15 14:06:46微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=4_sjUtHuErNROixdzjyWh21GDPRq2ZZEOzz8kxgUsAhwK0nl_PUGnv8HeXfQn98JFzXfKbC4zcPEj1wAz1m3qk7cMdk02gCCdtGUW7sLA9Xs1LhMG1UXgVoSRszej1XNK_atl_A7EMfQkus4neKULeADAVFW&openid=
+2017-12-15 14:06:47微信接口获取：{"errcode":40003,"errmsg":"invalid openid hint: [ffOBha0007vr23]"}

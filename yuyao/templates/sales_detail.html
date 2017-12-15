@@ -53,11 +53,11 @@
 				<th align="center">销售单位</th>
 				<th align="center">销售价格</th>
 				<th align="center">销售金额</th>
-				<th align="center">差额</th>
+				<th align="center" width="5%">差额</th>
 				<th align="center" style="width: 100px;">备注</th>
 				<th align="center" style="width: 100px;">内部备注</th>
-				<th align="center">是否发送</th>
-				{if $permission == 1 || ($permission == 2 AND $item.send_status == 0)}<th align="center">操作</th>{/if}
+				<th align="center">已送</th>
+				{if $permission == 1 || ($permission == 2 AND $item.send_status == 0)}<th align="center; width:10%">操作</th>{/if}
 		</thead>
 		<tbody class="goods_list_a">
 			{if $order_goods}
@@ -71,11 +71,11 @@
 				<td><div id="d_received_num_{$item.goods_id}">{$item.received_num}</div></td>
 				<td>{$item.unit}</td>
 				<td><div id="d_goods_price_{$item.goods_id}">{$item.good_price}</div></td>
-				<td>{$item.good_price*$item.received_num}</td>
-				<td><span id="diff_{$item.goods_id}">{$item.good_price*$item.goods_num-$item.good_price*$item.received_num}</span></td>
+				<td>{$item.sales_amount}</td>
+				<td><span id="diff_{$item.goods_id}">{$item.diff_amount}</span></td>
 				<td><div id="d_good_note_{$item.goods_id}">{$item.good_note}</div></td>
 				<td><div id="dn_good_note_{$item.goods_id}">{$item.n_good_note}</div></td>
-				<td><div id="d_send_status_{$item.goods_id}"><i {if $permission == 1}onclick="change({$item.goods_id})"{/if} id="send_status{$item.goods_id}" class="{if $item.send_status == 1}fa fa-check{else}fa fa-times{/if}" style="color: green;"></i></div></td>
+				<td><div id="d_send_status_{$item.goods_id}"><i {if $permission == 1}onclick="change({$item.goods_id})"{/if} id="send_status{$item.goods_id}" class="{if $item.send_status == 1}fa fa-check{else}fa fa-times{/if}" style="{if $item.send_status == 1}color: green;{else}color: red;{/if}"></i></div></td>
 				{if $permission == 1 || ($permission == 2 AND $item.send_status == 0)}<td><a href="#" onclick="delete_good({$item.goods_id})" style="color:dodgerblue;">删除</a>&nbsp;&nbsp;<a href="#" style="color:dodgerblue;" onclick="edit_info('{$item.goods_id}','{$item.goods_num}','{$item.send_num}','{$item.received_num}','{$item.good_note}', '{$item.good_price}', '{$item.n_good_note}')">编辑</a></td>{/if}
 				<!--<td>{$item.good_price}</td>-->
 			</tr>
@@ -97,14 +97,18 @@ function change(val)
 	var send_status = 0;
 	if(cls == 'fa fa-check')
 	{
+		//修改为未发送
 		$("#send_status"+val).removeClass("fa fa-check");
 		$("#send_status"+val).addClass("fa fa-times");
+		$("#send_status"+val).css("color","red");
 		send_status = 0;
 	}
 	else
 	{
+		//修改为发送
 		$("#send_status"+val).removeClass("fa fa-times");
 		$("#send_status"+val).addClass("fa fa-check");
+		$("#send_status"+val).css("color","green");
 		send_status = 1;
 	}
 	

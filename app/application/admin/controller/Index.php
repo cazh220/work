@@ -31,11 +31,21 @@ class Index extends Controller
 	
     public function index()
     {
-		//print_r(Config::get('host'));die;
-        $view = new View();
-		$view->assign('menu', Session::get('menu'));
-		$view->assign('username', Session::get('username'));
-		return $view->fetch('index');
+    	if(empty(Session::get('admin_id')))
+    	{
+    		//跳转到登录页面
+    		header("Content-type:text/html;charset=utf-8");
+            echo "<script>window.location.href='index/login';</script>";
+    	}
+    	else
+    	{
+    		//print_r(Config::get('host'));die;
+	        $view = new View();
+			$view->assign('menu', Session::get('menu'));
+			$view->assign('username', Session::get('username'));
+			return $view->fetch('index');
+    	}
+		
     }
 	
 	public function login()

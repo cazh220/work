@@ -10,6 +10,12 @@ class myorder extends Action {
 	 * 默认执行的方法
 	 */
 	public function doDefault(){	
+		//判断SESSION是否有效
+		if (empty($_SESSION['user_id']))
+		{
+			echo "<script>window.location.href='index.php?do=login'</script>";
+			exit();
+		}
 		//获取分类列表
 		/*
 		importModule("CategoryInfo","class");

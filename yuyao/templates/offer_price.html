@@ -82,7 +82,6 @@ function update_price(goods_id, role_id, price, o)
 function update_role_price(user_id, goods_id, role_id)
 {
 	var price = $("#price_"+user_id).val();
-
 	$.ajax({
 		type:"post",
 		//url:"goods.php?do=updateroleprice",

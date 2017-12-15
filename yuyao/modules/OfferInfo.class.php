@@ -80,7 +80,7 @@ class OfferInfo
     	}
     	
     	//先清掉所有user和role的报价
-    	$sql = "DELETE FROM yy_offer WHERE role_id = ".$param['role_id']. " AND is_delete = 0";
+    	$sql = "DELETE FROM yy_offer WHERE role_id = ".$param['role_id']. " AND goods_id = ".$param['goods_id']." AND is_delete = 0";
     	//开启事务
     	$this->db->exec("START TRANSACTION");
     	try{
@@ -132,7 +132,7 @@ class OfferInfo
     	
     	
     	//获取分类的价格
-    	$sql = "SELECT * FROM yy_offer WHERE goods_id = ".$goods_id." AND role_id = ".$role_id." AND is_delete = 0";
+    	$sql = "SELECT * FROM yy_offer WHERE goods_id = ".$goods_id." AND user_id = 0 AND role_id = ".$role_id." AND is_delete = 0";
     	$role_price = $this->db->getRow($sql);
     	if($role_price)
     	{

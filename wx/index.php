@@ -125,7 +125,8 @@ class index extends Action {
 		{
 			$code = $_GET['code'];
 			$state = $_GET['state'];
-			$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxa02a6a965b89a9c0&secret=93039a23ef6f5bfd3b6f6f39c636ad78&code={$code}&grant_type=authorization_code";
+			//$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wxa02a6a965b89a9c0&secret=93039a23ef6f5bfd3b6f6f39c636ad78&code={$code}&grant_type=authorization_code";
+			$url = "https://api.weixin.qq.com/sns/oauth2/access_token?appid=wx2ccfb6af79958896&secret=90e0b21ebb265d871d22a57d7c1162d0&code={$code}&grant_type=authorization_code";
 			import('util.RequestCurl');
 			$json_ticket = RequestCurl::curl_get($url);
 			$ticket = json_decode($json_ticket, true);
@@ -152,7 +153,8 @@ class index extends Action {
 		$security_code = !empty($_GET['security_code']) ? trim($_GET['security_code']) : '';
 		$headimgurl = !empty($_GET['headimgurl']) ? trim($_GET['headimgurl']) : '';
 		$urlencode_head = urlencode($headimgurl);
-		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa02a6a965b89a9c0&redirect_uri=".urlencode("http://www.yrsyc.cn/wx/index.php?do=share&wx=1&security_code=".$security_code."&headimgurl=".$headimgurl)."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+		//$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa02a6a965b89a9c0&redirect_uri=".urlencode("http://www.yrsyc.cn/wx/index.php?do=share&wx=1&security_code=".$security_code."&headimgurl=".$headimgurl)."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2ccfb6af79958896&redirect_uri=".urlencode("http://www.yrsyc.cn/wx/index.php?do=share&wx=1&security_code=".$security_code."&headimgurl=".$headimgurl)."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
 		header("Location:".$url);
 	}
 	
