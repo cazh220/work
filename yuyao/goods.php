@@ -113,7 +113,7 @@ class goods extends Action {
 		{
 			foreach($list['list'] as $key =>$val)
 			{
-				$list['list'][$key]['price'] = sprintf("%01.2f",$val['price']);
+				$list['list'][$key]['price'] = number_format($val['price'], 2, ".", "");//sprintf("%01.2f",$val['price']);
 			}
 		}
 		
@@ -328,7 +328,7 @@ class goods extends Action {
 		$leaf_role = RoleShow::get_leaf_role($role_cate);
 
 		$good_info = $obj_good->get_good_detail($goods_id);
-		$base_price = !empty($good_info['price']) ? $good_info['price'] : 0;
+		$base_price = !empty($good_info['price']) ? number_format($good_info['price'], 2, '.', '') : 0;
 		$goods_name = !empty($good_info['goods_name']) ? $good_info['goods_name'] : '';
 		$offer_price = array();
 		//基础报价
@@ -368,13 +368,15 @@ class goods extends Action {
 						$start_time = '';
 						$end_time = '';
 					}
+					$price	= number_format($price, 2, '.', '');//格式化价格
 					
 					$offer_price[$key] = array(
 						'goods_id'	=> $goods_id,
 						'role_id'	=> $val['role_id'],
 						'role_name'	=> $val['role_name'],
 						'goods_name'=> $goods_name,
-						'price'		=> sprintf("%01.2f",$price),
+						//'price'		=> sprintf("%01.2f",$price),
+						'price'		=> number_format($price, 2, '.', ''),//格式化价格
 						'start_time'=> $start_time,
 						'end_time'	=> $end_time,
 						'type'		=> 'client',
@@ -463,7 +465,8 @@ class goods extends Action {
 		$leaf_role = RoleShow::get_leaf_role($role_cate);
 
 		$good_info = $obj_good->get_good_detail($goods_id);
-		$base_price = !empty($good_info['price']) ? $good_info['price'] : 0;
+		//$base_price = !empty($good_info['price']) ? $good_info['price'] : 0;
+		$base_price = !empty($good_info['price']) ? number_format($good_info['price'], 2, '.', '') : 0;
 		$goods_name = !empty($good_info['goods_name']) ? $good_info['goods_name'] : '';
 		$offer_price = array();
 		//基础报价
@@ -504,13 +507,14 @@ class goods extends Action {
 						$start_time = '';
 						$end_time = '';
 					}
+					$price = number_format($price, 2, '.', '');//格式化价格
 
 					$offer_price[$key] = array(
 						'goods_id'	=> $goods_id,
 						'role_id'	=> $val['role_id'],
 						'role_name'	=> $val['role_name'],
 						'goods_name'=> $goods_name,
-						'price'		=> sprintf("%01.2f",$price),
+						'price'		=> $price,//sprintf("%01.2f",$price),
 						'start_time'=> $start_time,
 						'end_time'	=> $end_time,
 						'type'		=> 'client'

@@ -101,7 +101,7 @@ class offer extends Action {
 				$role_price = $obj_good->get_good_price($val['goods_id']);
 			}
 			
-			$list['list'][$key]['price'] = sprintf("%01.2f",$role_price);
+			$list['list'][$key]['price'] = number_format($role_price, 2, ".", "");//sprintf("%01.2f",$role_price);
 		}
 		
 		//print_r($page_info);die;
@@ -125,6 +125,9 @@ class offer extends Action {
 		$end_time		= !empty($_REQUEST['end_time']) ? trim($_REQUEST['end_time']) : '';
 		$operator_id	= !empty($_REQUEST['operator_id']) ? trim($_REQUEST['operator_id']) : $_SESSION['user_id'];
 		$operator		= !empty($_REQUEST['operator']) ? trim($_REQUEST['operator']) : $_SESSION['username'];
+		
+		//价格格式化
+		$price			= number_format($price, 2, '.', '');
 		
 		$offer = array(
 			'goods_id'		=> $goods_id,

@@ -232,6 +232,19 @@ class order extends Action {
 
 		//获取商品信息
 		$order_goods = $obj_order->get_order_goods($order_id);
+		
+		//销售金额格式化
+		if($order_goods)
+		{
+			foreach($order_goods as $key => $val)
+			{
+				$order_goods[$key]['sales_amount'] = number_format($val['good_price']*$val['received_num'], 2, ".", "");
+				//差额
+				$diff_amount = $val['good_price']*($val['goods_num']-$val['received_num']);
+				$order_goods[$key]['diff_amount'] = number_format($diff_amount, 2, ".", "");
+			}
+		}
+		
 		//print_r($order_goods);die;
 		//权限处理
 		$user_type  = !empty($_SESSION['type']) ? intval($_SESSION['type']) : 0;//1管理员 0普通会员
@@ -568,12 +581,21 @@ class order extends Action {
 		importModule("OrderInfo","class");
 		$obj_order = new OrderInfo;
 		$res = $obj_order->update_send_status($order_id, $goods_id, $send_status);
-
+		
+		if($send_status)
+		{
+			$send_status_name = '已送';
+		}
+		else
+		{
+			$send_status_name = '未送';
+		}
+		
 		if($res)
 		{
 			$data = array(
 				'status' => true,
-				'msg'	 => '状态更新成功'
+				'msg'	 => '状态更新为：'.$send_status_name
 			);
 		}
 		else
@@ -817,7 +839,7 @@ class order extends Action {
 		//获取商品详情和报价
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
-		
+	
 		//获取商品报价
 		importModule("OfferInfo","class");
 		$obj_offer = new OfferInfo;
@@ -829,11 +851,12 @@ class order extends Action {
 				$good = $obj_good->get_good_detail($val[0]);
 				//获取报价
 				$role_price = $obj_offer->get_good_offer_price($val[0], $order_user_id, $order_role_id);
-				$good['price']	=  !empty($val['4']) ? $val['4'] : $role_price;
+				$good['price']	=  !empty($val[4]) ? $val[4] : $role_price;
 
 				$sales = 0;
 				$diff = 0;
-				$sales = $good['price']*$good['goods_num'];
+				$sales = $val[4]*$val[1];//$good['price']*$good['goods_num'];
+				$sales = number_format($sales, 2, ".", "");
 				$actual_sales = $good['price']*$good['received_num'];
 				$diff = $sales-$actual_sales;
 				
