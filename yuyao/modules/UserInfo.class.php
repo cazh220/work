@@ -293,7 +293,7 @@ class UserInfo
 		{
     		return false;
     	}
-    	$sql = "UPADTE yy_users SET login_ip = '".$ip."' WHERE user_id = ".$user_id;
+    	$sql = "UPDATE yy_users SET login_ip = '".$ip."' WHERE user_id = ".$user_id;
     	try{
     		$res = $this->db->exec($sql);
     	}catch(exception $e){

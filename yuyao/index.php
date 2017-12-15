@@ -70,8 +70,11 @@ class index extends Action {
  	//退出
  	public function doLogout()
  	{
+ 		importModule("UserInfo","class");
+		$obj_user = new UserInfo;
+ 		$obj_user->update_client_ip($_SESSION['user_id'], '');
  		unset($_SESSION);
- 		$obj_user->update_client_ip($user['user_id'], '');
+ 		
  		$page = $this->app->page();
 		//$page->value('user_id',$user_id);
 		$page->params['template'] = 'login.html';
