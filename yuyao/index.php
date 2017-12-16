@@ -33,47 +33,62 @@ class index extends Action {
 	//登录操作
 	public function doLoginAct()
 	{
-		$username	= !empty($_POST['username']) ? trim($_POST['username']) : '';
-		$password	= !empty($_POST['password']) ? trim($_POST['password']) : '';
-		
-		if(empty($username) || empty($password))
+		$this->s_sessionid = $_SESSION['sess_id'];
+		if(!empty($_SESSION[$this->s_sessionid]['user_id']))
 		{
-			echo "<script>alert('账号或密码错误');history.go(-1);</script>";
-			exit();
+			$user_id = $_SESSION[$this->s_sessionid]['user_id'];
+			importModule("UserInfo","class");
+			$obj_user = new UserInfo;
+			$user_detail = $obj_user->get_user_detail($user_id);
 		}
-		$clent_ip = $_SERVER['REMOTE_ADDR'];
 		
-		//获取登录信息
-		importModule("UserInfo","class");
-		$obj_user = new UserInfo;
-		$user = $obj_user->get_user_info($username, $password);
-		if(!empty($user['login_ip']) && $clent_ip != $user['login_ip'])
+		if(empty($_SESSION[$this->s_sessionid]) || (!empty($user_detail) && $user_detail['sess_id'] != $this->s_sessionid))
 		{
-			echo "<script>alert('此账号已在另一台电脑上登录');window.location.href='index.php?do=login'</script>";
-			exit();
+			$username	= !empty($_POST['username']) ? trim($_POST['username']) : '';
+			$password	= !empty($_POST['password']) ? trim($_POST['password']) : '';
+			if(empty($username) || empty($password))
+			{
+				echo "<script>alert('账号或密码错误');history.go(-1);</script>";
+				exit();
+			}
+			//import('util.Ip');
+			//$client_ip = Ip::get();
+			//获取登录信息
+			importModule("UserInfo","class");
+			$obj_user = new UserInfo;
+			$user = $obj_user->get_user_info($username, $password);
+			if(empty($user))
+			{
+				echo "<script>alert('账号或者密码错误');window.location.href='index.php?do=login'</script>";
+			}
+			//先销毁掉已存在的session
+			$old_sess_id = $user['sess_id'];
+			if($old_sess_id)
+			{
+				//销毁掉session
+				unset($_SESSION[$old_sess_id]);
+			}
+			//判断sess_id 是否空或者不相等则则更新
+			//更新ip
+			//$obj_user->update_client_ip($user['user_id'], $client_ip);
+			$obj_user->update_sess_id($user['user_id'], $this->s_sessionid);//更新sess_id
+			$user['sess_id'] = $this->s_sessionid;
+			$_SESSION[$this->s_sessionid] = $user;
 		}
 
-		if(empty($user))
-		{
-			echo "<script>alert('账号或者密码错误');window.location.href='index.php?do=login'</script>";
-			exit();
-		}
-
-		//更新ip
-		$obj_user->update_client_ip($user['user_id'], $clent_ip);
-		
-		$_SESSION = $user;
-		echo "<script>window.location.href='myorder.php'</script>";
-		exit();
+		//不需要重新校验直接登录
+		echo "<script>window.location.href='myorder.php';</script>";
  	}
  	
  	//退出
  	public function doLogout()
  	{
- 		importModule("UserInfo","class");
-		$obj_user = new UserInfo;
- 		$obj_user->update_client_ip($_SESSION['user_id'], '');
- 		unset($_SESSION);
+ 		//importModule("UserInfo","class");
+		//$obj_user = new UserInfo;
+ 		//$obj_user->update_client_ip($_SESSION['user_id'], '');
+ 		//$user_id = $_SESSION['user_id']['user_id'];
+ 		$sess_id = $_SESSION['sess_id'];
+ 		unset($_SESSION[$sess_id]);
  		
  		$page = $this->app->page();
 		//$page->value('user_id',$user_id);

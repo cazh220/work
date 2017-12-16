@@ -9,12 +9,16 @@ class myorder extends Action {
 	/**
 	 * 默认执行的方法
 	 */
-	public function doDefault(){	
+	public function doDefault(){//print_r($_SESSION);die;
 		//判断SESSION是否有效
-		if (empty($_SESSION['user_id']))
+		$this->s_sessionid = $_SESSION['sess_id'];
+		$user_id = $_SESSION[$this->s_sessionid]['user_id'];
+		importModule("UserInfo","class");
+		$obj_user = new UserInfo;
+		$user_detail = $obj_user->get_user_detail($user_id);//var_dump($this->s_sessionid);var_dump($user_detail);die;
+		if($this->s_sessionid != $user_detail['sess_id'])
 		{
 			echo "<script>window.location.href='index.php?do=login'</script>";
-			exit();
 		}
 		//获取分类列表
 		/*
@@ -54,7 +58,7 @@ class myorder extends Action {
 		//$page->value('category',$category_show);
 		//$page->value('main','myorder');
 		$page->value('role',$role);
-		$page->value('user',$_SESSION);
+		$page->value('user',$_SESSION[$this->s_sessionid]);
 		$page->params['template'] = 'myorder_menu.html';
 		$page->output();
 	}

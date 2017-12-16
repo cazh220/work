@@ -304,6 +304,25 @@ class UserInfo
     	return true;
     }
     
+    //更新登录sess_id
+    public function update_sess_id($user_id=0, $sess_id='')
+    {
+    	$res = array();
+    	if($this->db == null ||  empty($user_id))
+		{
+    		return false;
+    	}
+    	$sql = "UPDATE yy_users SET sess_id = '".$sess_id."' WHERE user_id = ".$user_id;
+    	try{
+    		$res = $this->db->exec($sql);
+    	}catch(exception $e){
+    		$this->_log(array( __CLASS__ . '.class.php line ' . __LINE__ , 'function '. __FUNCTION__ . ' err:'.$e->getMessage().'  sql execute false. sql = ' . $sql, date("Y-m-d H:i:s")));
+    		return false;
+    	} 
+    	
+    	return true;
+    }
+    
 
 	/**
 	 * 数据更新失败记录日志，并标识操作失败
