@@ -53,6 +53,11 @@ $(function(){
 	});
 
 });
+
+ $(window).bind('beforeunload',function(){
+     return '确定要离开此页面';
+ });
+
 {/literal}
 </script>
 </head>
