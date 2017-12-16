@@ -62,7 +62,6 @@ class index extends Action {
 			$obj_user->update_sess_id($user['user_id'], $this->s_sessionid);//更新sess_id
 			$user['sess_id'] = $this->s_sessionid;
 			$_SESSION[$this->s_sessionid] = $user;
-			print_r($_SESSION);die;
 			//不需要重新校验直接登录
 			echo "<script>window.location.href='myorder.php';</script>";
 		}
@@ -143,13 +142,15 @@ class index extends Action {
  	//退出
  	public function doLogout()
  	{
- 		//importModule("UserInfo","class");
-		//$obj_user = new UserInfo;
- 		//$obj_user->update_client_ip($_SESSION['user_id'], '');
- 		//$user_id = $_SESSION['user_id']['user_id'];
+ 		//print_r($_SESSION);
  		$sess_id = $_SESSION['sess_id'];
+ 		importModule("UserInfo","class");
+ 		//$obj_user->update_client_ip($_SESSION['user_id'], '');
+ 		$user_id = $_SESSION[$sess_id]['user_id'];
+ 		$obj_user = new UserInfo;
+		$obj_user->update_sess_id($user_id, '');
+		
  		unset($_SESSION[$sess_id]);
- 		
  		$page = $this->app->page();
 		//$page->value('user_id',$user_id);
 		$page->params['template'] = 'login.html';
@@ -243,13 +244,48 @@ class index extends Action {
 		$obj_role = new RoleInfo;
 		$roles = $obj_role->get_all_roles();
 		
+		$role_list = $obj_role->get_all_roles(array(), 0);
+		importModule("UserInfo","class");
+		$obj_user = new UserInfo;
+		import('util.RoleShow');
+		$role_show = RoleShow::role_show($role_list);
+		//print_r($role_show);
+		//获取分类和客户
+		if(!empty($role_show))
+		{
+			foreach($role_show as $key => $val)
+			{
+				$users = array();
+				$users = $obj_user->get_role_users($val['role_id']);
+				$role_show[$key]['users'] = !empty($users) ? $users : array();
+				if(!empty($val['child']))
+				{
+					foreach($val['child'] as $k => $v)
+					{
+						$users_c = array();
+						$users_c = $obj_user->get_role_users($v['role_id']);
+						$role_show[$key]['child'][$k]['users'] = !empty($users_c) ? $users_c : array();
+						if(!empty($v['child']))
+						{
+							foreach($v['child'] as $kk => $vv)
+							{
+								$users_cc = array();
+								$users_cc = $obj_user->get_role_users($vv['role_id']);
+								$role_show[$key]['child'][$k]['child'][$kk]['users'] = !empty($users_cc) ? $users_cc : array();
+							}
+						}
+					}
+				} 
+			}
+		}
+		
 		importModule("TruckInfo","class");
 		$obj_truck = new TruckInfo;
 		$trucks = $obj_truck->get_all_trucks();
-		
  		$page = $this->app->page();
  		$page->value('roles',$roles['list']);
  		$page->value('trucks',$trucks);
+ 		$page->value('role_show',$role_show);
 		$page->params['template'] = 'register.html';
 		$page->output();
  	}

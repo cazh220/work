@@ -1,0 +1,108 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>宇尧系统</title>
+<link href="templates/themes/css/login.css" rel="stylesheet" type="text/css" />
+</head>
+
+<body>
+	<div id="login">
+		<div id="login_header">
+			<h1 class="login_logo">
+				<a href="#"><img src="templates/themes/default/images/login_logo.gif" /></a>
+			</h1>
+		</div>
+		<div id="login_content" style="height: 600px;">
+			<div class="registerForm" style="border:solid 1px #002280; padding: 20px 80px;">
+				<form action="index.php?do=registeract" method="post">
+					<p>
+						<div style="width:80px;margin: 0 auto; font-size: 22px; font-weight: bolder;">注册</div>
+					</p>
+					<p>
+						<label style="margin-left: 12px;">用户名：</label>
+						<input type="text" name="username" size="20" class="login_input"/><span style="color: red;">*</span>
+					</p>
+					<p>
+						<label style="margin-left: 24px;">密码：</label>
+						<input type="password" name="password" size="20" class="login_input" /><span style="color: red;">*</span>
+					</p>
+					<p>
+						<label style="margin-left: 0px;">确认密码：</label>
+						<input type="password" name="repassword" size="20" class="login_input" /><span style="color: red;">*</span>
+					</p>
+					<p>
+						<label style="margin-left: 0px;">真实姓名：</label>
+						<input type="text" name="realname" size="20" class="login_input" />
+					</p>
+					<p>
+						<label style="margin-left: 0px;">客户归属：</label>
+						<!--<select name="role_id">
+							<option value="">请选择</option>
+							{if $roles}
+							{foreach from=$roles item=item key=key}
+							<option value="{$item.role_id}">{$item.role_name}</option>
+							{/foreach}
+							{/if}
+						</select>-->
+						<select name="role_id">
+							{if $role_show}
+							{foreach from=$role_show item=item key=key}
+								<option value="{$item.role_id}" style="font-weight: bolder;" {if $order_role_id == $itema.role_id}selected="selected"{/if}>{$item.role_name}</option>
+								<!--<optgroup label='{$item.role_name}'></optgroup>-->
+								
+								{if $item.child}
+								{foreach from=$item.child item=itemb key=keyb}
+									<option value="{$itemb.role_id}" style="font-weight: bolder;" {if $order_role_id == $itemb.role_id}selected="selected"{/if}>&nbsp;&nbsp;∟{$itemb.role_name}</option>
+									<!--<optgroup label='&nbsp;&nbsp;∟{$itemb.role_name}'></optgroup>-->
+									
+									{if $itemb.child}
+										{foreach from=$itemb.child item=itemd key=keyd}
+										<option value="{$itemd.role_id}" style="font-weight: bolder;" {if $order_role_id == $itemd.role_id}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemd.role_name}</option>
+											<!--<optgroup label='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemd.role_name}'></optgroup>-->
+										{/foreach}
+									{/if}
+								{/foreach}
+								{/if}
+							{/foreach}
+							{/if}
+						</select>
+						<span style="color: red;">*</span>
+					</p>
+					<p>
+						<label style="margin-left: 0px;">公司名称：</label>
+						<input type="text" name="company_name" size="20" class="login_input" />
+					</p>
+					<p>
+						<label style="margin-left: 0px;">公司地址：</label>
+						<input type="text" name="address" size="20" class="login_input" />
+					</p>
+					<p>
+						<label style="margin-left: 0px;">联系电话：</label>
+						<input type="text" name="mobile" size="20" class="login_input" /><span style="color: red;">*</span>
+					</p>
+					<p>
+						<label style="margin-left: 0px;">配送车辆：</label>
+						<select name="truck">
+							<option value="">请选择</option>
+							{if $trucks}
+							{foreach from=$trucks item=item key=key}
+							<option value="{$item.truck_id}">{$item.truck_name}</option>
+							{/foreach}
+							{/if}
+						</select>
+					</p>
+					<div class="login_bar">
+						<input class="register" type="submit" value="注册" style="border: solid 1px #002280;" />
+					</div>
+				</form>
+			</div>
+		</div>
+		
+		
+		<div id="login_footer">
+			Copyright &copy;yuyao Inc. All Rights Reserved.
+		</div>
+	</div>
+</body>
+</html>
