@@ -5,21 +5,27 @@
 require_once('./common.inc.php');
 
 class myorder extends Action {
+	/*
+	public function __construct()
+	{
+		//判断SESSION是否有效
+		$s_sessionid = $_SESSION['sess_id'];
+		$user_id = $_SESSION[$s_sessionid]['user_id'];
+		importModule("UserInfo","class");
+		$obj_user = new UserInfo;
+		$user_detail = $obj_user->get_user_detail($user_id);
+		if($s_sessionid != $user_detail['sess_id'])
+		{
+			echo "<script>window.location.href='index.php?do=login'</script>";
+			exit();
+		}
+	}*/
+
 	
 	/**
 	 * 默认执行的方法
 	 */
-	public function doDefault(){//print_r($_SESSION);die;
-		//判断SESSION是否有效
-		$this->s_sessionid = $_SESSION['sess_id'];
-		$user_id = $_SESSION[$this->s_sessionid]['user_id'];
-		importModule("UserInfo","class");
-		$obj_user = new UserInfo;
-		$user_detail = $obj_user->get_user_detail($user_id);//var_dump($this->s_sessionid);var_dump($user_detail);die;
-		if($this->s_sessionid != $user_detail['sess_id'])
-		{
-			echo "<script>window.location.href='index.php?do=login'</script>";
-		}
+	public function doDefault(){
 		//获取分类列表
 		/*
 		importModule("CategoryInfo","class");

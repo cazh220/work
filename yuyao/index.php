@@ -33,7 +33,65 @@ class index extends Action {
 	//登录操作
 	public function doLoginAct()
 	{
+		$username	= !empty($_POST['username']) ? trim($_POST['username']) : '';
+		$password	= !empty($_POST['password']) ? trim($_POST['password']) : '';
+		if(empty($username) || empty($password))
+		{
+			echo "<script>alert('账号或密码不为空');history.go(-1);</script>";
+			exit();
+		}
+			
 		$this->s_sessionid = $_SESSION['sess_id'];
+		
+		//获取登录信息
+		importModule("UserInfo","class");
+		$obj_user = new UserInfo;
+		$user = $obj_user->get_user_info($username, $password);
+		if(empty($user))
+		{
+			echo "<script>alert('账号或者密码错误');window.location.href='index.php?do=login'</script>";
+		}
+		
+		if(!empty($user['sess_id']) && ($this->s_sessionid != $user['sess_id']))
+		{
+			echo "<script>alert('此账号已有人占用，请在线者退出系统您再登录');window.location.href='index.php?do=login'</script>";
+		}
+		else
+		{
+			//更新sess_id
+			$obj_user->update_sess_id($user['user_id'], $this->s_sessionid);//更新sess_id
+			$user['sess_id'] = $this->s_sessionid;
+			$_SESSION[$this->s_sessionid] = $user;
+			print_r($_SESSION);die;
+			//不需要重新校验直接登录
+			echo "<script>window.location.href='myorder.php';</script>";
+		}
+		
+		
+		
+		/*
+		if(!empty($_SESSION[$this->s_sessionid]['user_id']))
+		{
+			//存在session且不一致
+			$user_id = $_SESSION[$this->s_sessionid]['user_id'];
+			
+		}
+		else
+		{
+			//
+			importModule("UserInfo","class");
+			$obj_user = new UserInfo;
+			$user = $obj_user->get_user_info($username, $password);
+			if(empty($user))
+			{
+				echo "<script>alert('账号或者密码错误');window.location.href='index.php?do=login'</script>";
+			}
+		}
+		
+		importModule("UserInfo","class");
+		$obj_user = new UserInfo;
+		$user_detail = $obj_user->get_user_detail($user_id);
+
 		if(!empty($_SESSION[$this->s_sessionid]['user_id']))
 		{
 			$user_id = $_SESSION[$this->s_sessionid]['user_id'];
@@ -42,6 +100,7 @@ class index extends Action {
 			$user_detail = $obj_user->get_user_detail($user_id);
 		}
 		
+
 		if(empty($_SESSION[$this->s_sessionid]) || (!empty($user_detail) && $user_detail['sess_id'] != $this->s_sessionid))
 		{
 			$username	= !empty($_POST['username']) ? trim($_POST['username']) : '';
@@ -75,9 +134,10 @@ class index extends Action {
 			$user['sess_id'] = $this->s_sessionid;
 			$_SESSION[$this->s_sessionid] = $user;
 		}
+		*/
 
 		//不需要重新校验直接登录
-		echo "<script>window.location.href='myorder.php';</script>";
+		//echo "<script>window.location.href='myorder.php';</script>";
  	}
  	
  	//退出

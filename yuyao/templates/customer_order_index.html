@@ -9,10 +9,6 @@
 				<a class="add" href="user.php?do=UsersAll" lookupGroup="orgLookup"><span>选择客户</span></a>
 			</li>
 			<li>
-				时间：<input type="text" class="date" name="confirm_time" readonly="true" value="{$param.order_time}" id="confirm_time" />
-			</li>
-			<li><div class="buttonActive"><div class="buttonContent"><button onclick="create()">新建</button></div></div></li>
-			<li>
 			
 				<table>
 					<tr>
@@ -38,7 +34,11 @@
 				
 				
 			</li>
+			<li>
+				日期：<input type="text" class="date" name="confirm_time" readonly="true" value="{$param.order_time}" id="confirm_time" />
+			</li>
 			<li><div class="buttonActive"><div class="buttonContent"><button type="button" name="query" value="query" onclick="search()">查询</button></div></div></li>
+			<li><div class="buttonActive"><div class="buttonContent"><button onclick="create()">新建</button></div></div></li>
 			
 			<!--<li><a class="icon" href="order.php?do=sendlist&order_id={$general.order_id}" target="_blank"><span>预览送货清单</span></a></li>-->
 		</ul>
@@ -62,9 +62,9 @@
 				<td colspan="4" height="10px"></td>
 			</tr>
 			<tr>
-				<td>客户：{$general.customer}</td>
-				<td>订单序号：{$order_day_id}</td>
-				<td>订单号：{$order_no}</td>
+				<td>客户：<span id="create_order_user_id">{$general.customer}</span></td>
+				<td>订单序号：<span id="create_order_dday_id">{$order_day_id}</span></td>
+				<td>订单号：<span id="create_order_no">{$order_no}</span></td>
 				<td>发货单号：<input type="text" id="send_no" name="send_no" value="{$general.send_no}"></td>
 			</tr>
 			<tr>
@@ -375,6 +375,7 @@ function save_order()
 		data:"do=manageorder&goods_list="+JSON.stringify(goods_list)+"&send_no="+send_no+"&pay_type="+pay_type+"&send_time="+send_time+"&update_time="+update_time+"&processing_time="+processing_time+"&order_id="+order_id+"&customer="+customer+"&customer_id="+customer_id+"&order_day_id="+order_day_id,
 		dataType:"json",
 		success:function(msg){
+			//$("#save_order").css("display", "none");
 			alert(msg.msg);
 			if(msg.data)
 			{

@@ -418,6 +418,36 @@ class OrderInfo
     		$where .= " AND a.operator LIKE '".$param['operator']."%'";
     	}
     	
+    	if(!empty($param['role_id']))
+    	{
+    		//获取子分类
+    		$category_set = array($param['role_id']);
+    		$sql = "SELECT role_id FROM yy_role WHERE parent_id = ".$param['role_id'];
+    		$res_cat = $this->db->getArray($sql);
+    		if($res_cat)
+    		{
+    			foreach($res_cat as $key => $val)
+    			{
+    				array_push($category_set, $val['role_id']);
+    			}
+    			
+    			$cat_list = implode(',', $category_set);
+    			$sql = "SELECT role_id FROM yy_role WHERE parent_id IN (".$cat_list.")";
+    			$res_cat_child = $this->db->getArray($sql);
+    			if ($res_cat_child)
+    			{
+    				foreach($res_cat_child as $k => $v)
+	    			{
+	    				array_push($category_set, $v['role_id']);
+	    			}
+    			}
+    		}
+    		$cat_list = implode(',', $category_set);
+    		
+    		$where .= " AND a.order_role_id IN (".$cat_list.") ";
+    		//$where .= " AND a.order_role_id = ".$param['role_id'];
+    	}
+    	
     	if(!empty($param['start_time']))
     	{
     		$where .= " AND a.order_time >= '".$param['start_time']."'";
@@ -429,7 +459,7 @@ class OrderInfo
     	}
     	
     	$sql = "SELECT *,a.create_time as create_time FROM yy_order a LEFT JOIN yy_users b ON a.operator_id = b.user_id LEFT JOIN yy_role c ON b.role_id = c.role_id WHERE {$where}";//echo $sql;die;
-    	//echo $sql;die;
+    	//echo $sql;//die;
     	$sql_count = "SELECT count(*) as cnt FROM yy_order a WHERE {$where}";
     	$res_count = $this->db->getValue($sql_count);
     	/*
@@ -699,7 +729,7 @@ class OrderInfo
 		
 		foreach($order_goods as $key => $val)
 		{
-			$sql = "INSERT INTO yy_order_goods SET order_id = ".$order_id.", goods_id = ".$val['goods_id'].", goods_num = ".$val['goods_num'].", send_num = '".$val['send_num']."', received_num = '".$val['received_num']."', good_price = ".$val['good_price'].", good_note = '".$val['good_note']."', n_good_note = '".$val['n_good_note']."', send_status = '".$val['send_status']."'";
+			$sql = "INSERT INTO yy_order_goods SET order_id = ".$order_id.", goods_id = ".$val['goods_id'].", goods_num = '".$val['goods_num']."', send_num = '".$val['send_num']."', received_num = '".$val['received_num']."', good_price = ".$val['good_price'].", good_note = '".$val['good_note']."', n_good_note = '".$val['n_good_note']."', send_status = '".$val['send_status']."'";
 			
 			try{
 	    		$res = $this->db->exec($sql);
@@ -873,6 +903,20 @@ class OrderInfo
     	$res = $this->db->getValue($sql);
     	
     	return $res;
+	}
+	
+	//判断订单是否存在
+	public function get_day_order_detail($order_user_id=0, $order_day_id=0, $order_time='')
+	{
+		if($this->db == null || empty($order_user_id) || empty($order_day_id) || empty($order_time))
+		{
+			return false;
+		}
+		
+		$sql = "SELECT count(*) as cnt FROM yy_order WHERE order_user_id = '".$order_user_id."' AND order_day_id = '".$order_day_id."' AND order_time = '".$order_time."'";
+		$res = $this->db->getValue($sql);
+		
+		return $res ? $res : 0;
 	}
 	
     

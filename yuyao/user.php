@@ -326,13 +326,15 @@ class user extends Action {
 		$current_page 	= !empty($_REQUEST['pageNum']) ? intval($_REQUEST['pageNum']) : 1;
 		$page_size		= !empty($_REQUEST['numPerPage']) ? intval($_REQUEST['numPerPage']) : 10;
 		$role_id		= !empty($_REQUEST['role_id']) ? trim($_REQUEST['role_id']) : ROLE_TOP;
+		$username		= !empty($_REQUEST['username']) ? trim($_REQUEST['username']) : '';
 		
 		importModule("UserInfo","class");
 		$obj_user = new UserInfo;
 		$param = array(
 			'page'			=> $current_page,
 			'page_size'		=> $page_size,
-			'role_id'		=> $role_id
+			'role_id'		=> $role_id,
+			'username'		=> $username
 		);
 		$list = $obj_user->get_user_list($param);
 		importModule("RoleInfo","class");

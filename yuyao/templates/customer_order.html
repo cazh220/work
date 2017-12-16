@@ -24,8 +24,35 @@
 						<option value="4" {if $param.order_status == 4}selected{/if}>已完成</option>
 					</select>
 				</td>
+				
 				<td>
 					 开始日期：<input type="text" class="date" name="start_time" readonly="true" value="{$param.start_time}" />~ 结束日期：<input type="text" name="end_time" class="date" readonly="true" value="{$param.end_time}"/>
+				</td>
+				
+				<td>
+					<label>客户分类：</label>
+					<select name="role_id">
+						{if $role_show}
+						{foreach from=$role_show item=item key=key}
+							<option value="{$item.role_id}" style="font-weight: bolder;" {if $order_role_id == $itema.role_id}selected="selected"{/if}>{$item.role_name}</option>
+							<!--<optgroup label='{$item.role_name}'></optgroup>-->
+							
+							{if $item.child}
+							{foreach from=$item.child item=itemb key=keyb}
+								<option value="{$itemb.role_id}" style="font-weight: bolder;" {if $order_role_id == $itemb.role_id}selected="selected"{/if}>&nbsp;&nbsp;∟{$itemb.role_name}</option>
+								<!--<optgroup label='&nbsp;&nbsp;∟{$itemb.role_name}'></optgroup>-->
+								
+								{if $itemb.child}
+									{foreach from=$itemb.child item=itemd key=keyd}
+									<option value="{$itemd.role_id}" style="font-weight: bolder;" {if $order_role_id == $itemd.role_id}selected="selected"{/if}>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemd.role_name}</option>
+										<!--<optgroup label='&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;∟{$itemd.role_name}'></optgroup>-->
+									{/foreach}
+								{/if}
+							{/foreach}
+							{/if}
+						{/foreach}
+						{/if}
+					</select>
 				</td>
 			</tr>
 		</table>

@@ -156,6 +156,7 @@ class order extends Action {
 		$start_time		= !empty($_REQUEST['start_time']) ? trim($_REQUEST['start_time']) : '';//下单开始时间
 		$end_time		= !empty($_REQUEST['end_time']) ? trim($_REQUEST['end_time']) : '';//下单结束时间
 		$search			= !empty($_REQUEST['search']) ? trim($_REQUEST['search']) : '';
+		$role_id		= !empty($_REQUEST['role_id']) ? intval($_REQUEST['role_id']) : '';
 		
 		if(empty($search))
 		{
@@ -172,7 +173,8 @@ class order extends Action {
 			'order_status'	=> $order_status,
 			'operator'		=> $operator,
 			'start_time'	=> $start_time,
-			'end_time'		=> $end_time
+			'end_time'		=> $end_time,
+			'role_id'		=> $role_id
 		);	
 		//print_r($param);
 		$order_list = $obj_order->get_order_list($param); 
@@ -194,12 +196,54 @@ class order extends Action {
 		}
 		
 		$order_list['total_amount'] = $total_amount;
+		
+		
+		//获取客户分类
+		importModule("RoleInfo","class");
+		$obj_role = new RoleInfo;
+		$role_list = $obj_role->get_all_roles(array(), 0);
+		
+		importModule("UserInfo","class");
+		$obj_user = new UserInfo;
+		
+		import('util.RoleShow');
+		$role_show = RoleShow::role_show($role_list);
+		//print_r($role_show);
+		//获取分类和客户
+		if(!empty($role_show))
+		{
+			foreach($role_show as $key => $val)
+			{
+				$users = array();
+				$users = $obj_user->get_role_users($val['role_id']);
+				$role_show[$key]['users'] = !empty($users) ? $users : array();
+				if(!empty($val['child']))
+				{
+					foreach($val['child'] as $k => $v)
+					{
+						$users_c = array();
+						$users_c = $obj_user->get_role_users($v['role_id']);
+						$role_show[$key]['child'][$k]['users'] = !empty($users_c) ? $users_c : array();
+						if(!empty($v['child']))
+						{
+							foreach($v['child'] as $kk => $vv)
+							{
+								$users_cc = array();
+								$users_cc = $obj_user->get_role_users($vv['role_id']);
+								$role_show[$key]['child'][$k]['child'][$kk]['users'] = !empty($users_cc) ? $users_cc : array();
+							}
+						}
+					}
+				} 
+			}
+		}
 
 		$page = $this->app->page();
 		$page->value('list',$order_list['list']);
 		$page->value('total',$order_list['count']);
 		$page->value('total_amount',$order_list['total_amount']);
 		//$page->value('page',$page_info);
+		$page->value('role_show',$role_show);
 		$page->value('param',$param);
 		$page->params['template'] = 'customer_order.html';
 		$page->output();
@@ -923,7 +967,10 @@ class order extends Action {
 		{
 			exit(json_encode(array('status'=>false, 'msg'=>'送货日期、采购日期、发送日期不一致', 'data'=>$items)));
 		}
-		
+
+		importModule("OrderInfo","class");
+		$obj_order = new OrderInfo;
+
 		//获取用户角色和分车
 		importModule("RoleInfo","class");
 		$obj_role = new RoleInfo;
@@ -941,10 +988,7 @@ class order extends Action {
 			'send_time'			=> $send_time,
 			'processing_time'	=> $processing_time
 		);
-		
-		importModule("OrderInfo","class");
-		$obj_order = new OrderInfo;
-		
+
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
 		
@@ -959,6 +1003,13 @@ class order extends Action {
 
 		if(empty($order_id))
 		{
+			//判断user_id  order_day_id  day 是否存在，若存在则不可添加
+			$day_order_info = $obj_order->get_day_order_detail($customer_id, $order_day_id, $processing_time);
+			if($day_order_info)
+			{
+				exit(json_encode(array('status'=>false, 'msg'=>'不可重复下订单', 'data'=>$items)));
+			}
+			
 			//新建
 			$total_amount = 0;
 			$total_num = 0;
@@ -1021,7 +1072,7 @@ class order extends Action {
 			$res = $obj_order->create_user_order($order_title, $items);
 			if($res)
 			{
-				exit(json_encode(array('status'=>true, 'msg'=>'下单成功成功', 'data'=>$items)));
+				exit(json_encode(array('status'=>true, 'msg'=>'下单成功', 'data'=>$items)));
 			}
 			else
 			{
