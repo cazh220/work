@@ -131,6 +131,40 @@ class Credits
 	//技工录入
 	public function do_edit_member()
 	{
+		$hospital = !empty($_POST['hospital']) ? $_POST['hospital'] : '';
+		$doctor = !empty($_POST['doctor']) ? $_POST['doctor'] : '';
+		$name = !empty($_POST['name']) ? $_POST['name'] : '';
+		$tooth_position1 = !empty($_POST['tooth_position1']) ? $_POST['tooth_position1'] : '';
+		$tooth_position2= !empty($_POST['tooth_position2']) ? $_POST['tooth_position2'] : '';
+		$tooth_position3= !empty($_POST['tooth_position3']) ? $_POST['tooth_position3'] : '';
+		$tooth_position4 = !empty($_POST['tooth_position4']) ? $_POST['tooth_position4'] : '';
+		$birthday = !empty($_POST['birthday']) ? $_POST['birthday'] : '';
+		if(empty($hospital))
+		{
+			echo "<script>alert('医疗机构不为空');history.go(-1);</script>";
+			exit();
+		}
+		elseif(empty($doctor))
+		{
+			echo "<script>alert('医生不为空');history.go(-1);</script>";
+			exit();
+		}
+		elseif(empty($name))
+		{
+			echo "<script>alert('患者不为空');history.go(-1);</script>";
+			exit();
+		}
+		elseif(empty($birthday))
+		{
+			echo "<script>alert('生日不为空');history.go(-1);</script>";
+			exit();
+		}
+		elseif(empty($tooth_position1) && empty($tooth_position2) && empty($tooth_position3) && empty($tooth_position4))
+		{
+			echo "<script>alert('至少填一个牙位');history.go(-1);</script>";
+			exit();
+		}
+
 		if(!empty($_FILES['repairosome_pic']['name']))
 		{
 			$upload = $this->upload();
@@ -154,9 +188,9 @@ class Credits
 		$user = $Member->get_my_detail($user_id);
 		
 		$data = array(
-			'hospital'	=> $_POST['hospital'],
-			'doctor'	=> $_POST['doctor'],
-			'name'		=> $_POST['name'],
+			'hospital'	=> $hospital,
+			'doctor'	=> $doctor,
+			'name'		=> $name,
 			'sex'		=> $_POST['sex'],
 			'operator'	=> $user[0]['realname'],
 			//'birthday'	=> date("Y-m-d H:i:s", strtotime($birthday)),

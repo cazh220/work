@@ -94,17 +94,18 @@ $(function(){
 function change(val)
 {
 	var cls = $("#send_status"+val).attr("class");
+	console.log(cls);
 	var send_status = 0;
 	if(cls == 'fa fa-check')
-	{
-		//修改为未发送
+	{console.log('xx');
+		//修改为未发送	
 		$("#send_status"+val).removeClass("fa fa-check");
 		$("#send_status"+val).addClass("fa fa-times");
 		$("#send_status"+val).css("color","red");
 		send_status = 0;
 	}
 	else
-	{
+	{console.log('yy');
 		//修改为发送
 		$("#send_status"+val).removeClass("fa fa-times");
 		$("#send_status"+val).addClass("fa fa-check");

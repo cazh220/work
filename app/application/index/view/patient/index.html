@@ -291,7 +291,7 @@
 				<a href="{$Think.config.host_url}/public/index.php/index/index/">首页</a>&nbsp;&gt;&nbsp;<a href="{$Think.config.host_url}/public/index.php/index/member/">会员中心</a>&nbsp;&gt;&nbsp;患者列表		</div>
 			<table width="1200" border="0" align="center" cellpadding="12" cellspacing="1" bgcolor="#7fb926">
 				<tbody><tr>
-					<td width="20%" valign="top" bgcolor="#FFFFFF">
+					<td width="15%" valign="top" bgcolor="#FFFFFF">
 												<table width="180" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
 							<tbody><tr class="header" id="domenumemberid" onmouseup="turnit(domenumember,&#39;menumemberimg&#39;);" style="CURSOR: hand" title="展开/收缩">
 								<td height="40"><img src="{$Think.config.host_url}/public/static/index/css/new/add.gif" name="menumemberimg" width="20" height="9" border="0">帐号</td>
@@ -391,11 +391,11 @@
               <td width="5%"><div align="center">序号</div></td>
               <td width="10%"><div align="center">防伪码</div></td>
               <td width="10%"><div align="center">所属单位</div></td>
-              <td width="10%"><div align="center">患者姓名</div></td>
+              <td width="9%"><div align="center">患者姓名</div></td>
 			  <td width="5%"><div align="center">性别</div></td>
 			  <td width="5%"><div align="center">年龄</div></td>
 			  <td width="10%"><div align="center">门诊医院</div></td>
-			  <td width="7%"><div align="center">主治医生</div></td>
+			  <td width="8%"><div align="center">主治医生</div></td>
 			  <td width="12%"><div align="center">牙位</div></td>
 			  <td width="10%"><div align="center">义齿类别</div></td>
 			  <td width="10%"><div align="center">患者手机号</div></td>
@@ -415,7 +415,18 @@
 			  <td>{$item.birthday}</td>
 			  <td>{$item.hospital}</td>
 			  <td>{$item.doctor}</td>
-			  <td>{$item.tooth_position}</td>
+			  <td>
+			  	<table style="text-align: center; " border="0" cellspacing="0" cellpadding="0">
+			  		<tr>
+			  			<td style="padding-right: 6px; border-bottom:1px solid #000; border-right:1px solid #000;">{$item.tooth_position1}</td>
+			  			<td style="padding-left: 2px; border-bottom:1px solid #000; border-left:1px solid #000;">{$item.tooth_position2}</td>
+			  		</tr>
+			  		<tr>
+			  			<td style="padding-right: 6px; border-top:1px solid #000; border-right:1px solid #000;">{$item.tooth_position3}</td>
+			  			<td style="padding-left: 2px; border-top:1px solid #000; border-left:1px solid #000;">{$item.tooth_position4}</td>
+			  		</tr>
+			  	</table>
+			  </td>
 			  <td>{$item.false_tooth_name}</td>
 			  <td>{$item.mobile}</td>
             </tr>

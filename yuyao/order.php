@@ -18,10 +18,11 @@ class order extends Action {
 	//加入购物清单
 	public function doAddBuyList()
 	{
-		$operator_id 	= $_SESSION['user_id'];
-		$operator 		= $_SESSION['username'];
-		$truck_id		= $_SESSION['truck'];
-		$role_id 		= !empty($_SESSION['offer_role']) ? $_SESSION['offer_role'] : $_SESSION['role_id'];
+		$sess_id		= $_SESSION['sess_id'];
+		$operator_id 	= $_SESSION[$sess_id]['user_id'];
+		$operator 		= $_SESSION[$sess_id]['username'];
+		$truck_id		= $_SESSION[$sess_id]['truck'];
+		$role_id 		= !empty($_SESSION[$sess_id]['offer_role']) ? $_SESSION[$sess_id]['offer_role'] : $_SESSION[$sess_id]['role_id'];
 		$ids 			= !empty($_REQUEST['ids']) ? trim($_REQUEST['ids']) : '';
 		$id_set 		= explode(",", $ids);
 		
@@ -289,9 +290,10 @@ class order extends Action {
 			}
 		}
 		
-		//print_r($order_goods);die;
+
 		//权限处理
-		$user_type  = !empty($_SESSION['type']) ? intval($_SESSION['type']) : 0;//1管理员 0普通会员
+		$sess_id = $_SESSION['sess_id'];
+		$user_type  = !empty($_SESSION[$sess_id]['type']) ? intval($_SESSION[$sess_id]['type']) : 0;//1管理员 0普通会员
 		//获取订单
 		$order_time = !empty($general['confirm_time']) ? strtotime($general['confirm_time']) : time();//订单确认时间
 		if($user_type == 1)
@@ -313,7 +315,7 @@ class order extends Action {
 		$page = $this->app->page();
 		$page->value('order_goods',$order_goods);
 		$page->value('general',$general);
-		$page->value('user_type',$_SESSION['type']);
+		$page->value('user_type',$_SESSION[$sess_id]['type']);
 		$page->value('permission',$permission);//0 无权限  1有权限
 		$page->params['template'] = 'sales_detail.html';
 		$page->output();
@@ -544,6 +546,7 @@ class order extends Action {
 			'order_time'		=> $processing_time,
 			'update_time'		=> date("Y-m-d H:i:s", time())
 		);
+		$sess_id		= $_SESSION['sess_id'];
 		
 		importModule("OrderInfo","class");
 		$obj_order = new OrderInfo;
@@ -563,7 +566,7 @@ class order extends Action {
 				if(!empty($goods[1]))
 				{
 					//获取报价
-					$role_id = $_SESSION['role_id'];
+					$role_id = $_SESSION[$sess_id]['role_id'];
 					$offer_price = $obj_good->get_role_good_price($role_id, $goods[0]);
 
 					if(empty($offer_price))
@@ -679,10 +682,11 @@ class order extends Action {
 		{
 			foreach($order_goods as $key => $val)
 			{
-				$order_goods[$key]['good_price'] = sprintf("%1\$.2f", $val['good_price']);
+				$order_goods[$key]['goods_num'] = $val['goods_num'] ? $val['goods_num'] : '';
+				$order_goods[$key]['good_price'] = $val['good_price'] ?  sprintf("%1\$.2f", $val['good_price']) : '';
 				$total_amount += $val['good_price']*$val['goods_num'];
 				$order_goods[$key]['amount'] = $val['price']*$val['goods_num'];
-				$order_goods[$key]['amount'] = sprintf("%1\$.2f", $order_goods[$key]['amount']);
+				$order_goods[$key]['amount'] = $order_goods[$key]['amount'] ? sprintf("%1\$.2f", $order_goods[$key]['amount']) : '';
 				$order_goods[$key]['check_amount'] = $val['good_price']*$val['received_num'];
 			}
 		}
@@ -949,6 +953,7 @@ class order extends Action {
 	//订单处理
 	public function doManageOrder()
 	{
+		$sess_id			= $_SESSION['sess_id'];
 		$order_id 			= !empty($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 		$send_no			= !empty($_GET['send_no']) ? trim($_GET['send_no']) : '';
 		$update_time		= !empty($_GET['update_time']) ? trim($_GET['update_time']) : '';
@@ -958,9 +963,9 @@ class order extends Action {
 		$customer_id		= !empty($_GET['customer_id']) ? intval($_GET['customer_id']) : '';
 		$customer_name		= !empty($_GET['customer']) ? trim($_GET['customer']) : '';
 		$order_day_id		= !empty($_GET['order_day_id']) ? intval($_GET['order_day_id']) : '';
-		$operator_id 		= !empty($_SESSION['user_id']) ? intval($_SESSION['user_id']) : '';
-		$operator 			= !empty($_SESSION['username']) ? trim($_SESSION['username']) : '';
-		$operator_role_id	= !empty($_SESSION['role_id']) ? intval($_SESSION['role_id']) : '';
+		$operator_id 		= !empty($_SESSION[$sess_id]['user_id']) ? intval($_SESSION[$sess_id]['user_id']) : '';
+		$operator 			= !empty($_SESSION[$sess_id]['username']) ? trim($_SESSION[$sess_id]['username']) : '';
+		$operator_role_id	= !empty($_SESSION[$sess_id]['role_id']) ? intval($_SESSION[$sess_id]['role_id']) : '';
 		//print_r($_GET);
 		$items = array();
 		if($update_time != $send_time || $update_time != $processing_time || $send_time != $processing_time )

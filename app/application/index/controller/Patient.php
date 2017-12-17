@@ -17,6 +17,18 @@ class Patient
 		$param = array('page'=>1, 'page_size'=>10, 'tech_id'=>$user_id);
 		$Patient = model('Patient');
 		$res = $Patient->patient_list($param);
+		
+		if($res)
+		{
+			foreach($res as $key => $val)
+			{
+				$tooth_false_arr = explode('|', $val['tooth_position']);
+				$res[$key]['tooth_position1'] = $tooth_false_arr[0];
+				$res[$key]['tooth_position2'] = $tooth_false_arr[1];
+				$res[$key]['tooth_position3'] = $tooth_false_arr[2];
+				$res[$key]['tooth_position4'] = $tooth_false_arr[3];
+			}
+		}
 		//print_r($res);die;
 		$view = new View();
 		//$view->assign('user', $user[0]);
