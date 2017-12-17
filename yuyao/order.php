@@ -274,7 +274,6 @@ class order extends Action {
 		$obj_order = new OrderInfo;
 		//获取订单总览
 		$general = $obj_order->get_general_info($order_id);
-
 		//获取商品信息
 		$order_goods = $obj_order->get_order_goods($order_id);
 		
@@ -584,7 +583,8 @@ class order extends Action {
 						'received_num'	=> $goods[3],
 						'good_note'		=> $goods[4],
 						'n_good_note'	=> $goods[5],
-						'good_price'	=> $offer_price
+						'good_price'	=> $offer_price,
+						'send_status'	=> $goods[6],
 					);
 
 				}
@@ -599,12 +599,13 @@ class order extends Action {
 						'received_num'	=> $order_goods['received_num'],
 						'good_note'		=> $order_goods['good_note'],
 						'n_good_note'	=> $order_goods['n_good_note'],
-						'good_price'	=> $order_goods['good_price']
+						'good_price'	=> $order_goods['good_price'],
+						'send_status'	=> $order_goods['send_status'],
 					);
 				}
 			}
 		}
-		//print_r($order_title);print_r($items);die;
+		print_r($order_title);
 		$res = $obj_order->replace_order($order_title, $items);
 		
 		if($res)

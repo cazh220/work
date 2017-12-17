@@ -30,9 +30,9 @@
 			</tr>
 			<tr>
 				<td>结算方式：<select id="pay_type"><option value="1">现金</option><option value="2">转账</option></select></td>
-				<td>送货日期：<input type="text" id="send_time" class="date" name="start_time" value="{$general.send_time}" /></td>
-				<td>采购日期：<input type="text" class="date" id="update_time" name="update_time" value="{$general.processing_time}" /></td>
-				<td>加工日期：<input type="text" class="date" name="processing_time" id="processing_time" value="{$general.jg_date}" /></td>
+				<td>送货日期：<input type="text" class="date" id="m_send_time" name="start_time" value="{$general.send_time}" /></td>
+				<td>采购日期：<input type="text" class="date" id="m_update_time" name="update_time" value="{$general.processing_time}" /></td>
+				<td>加工日期：<input type="text" class="date" id="m_processing_time" name="processing_time" value="{$general.jg_date}" /></td>
 			</tr>
 		</table>
 	</div>
@@ -75,7 +75,7 @@
 				<td><span id="diff_{$item.goods_id}">{$item.diff_amount}</span></td>
 				<td><div id="d_good_note_{$item.goods_id}">{$item.good_note}</div></td>
 				<td><div id="dn_good_note_{$item.goods_id}">{$item.n_good_note}</div></td>
-				<td><div id="d_send_status_{$item.goods_id}"><i {if $permission == 1}onclick="change({$item.goods_id})"{/if} id="send_status{$item.goods_id}" class="{if $item.send_status == 1}fa fa-check{else}fa fa-times{/if}" style="{if $item.send_status == 1}color: green;{else}color: red;{/if}"></i></div></td>
+				<td><div id="d_send_status_{$item.goods_id}"><i {if $permission == 1}onclick="change({$item.goods_id})"{/if} id="c_send_status{$item.goods_id}" class="{if $item.send_status == 1}fa fa-check{else}fa fa-times{/if}" style="{if $item.send_status == 1}color: green;{else}color: red;{/if}"></i></div></td>
 				{if $permission == 1 || ($permission == 2 AND $item.send_status == 0)}<td><a href="#" onclick="delete_good({$item.goods_id})" style="color:dodgerblue;">删除</a>&nbsp;&nbsp;<a href="#" style="color:dodgerblue;" onclick="edit_info('{$item.goods_id}','{$item.goods_num}','{$item.send_num}','{$item.received_num}','{$item.good_note}', '{$item.good_price}', '{$item.n_good_note}')">编辑</a></td>{/if}
 				<!--<td>{$item.good_price}</td>-->
 			</tr>
@@ -93,23 +93,22 @@ $(function(){
 
 function change(val)
 {
-	var cls = $("#send_status"+val).attr("class");
-	console.log(cls);
+	var cls = $("#c_send_status"+val).attr("class");
 	var send_status = 0;
 	if(cls == 'fa fa-check')
-	{console.log('xx');
+	{
 		//修改为未发送	
-		$("#send_status"+val).removeClass("fa fa-check");
-		$("#send_status"+val).addClass("fa fa-times");
-		$("#send_status"+val).css("color","red");
+		$("#c_send_status"+val).removeClass("fa fa-check");
+		$("#c_send_status"+val).addClass("fa fa-times");
+		$("#c_send_status"+val).css("color","red");
 		send_status = 0;
 	}
 	else
-	{console.log('yy');
+	{
 		//修改为发送
-		$("#send_status"+val).removeClass("fa fa-times");
-		$("#send_status"+val).addClass("fa fa-check");
-		$("#send_status"+val).css("color","green");
+		$("#c_send_status"+val).removeClass("fa fa-times");
+		$("#c_send_status"+val).addClass("fa fa-check");
+		$("#c_send_status"+val).css("color","green");
 		send_status = 1;
 	}
 	
@@ -170,14 +169,24 @@ function save_info()
 			var n_good_note = $("#n_good_note_"+goods_id).val();
 			var good_price = $("#goods_price"+goods_id).val();
 		}
-		goods_list[i] = goods_id+':'+goods_num+':'+send_num+':'+received_num+':'+good_note+':'+n_good_note+':'+good_price;
+		var send_status_tmp = $("#c_send_status"+goods_id).attr("class");
+		var send_status;
+		if(send_status_tmp == 'fa fa-check')
+		{
+			send_status = 1;
+		}
+		else
+		{
+			send_status = 0;
+		}
+		goods_list[i] = goods_id+':'+goods_num+':'+send_num+':'+received_num+':'+good_note+':'+n_good_note+':'+good_price+':'+send_status;
 	});
 	var send_no = $("#send_no").val();//发货单号
 	var order_id = $("#mine_order_id").val();
 	var pay_type = $("#pay_type").val();
-	var send_time = $("#send_time").val();
-	var update_time = $("#update_time").val();
-	var processing_time = $("#processing_time").val();
+	var send_time = $("#m_send_time").val();
+	var update_time = $("#m_update_time").val();
+	var processing_time = $("#m_processing_time").val();
 	
 	if(send_time != update_time || send_time != processing_time || update_time != processing_time )
 	{

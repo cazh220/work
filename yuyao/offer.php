@@ -13,16 +13,18 @@ class offer extends Action {
 		//判断切换是role_id有值
 		
 		$this->role_id = !empty($_GET['role_id']) ? intval($_GET['role_id']) : 0;
+		
+		$sess_id = $_SESSION['sess_id'];
 		if(!empty($this->role_id))
 		{
 			if($this->role_id == -1)
 			{
 				//管理员报价
-				$_SESSION['offer_role'] = -1;
+				$_SESSION[$sess_id]['offer_role'] = -1;
 			}
 			else
 			{
-				$_SESSION['offer_role'] = $this->role_id;
+				$_SESSION[$sess_id]['offer_role'] = $this->role_id;
 			}
 			
 		}
@@ -47,7 +49,8 @@ class offer extends Action {
 	//商品列表
 	public function doOfferList()
 	{
-		$role_id 		= $_SESSION['role_id'];
+		$sess_id 		= $_SESSION['sess_id'];
+		$role_id 		= $_SESSION[$sess_id]['role_id'];
 		$user_id		= !empty($_REQUEST['user_id']) ? intval($_REQUEST['user_id']) : 0;
 		$category_id 	= !empty($_REQUEST['category_id']) ? intval($_REQUEST['category_id']) : 0;
 		$current_page 	= !empty($_REQUEST['pageNum']) ? intval($_REQUEST['pageNum']) : 1;
@@ -88,7 +91,7 @@ class offer extends Action {
 		//用户报价输出
 		foreach($list['list'] as $key => $val)
 		{
-			$role_id = !empty($_SESSION['offer_role']) ? $_SESSION['offer_role'] : $role_id;
+			$role_id = !empty($_SESSION[$sess_id]['offer_role']) ? $_SESSION[$sess_id]['offer_role'] : $role_id;
 			//获取商品报价
 			importModule("OfferInfo","class");
 			$obj_offer = new OfferInfo;
@@ -117,14 +120,15 @@ class offer extends Action {
 	//更新具体客户的商品定价
 	public function doUpdateUserGoodPrice()
 	{
+		$sess_id 		= $_SESSION['sess_id'];
 		$goods_id		= !empty($_REQUEST['goods_id']) ? intval($_REQUEST['goods_id']) : 0;
 		$user_id		= !empty($_REQUEST['user_id']) ? intval($_REQUEST['user_id']) : 0;
 		$role_id		= !empty($_REQUEST['role_id']) ? intval($_REQUEST['role_id']) : 0;
 		$price			= !empty($_REQUEST['price']) ? floatval($_REQUEST['price']) : 0;
 		$start_time		= !empty($_REQUEST['start_time']) ? trim($_REQUEST['start_time']) : '';
 		$end_time		= !empty($_REQUEST['end_time']) ? trim($_REQUEST['end_time']) : '';
-		$operator_id	= !empty($_REQUEST['operator_id']) ? trim($_REQUEST['operator_id']) : $_SESSION['user_id'];
-		$operator		= !empty($_REQUEST['operator']) ? trim($_REQUEST['operator']) : $_SESSION['username'];
+		$operator_id	= !empty($_REQUEST['operator_id']) ? trim($_REQUEST['operator_id']) : $_SESSION[$sess_id]['user_id'];
+		$operator		= !empty($_REQUEST['operator']) ? trim($_REQUEST['operator']) : $_SESSION[$sess_id]['username'];
 		
 		//价格格式化
 		$price			= number_format($price, 2, '.', '');
@@ -159,13 +163,14 @@ class offer extends Action {
 	//更新客户分类的商品定价
 	public function doUpdateRoleGoodPrice()
 	{
+		$sess_id 		= $_SESSION['sess_id'];
 		$goods_id		= !empty($_REQUEST['goods_id']) ? intval($_REQUEST['goods_id']) : 0;
 		$role_id		= !empty($_REQUEST['role_id']) ? intval($_REQUEST['role_id']) : 0;
 		$price			= !empty($_REQUEST['price']) ? floatval($_REQUEST['price']) : 0;
 		$start_time		= !empty($_REQUEST['start_time']) ? trim($_REQUEST['start_time']) : '';
 		$end_time		= !empty($_REQUEST['end_time']) ? trim($_REQUEST['end_time']) : '';
-		$operator_id	= !empty($_REQUEST['operator_id']) ? trim($_REQUEST['operator_id']) : $_SESSION['user_id'];
-		$operator		= !empty($_REQUEST['operator']) ? trim($_REQUEST['operator']) : $_SESSION['username'];
+		$operator_id	= !empty($_REQUEST['operator_id']) ? trim($_REQUEST['operator_id']) : $_SESSION[$sess_id]['user_id'];
+		$operator		= !empty($_REQUEST['operator']) ? trim($_REQUEST['operator']) : $_SESSION[$sess_id]['username'];
 		
 		$offer = array(
 			'goods_id'		=> $goods_id,

@@ -606,11 +606,11 @@ class OrderInfo
 	    	}
 	
 			//重新增加订单商品
-			$sql = "INSERT INTO yy_order_goods(order_id, goods_id, goods_num, good_price, good_note, send_num, received_num, n_good_note)VALUES";
+			$sql = "INSERT INTO yy_order_goods(order_id, goods_id, goods_num, good_price, good_note, send_num, received_num, n_good_note, send_status)VALUES";
 			
 			foreach($order_goods as $key => $val)
 			{
-				$sql .= "(".$order_id.", ".$val['goods_id'].", ".$val['goods_num'].", ".$val['good_price'].", '".$val['good_note']."', '".$val['send_num']."', '".$val['received_num']."', '".$val['n_good_note']."'),";
+				$sql .= "(".$order_id.", ".$val['goods_id'].", ".$val['goods_num'].", ".$val['good_price'].", '".$val['good_note']."', '".$val['send_num']."', '".$val['received_num']."', '".$val['n_good_note']."', '".$val['send_status']."'),";
 			}
 			
 			$sql = rtrim($sql, ',');
@@ -823,7 +823,7 @@ class OrderInfo
 			
 			foreach($order_goods as $key => $val)
 			{
-				$sql .= "(".$order_id.", ".$val['goods_id'].", ".$val['goods_num'].", ".$val['good_price'].", '".$val['good_note']."', '".$val['send_num']."', '".$val['received_num']."', '".$val['send_status']."', '".$val['n_good_note']."'),";
+				$sql .= "('".$order_id."', '".$val['goods_id']."', '".$val['goods_num']."', '".$val['good_price']."', '".$val['good_note']."', '".$val['send_num']."', '".$val['received_num']."', '".$val['send_status']."', '".$val['n_good_note']."'),";
 			}
 			
 			$sql = rtrim($sql, ',');

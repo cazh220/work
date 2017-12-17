@@ -88,8 +88,9 @@ class myorder extends Action {
 	//我的订单
 	public function doMyOrder()
 	{
-		$user_id 		= !empty($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
-		$role_id 		= !empty($_SESSION['role_id']) ? $_SESSION['role_id'] : 4;
+		$sess_id 		= $_SESSION['sess_id'];
+		$user_id 		= !empty($_SESSION[$sess_id]['user_id']) ? $_SESSION[$sess_id]['user_id'] : 1;
+		$role_id 		= !empty($_SESSION[$sess_id]['role_id']) ? $_SESSION[$sess_id]['role_id'] : 4;
 		//获取待确认清单
 		importModule("OrderInfo","class");
 		$obj_order = new OrderInfo;
@@ -225,8 +226,9 @@ class myorder extends Action {
 	
 	//获取已确认订单
 	public function doCompleteOrder(){	
-		$user_id 		= !empty($_SESSION['user_id']) ? $_SESSION['user_id'] : 1;
-		$role_id 		= !empty($_SESSION['role_id']) ? $_SESSION['role_id'] : 4;
+		$sess_id 		= $_SESSION['sess_id'];
+		$user_id 		= !empty($_SESSION[$sess_id]['user_id']) ? $_SESSION[$sess_id]['user_id'] : 1;
+		$role_id 		= !empty($_SESSION[$sess_id]['role_id']) ? $_SESSION[$sess_id]['role_id'] : 4;
 		
 		$current_page 	= !empty($_REQUEST['pageNum']) ? intval($_REQUEST['pageNum']) : 1;
 		$page_size		= !empty($_REQUEST['numPerPage']) ? intval($_REQUEST['numPerPage']) : 10;

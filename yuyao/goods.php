@@ -150,8 +150,9 @@ class goods extends Action {
 	public function doAddGoodAct()
 	{
 		//模拟用户
-		$operator_id = $_SESSION['user_id'];
-		$operator = $_SESSION['username'];
+		$sess_id = $_SESSION['sess_id'];
+		$operator_id= $_SESSION[$sess_id]['user_id'];
+		$operator 	= $_SESSION[$sess_id]['username'];
 		$goods_name	= $_POST['goods_name'] ? trim($_POST['goods_name']) : '';
 		$goods_code = $_POST['goods_code'] ? trim($_POST['goods_code']) : '';
 		$category_id= $_POST['category_id'] ? intval($_POST['category_id']) : 0;
@@ -572,14 +573,14 @@ class goods extends Action {
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
 		
-		
+		$sess_id = $_SESSION['sess_id'];
 		$param = array(
 			'goods_id'		=> $goods_id,
 			'role_id'		=> $role_id,
 			'user_id'		=> $user_id,
 			'price'			=> $price,
-			'operator_id'	=> $_SESSION['user_id'],
-			'operator'		=> $_SESSION['username']
+			'operator_id'	=> $_SESSION[$sess_id]['user_id'],
+			'operator'		=> $_SESSION[$sess_id]['username']
 		);
 
 		$res = $obj_good->update_role_price($param);
@@ -607,14 +608,14 @@ class goods extends Action {
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
 		
-		
+		$sess_id = $_SESSION['sess_id'];
 		$param = array(
 			'goods_id'		=> $goods_id,
 			'role_id'		=> $role_id,
 			'user_id'		=> $user_id,
 			'price'			=> $price,
-			'operator_id'	=> $_SESSION['user_id'],
-			'operator'		=> $_SESSION['username']
+			'operator_id'	=> $_SESSION[$sess_id]['user_id'],
+			'operator'		=> $_SESSION[$sess_id]['username']
 		);
 
 		$res = $obj_good->update_role_good_price($param);
@@ -764,8 +765,9 @@ class goods extends Action {
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
 		
+		$sess_id = $_SESSION['sess_id'];
 		$good_info = $obj_good->get_good_detail($goods_id);
-		$offer = $obj_good->get_role_price_detail($_SESSION['role_id'], $goods_id);
+		$offer = $obj_good->get_role_price_detail($_SESSION[$sess_id]['role_id'], $goods_id);
 		
 		exit(json_encode(array('offer'=>$offer, 'goods'=>$good_info)));
 	}

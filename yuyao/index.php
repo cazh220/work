@@ -194,10 +194,11 @@ class index extends Action {
 			exit();
  		}
  		
+ 		$sess_id = $_SESSION['sess_id'];
  		//检查老密码
  		importModule("UserInfo", "class");
  		$obj_user = new UserInfo;
- 		$res = $obj_user->check_user_id($_SESSION['user_id'], $oldpassword);
+ 		$res = $obj_user->check_user_id($_SESSION[$sess_id]['user_id'], $oldpassword);
  		
  		if(empty($res))
  		{
@@ -206,7 +207,7 @@ class index extends Action {
  		}
  		
  		//修改密码
- 		$res = $obj_user->doUpdatePwd($_SESSION['user_id'], $newPassword);
+ 		$res = $obj_user->doUpdatePwd($_SESSION[$sess_id]['user_id'], $newPassword);
  		if($res)
 		{
 			//成功

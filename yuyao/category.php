@@ -19,12 +19,13 @@ class category extends Action {
 		//导入工具类
 		import('util.CategoryShow');
 		$category_show = CategoryShow::category_show($category_list);
-
+	
+		$sess_id = $_SESSION['sess_id'];
 		//print_r($category_show);die;
 		$page = $this->app->page();
 		$page->value('category',$category_show);
 		$page->value('main','category_main');
-		$page->value('user',$_SESSION);
+		$page->value('user',$_SESSION[$sess_id]);
 		$page->params['template'] = 'index_menu.html';
 		$page->output();
 	}

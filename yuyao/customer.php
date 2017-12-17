@@ -122,10 +122,11 @@ class customer extends Action {
 	//加入购物清单
 	public function doAddBuyList()
 	{
-		$operator_id 	= $_SESSION['user_id'];
-		$operator 		= $_SESSION['username'];
-		$truck_id		= $_SESSION['truck'];
-		$role_id 		= !empty($_SESSION['offer_role']) ? $_SESSION['offer_role'] : $_SESSION['role_id'];
+		$sess_id 		= $_SESSION['sess_id'];
+		$operator_id 	= $_SESSION[$sess_id]['user_id'];
+		$operator 		= $_SESSION[$sess_id]['username'];
+		$truck_id		= $_SESSION[$sess_id]['truck'];
+		$role_id 		= !empty($_SESSION[$sess_id]['offer_role']) ? $_SESSION[$sess_id]['offer_role'] : $_SESSION[$sess_id]['role_id'];
 		$ids 			= !empty($_REQUEST['ids']) ? trim($_REQUEST['ids']) : '';
 		$id_set 		= explode(",", $ids);
 		
@@ -319,7 +320,8 @@ class customer extends Action {
 		$order_goods = $obj_order->get_order_goods($order_id);
 		//print_r($order_goods);die;
 		//权限处理
-		$user_type  = !empty($_SESSION['type']) ? intval($_SESSION['type']) : 0;//1管理员 0普通会员
+		$sess_id = $_SESSION['sess_id'];
+		$user_type  = !empty($_SESSION[$sess_id]['type']) ? intval($_SESSION[$sess_id]['type']) : 0;//1管理员 0普通会员
 		//获取订单
 		$order_time = !empty($general['confirm_time']) ? strtotime($general['confirm_time']) : time();//订单确认时间
 		if($user_type == 1)
@@ -341,7 +343,7 @@ class customer extends Action {
 		$page = $this->app->page();
 		$page->value('order_goods',$order_goods);
 		$page->value('general',$general);
-		$page->value('user_type',$_SESSION['type']);
+		$page->value('user_type',$_SESSION[$sess_id]['type']);
 		$page->value('permission',$permission);//0 无权限  1有权限
 		$page->params['template'] = 'sales_detail.html';
 		$page->output();
@@ -570,6 +572,7 @@ class customer extends Action {
 			'send_time'		=> $send_time,
 			'processing_time'	=> $processing_time
 		);
+		$sess_id = $_SESSION['sess_id'];
 		
 		importModule("OrderInfo","class");
 		$obj_order = new OrderInfo;
@@ -589,7 +592,7 @@ class customer extends Action {
 				if(!empty($goods[1]))
 				{
 					//获取报价
-					$role_id = $_SESSION['role_id'];
+					$role_id = $_SESSION[$sess_id]['role_id'];
 					$offer_price = $obj_good->get_role_good_price($role_id, $goods[0]);
 
 					if(empty($offer_price))

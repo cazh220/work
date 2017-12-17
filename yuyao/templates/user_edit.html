@@ -21,6 +21,7 @@
 				<dt>客户分类：</dt>
 				<dd>
 					<select class="combox" name="role">
+						<option value="1" {if 1 == $user.role_id}selected{/if}>管理员</option>
 						{foreach from=$roles key=key item=item}
 						<option value="{$item.role_id}" {if $item.role_id == $user.role_id}selected{/if}>{$item.role_name}</option>
 						{/foreach}
