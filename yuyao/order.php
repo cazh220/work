@@ -18,7 +18,15 @@ class order extends Action {
 	//加入购物清单
 	public function doAddBuyList()
 	{
-		$sess_id		= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
+		//$sess_id		= $_SESSION['sess_id'];
 		$operator_id 	= $_SESSION[$sess_id]['user_id'];
 		$operator 		= $_SESSION[$sess_id]['username'];
 		$truck_id		= $_SESSION[$sess_id]['truck'];
@@ -291,7 +299,14 @@ class order extends Action {
 		
 
 		//权限处理
-		$sess_id = $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$user_type  = !empty($_SESSION[$sess_id]['type']) ? intval($_SESSION[$sess_id]['type']) : 0;//1管理员 0普通会员
 		//获取订单
 		$order_time = !empty($general['confirm_time']) ? strtotime($general['confirm_time']) : time();//订单确认时间
@@ -545,8 +560,15 @@ class order extends Action {
 			'order_time'		=> $processing_time,
 			'update_time'		=> date("Y-m-d H:i:s", time())
 		);
-		$sess_id		= $_SESSION['sess_id'];
-		
+		//$sess_id		= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		importModule("OrderInfo","class");
 		$obj_order = new OrderInfo;
 		
@@ -605,7 +627,7 @@ class order extends Action {
 				}
 			}
 		}
-		print_r($order_title);
+		//print_r($order_title);
 		$res = $obj_order->replace_order($order_title, $items);
 		
 		if($res)
@@ -954,7 +976,15 @@ class order extends Action {
 	//订单处理
 	public function doManageOrder()
 	{
-		$sess_id			= $_SESSION['sess_id'];
+		//$sess_id			= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$order_id 			= !empty($_GET['order_id']) ? intval($_GET['order_id']) : 0;
 		$send_no			= !empty($_GET['send_no']) ? trim($_GET['send_no']) : '';
 		$update_time		= !empty($_GET['update_time']) ? trim($_GET['update_time']) : '';

@@ -122,7 +122,15 @@ class customer extends Action {
 	//加入购物清单
 	public function doAddBuyList()
 	{
-		$sess_id 		= $_SESSION['sess_id'];
+		//$sess_id 		= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$operator_id 	= $_SESSION[$sess_id]['user_id'];
 		$operator 		= $_SESSION[$sess_id]['username'];
 		$truck_id		= $_SESSION[$sess_id]['truck'];
@@ -320,7 +328,15 @@ class customer extends Action {
 		$order_goods = $obj_order->get_order_goods($order_id);
 		//print_r($order_goods);die;
 		//权限处理
-		$sess_id = $_SESSION['sess_id'];
+		//$sess_id = $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$user_type  = !empty($_SESSION[$sess_id]['type']) ? intval($_SESSION[$sess_id]['type']) : 0;//1管理员 0普通会员
 		//获取订单
 		$order_time = !empty($general['confirm_time']) ? strtotime($general['confirm_time']) : time();//订单确认时间
@@ -572,7 +588,15 @@ class customer extends Action {
 			'send_time'		=> $send_time,
 			'processing_time'	=> $processing_time
 		);
-		$sess_id = $_SESSION['sess_id'];
+		//$sess_id = $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		
 		importModule("OrderInfo","class");
 		$obj_order = new OrderInfo;

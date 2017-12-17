@@ -216,7 +216,15 @@ class index extends Action {
 			exit();
  		}
  		
- 		$sess_id = $_SESSION['sess_id'];
+ 		//$sess_id = $_SESSION['sess_id'];
+ 		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
  		//检查老密码
  		importModule("UserInfo", "class");
  		$obj_user = new UserInfo;

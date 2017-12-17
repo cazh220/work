@@ -95,7 +95,14 @@ class myorder extends Action {
 	//我的订单
 	public function doMyOrder()
 	{
-		$sess_id 		= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$user_id 		= !empty($_SESSION[$sess_id]['user_id']) ? $_SESSION[$sess_id]['user_id'] : 1;
 		$role_id 		= !empty($_SESSION[$sess_id]['role_id']) ? $_SESSION[$sess_id]['role_id'] : 4;
 		//获取待确认清单
@@ -233,7 +240,14 @@ class myorder extends Action {
 	
 	//获取已确认订单
 	public function doCompleteOrder(){	
-		$sess_id 		= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$user_id 		= !empty($_SESSION[$sess_id]['user_id']) ? $_SESSION[$sess_id]['user_id'] : 1;
 		$role_id 		= !empty($_SESSION[$sess_id]['role_id']) ? $_SESSION[$sess_id]['role_id'] : 4;
 		

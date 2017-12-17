@@ -132,7 +132,15 @@ class user_list extends Action {
 	public function doAddGoodAct()
 	{
 		//模拟用户
-		$sess_id = $_SESSION['sess_id'];
+		//$sess_id = $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$operator_id = $_SESSION[$sess_id]['user_id'];
 		$operator 	= $_SESSION[$sess_id]['username'];
 		$goods_name	= $_POST['goods_name'] ? trim($_POST['goods_name']) : '';
@@ -378,7 +386,15 @@ class user_list extends Action {
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
 		
-		$sess_id = $_SESSION['sess_id'];
+		//$sess_id = $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$param = array(
 			'goods_id'		=> $goods_id,
 			'role_id'		=> $role_id,
@@ -533,7 +549,15 @@ class user_list extends Action {
 		importModule("GoodsInfo","class");
 		$obj_good = new GoodsInfo;
 		
-		$sess_id = $_SESSION['sess_id'];
+		//$sess_id = $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$good_info = $obj_good->get_good_detail($goods_id);
 		$offer = $obj_good->get_role_price_detail($_SESSION[$sess_id]['role_id'], $goods_id);
 		

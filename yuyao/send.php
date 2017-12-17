@@ -61,7 +61,15 @@ class send extends Action {
 	{
 		$order_id	= !empty($_POST['order_id']) ? intval($_POST['order_id']) : 0;
 		$truck_id	= !empty($_POST['truck_id']) ? intval($_POST['truck_id']) : 0;
-		$sess_id 	= $_SESSION['sess_id'];
+		//$sess_id 	= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$operator_id 	= $_SESSION[$sess_id]['user_id'];
 		$operator 		= $_SESSION[$sess_id]['username'];
 		//生成一个配送号

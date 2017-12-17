@@ -57,7 +57,15 @@ class role_category extends Action {
 		import('util.RoleShow');
 		$role_show = RoleShow::role_show($role_category_list);
 		//print_r($role_show);die;
-		$sess_id = $_SESSION['sess_id'];
+		//$sess_id = $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$page = $this->app->page();
 		$page->value('role_category',$role_show);
 		$page->value('main','category_main');

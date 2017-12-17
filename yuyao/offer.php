@@ -14,7 +14,15 @@ class offer extends Action {
 		
 		$this->role_id = !empty($_GET['role_id']) ? intval($_GET['role_id']) : 0;
 		
-		$sess_id = $_SESSION['sess_id'];
+		//$sess_id = $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		if(!empty($this->role_id))
 		{
 			if($this->role_id == -1)
@@ -49,7 +57,15 @@ class offer extends Action {
 	//商品列表
 	public function doOfferList()
 	{
-		$sess_id 		= $_SESSION['sess_id'];
+		//$sess_id 		= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$role_id 		= $_SESSION[$sess_id]['role_id'];
 		$user_id		= !empty($_REQUEST['user_id']) ? intval($_REQUEST['user_id']) : 0;
 		$category_id 	= !empty($_REQUEST['category_id']) ? intval($_REQUEST['category_id']) : 0;
@@ -120,7 +136,15 @@ class offer extends Action {
 	//更新具体客户的商品定价
 	public function doUpdateUserGoodPrice()
 	{
-		$sess_id 		= $_SESSION['sess_id'];
+		//$sess_id 		= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$goods_id		= !empty($_REQUEST['goods_id']) ? intval($_REQUEST['goods_id']) : 0;
 		$user_id		= !empty($_REQUEST['user_id']) ? intval($_REQUEST['user_id']) : 0;
 		$role_id		= !empty($_REQUEST['role_id']) ? intval($_REQUEST['role_id']) : 0;
@@ -163,7 +187,15 @@ class offer extends Action {
 	//更新客户分类的商品定价
 	public function doUpdateRoleGoodPrice()
 	{
-		$sess_id 		= $_SESSION['sess_id'];
+		//$sess_id 		= $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$sess_id = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$sess_id = $_SESSION['sess_id'];
+		}
 		$goods_id		= !empty($_REQUEST['goods_id']) ? intval($_REQUEST['goods_id']) : 0;
 		$role_id		= !empty($_REQUEST['role_id']) ? intval($_REQUEST['role_id']) : 0;
 		$price			= !empty($_REQUEST['price']) ? floatval($_REQUEST['price']) : 0;
