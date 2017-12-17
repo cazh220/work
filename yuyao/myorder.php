@@ -11,7 +11,14 @@ class myorder extends Action {
 	 */
 	public function doDefault(){
 		//判断SESSION是否有效
-		$this->s_sessionid = $_SESSION['sess_id'];
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$this->s_sessionid = $_COOKIE['last_sess_id'];
+		}
+		else
+		{
+			$this->s_sessionid = $_SESSION['sess_id'];
+		}
 		$user_id = $_SESSION[$this->s_sessionid]['user_id'];
 		importModule("UserInfo","class");
 		$obj_user = new UserInfo;

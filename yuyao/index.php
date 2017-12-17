@@ -40,8 +40,19 @@ class index extends Action {
 			echo "<script>alert('账号或密码不为空');history.go(-1);</script>";
 			exit();
 		}
+		
+		if(isset($_COOKIE['last_sess_id']))
+		{
+			$this->s_sessionid = $_COOKIE['last_sess_id'];
+			$times = 1;
+		}
+		else
+		{
+			$this->s_sessionid = $_SESSION['sess_id'];
+			$times = 0;
+		}
 			
-		$this->s_sessionid = $_SESSION['sess_id'];
+		
 		
 		//获取登录信息
 		importModule("UserInfo","class");
@@ -62,6 +73,8 @@ class index extends Action {
 			$obj_user->update_sess_id($user['user_id'], $this->s_sessionid);//更新sess_id
 			$user['sess_id'] = $this->s_sessionid;
 			$_SESSION[$this->s_sessionid] = $user;
+			//更新cookie
+			setcookie("last_sess_id", $this->s_sessionid, time()+3600*24*3650);
 			//不需要重新校验直接登录
 			echo "<script>window.location.href='myorder.php';</script>";
 		}
@@ -143,7 +156,14 @@ class index extends Action {
  	public function doLogout()
  	{
  		//print_r($_SESSION);
- 		$sess_id = $_SESSION['sess_id'];
+ 		if(isset($_COOKIE['last_sess_id']))
+ 		{
+ 			$sess_id = $_COOKIE['last_sess_id'];
+ 		}
+ 		else
+ 		{
+ 			$sess_id = $_SESSION['sess_id'];
+ 		}
  		importModule("UserInfo","class");
  		//$obj_user->update_client_ip($_SESSION['user_id'], '');
  		$user_id = $_SESSION[$sess_id]['user_id'];
@@ -151,6 +171,8 @@ class index extends Action {
 		$obj_user->update_sess_id($user_id, '');
 		
  		unset($_SESSION[$sess_id]);
+ 		//销毁cookie
+ 		setcookie("last_sess_id", "", time()-3600);
  		$page = $this->app->page();
 		//$page->value('user_id',$user_id);
 		$page->params['template'] = 'login.html';
