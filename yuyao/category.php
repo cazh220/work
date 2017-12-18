@@ -229,6 +229,26 @@ class category extends Action {
 			$param = array(
 				'cid'	=> $cid
 			);
+			//判断分类下是否有产品，有则不能删
+			importModule("GoodsInfo","class");
+			$obj_good = new GoodsInfo;	
+			$goods = $obj_good->get_goods_list(array('category_id'=>$cid));
+			
+			if(!empty($goods['list']))
+			{
+				//echo "<script>alert('该分类下有产品，禁止删除');</script>";
+				//失败
+				$return = array(
+					'statusCode'	=> 300,
+					'message'		=> '该分类下有产品，禁止删除',
+					'navTabId'		=> 'catgory_show',
+					'rel'			=> '',
+					'callbackType'	=> 'closeCurrent',
+					'forwardUrl'	=> HOST.'/category.php',
+					'confirmMsg'	=> ''
+				);
+				exit(json_encode($return));
+			}
 			
 			$res = $obj_category->delete_category($param);
 			

@@ -223,8 +223,8 @@ function delete_good(goods_id)
 function edit_info(goods_id, goods_num, send_num, received_num, good_note, good_price, n_good_note)
 {
 	$("#h_goods_id_"+goods_id).html("<input type='hidden' style='width:50px' class='center' value='"+goods_id+"' name='goods_id[]' />");
-	$("#d_goods_num_"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+goods_num+"' name='goods_num[]' id='goods_num_"+goods_id+"' onblur='diff("+goods_id+", "+good_price+")'  />");
-	$("#d_send_num_"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+send_num+"' name='send_num[]' id='send_num_"+goods_id+"' />");
+	$("#d_goods_num_"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+goods_num+"' name='goods_num[]' id='goods_num_"+goods_id+"'   />");
+	$("#d_send_num_"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+send_num+"' name='send_num[]' id='send_num_"+goods_id+"' onblur='diff("+goods_id+", "+good_price+")' />");
 	$("#d_received_num_"+goods_id).html("<input type='text' style='width:50px' class='center' value='"+received_num+"' name='received_num[]' id='received_num_"+goods_id+"' onblur='diff("+goods_id+", "+good_price+")' />");
 	$("#d_good_note_"+goods_id).html("<input type='text' style='width:100px' class='center' value='"+good_note+"' name='good_note[]' id='good_note_"+goods_id+"' />");
 	$("#dn_good_note_"+goods_id).html("<input type='text' style='width:100px' class='center' value='"+n_good_note+"' name='good_note[]' id='n_good_note_"+goods_id+"' />");
@@ -238,17 +238,18 @@ function diff(id, price)
 	var goods_num = $("#goods_num_"+id).val();
 	var received_num = $("#received_num_"+id).val();
 	var price = $("#goods_price"+id).val();
+	var send_num = $("#send_num_"+id).val();
 	price = parseFloat(price);
-	if(received_num >= goods_num)
+	if(received_num >= send_num)
 	{
 		diff = 0;
 	}
 	else
 	{
-		diff = (goods_num-received_num)*price;
+		diff = (send_num-received_num)*price;
 	}
-	var sales = goods_num*price;
-	console.log(diff);
+	var sales = send_num*price;
+	//console.log(diff);
 	$("#diff_"+id).html(diff.toFixed(2));
 	$("#sales_"+id).html(sales.toFixed(2));
 	//console.log(id+':'+price);

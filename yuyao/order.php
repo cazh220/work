@@ -393,7 +393,7 @@ class order extends Action {
 			'truck_id'		=> $truck_id,
 		);	
 		$order_list = $obj_order->get_truck_order_list($param);
-		print_r($order_list);die;
+		//print_r($order_list);die;
 		/*
 		$page_num = ceil($order_list['count']/$page_size);
 		$page_info = array(
