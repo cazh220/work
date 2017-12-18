@@ -220,6 +220,14 @@
 		
     	var fspassword = $("#password").val();
     	var repassword = $("#repassword").val();
+    	
+    	var exp = /^\w{6,20}/;
+		if(!exp.test(fspassword))
+		{
+			alert("密码不符合要求");
+			return false;
+		}
+    	
     	if(fspassword == '')
     	{
     		alert('密码不为空');

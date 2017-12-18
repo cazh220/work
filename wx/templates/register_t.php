@@ -43,7 +43,7 @@
 			</tr>
 			<tr>
 				<td width="30%" align="right"></td>
-				<td width="70%" colspan="2"><span style="font-size:xx-small; color: #aaa;">6-20个字符，由字母和数字或符号组成<br><span id="note" style="font-size:xx-small; color: red;"></span></span>
+				<td width="70%" colspan="2"><span style="font-size:xx-small; color: #aaa;">6-20个字符，由字母或数字组成<br><span id="note" style="font-size:xx-small; color: red;"></span></span>
 					<br><img id="img1" src='public/themes/images/6.png' width="65px" height="24px"/><img id="img2" src='public/themes/images/5.png' width="65px" height="24px"/><img id="img3" src='public/themes/images/4.png' width="65px" height="24px"/>
 				</td>
 			</tr>
@@ -347,7 +347,8 @@ $(function(){
 		var pwd = $(this).val();
 		var l = pwd.length;
 		//console.log(l);
-		var exp = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)(?![\W_]+$)\S{6,20}$/;
+		//var exp = /^(?![A-Z]+$)(?![a-z]+$)(?!\d+$)(?![\W_]+$)\S{6,20}$/;
+		var exp = /^\w{6,20}/;
 		if(!exp.test(pwd))
 		{
 			$("#note").html('密码不符合要求');

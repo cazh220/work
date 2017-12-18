@@ -232,6 +232,14 @@ function check_user()
 							return false;
 						}
 						
+						//判断密码是否符合要求
+						var exp = /^\w{6,20}/;
+						if(!exp.test(fpassword))
+						{
+							alert("密码不符合要求");
+							return false;
+						}
+
 						if(fpassword != repassword)
 						{
 							alert('密码不一致');
