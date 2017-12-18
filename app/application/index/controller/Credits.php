@@ -139,6 +139,7 @@ class Credits
 		$tooth_position3= !empty($_POST['tooth_position3']) ? $_POST['tooth_position3'] : '';
 		$tooth_position4 = !empty($_POST['tooth_position4']) ? $_POST['tooth_position4'] : '';
 		$birthday = !empty($_POST['birthday']) ? $_POST['birthday'] : '';
+		/*
 		if(empty($hospital))
 		{
 			echo "<script>alert('医疗机构不为空');history.go(-1);</script>";
@@ -163,7 +164,7 @@ class Credits
 		{
 			echo "<script>alert('至少填一个牙位');history.go(-1);</script>";
 			exit();
-		}
+		}*/
 
 		if(!empty($_FILES['repairosome_pic']['name']))
 		{

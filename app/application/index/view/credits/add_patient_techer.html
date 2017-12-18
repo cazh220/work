@@ -192,6 +192,61 @@
 					document.images.menushopimg.src = "{$Think.config.host_url}/public/static/index/css/new/add.gif";
 				}
 			}
+			
+			function formsubmit(){
+				var hospital = $("#hospital").val();
+				var doctor = $("#doctor").val();
+				var name = $("#name").val();
+				var birthday = $("#birthday").val();
+				if(hospital == '')
+				{
+					alert('医疗机构不为空');
+					return false;
+				}
+				if(doctor == '')
+				{
+					alert('医疗专家不为空');
+					return false;
+				}
+				if(name == '')
+				{
+					alert('患者姓名不为空');
+					return false;
+				}
+				if(birthday == '')
+				{
+					alert('年龄不为空');
+					return false;
+				}
+				var tooth_position1 = $("#tooth_position1").val();
+				var tooth_position2 = $("#tooth_position2").val();
+				var tooth_position3 = $("#tooth_position3").val();
+				var tooth_position4 = $("#tooth_position4").val();
+				
+				var exp = /^[1-8]{1,8}$/;
+				if(tooth_position1 && !exp.exec(tooth_position1))
+				{
+					alert('左上牙位填写不符合要求');
+					return false;
+				}
+				else if(tooth_position2 && !exp.exec(tooth_position2))
+				{
+					alert('右上牙位填写不符合要求');
+					return false;
+				}
+				else if(tooth_position3 && !exp.exec(tooth_position3))
+				{
+					alert('左下牙位填写不符合要求');
+					return false;
+				}
+				else if(tooth_position4 && !exp.exec(tooth_position4))
+				{
+					alert('右下牙位填写不符合要求');
+					return false;
+				}
+				
+				$("#userinfoform").submit();
+			}
 		</script>
 	</head>
 
@@ -222,9 +277,9 @@
 		<div class="wrap" style="margin-bottom:120px">
 			<div style="margin:10px 0">
 				<a href="{$Think.config.host_url}/public/index.php/index/index/">首页</a>&nbsp;&gt;&nbsp;<a href="{$Think.config.host_url}/public/index.php/index/member/">会员中心</a>&nbsp;&gt;&nbsp;修改资料			</div>
-			<table width="960" border="0" align="center" cellpadding="12" cellspacing="1" bgcolor="#7fb926">
+			<table width="1300" border="0" align="center" cellpadding="12" cellspacing="1" bgcolor="#7fb926">
 				<tbody><tr>
-					<td width="20%" valign="top" bgcolor="#FFFFFF">
+					<td width="15%" valign="top" bgcolor="#FFFFFF">
 												<table width="180" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
 							<tbody><tr class="header" id="domenumemberid" onmouseup="turnit(domenumember,&#39;menumemberimg&#39;);" style="CURSOR: hand" title="展开/收缩">
 								<td height="40"><img src="{$Think.config.host_url}/public/static/index/css/new/add.gif" name="menumemberimg" width="20" height="9" border="0">帐号</td>
@@ -330,7 +385,7 @@
 <br>
 <table width="100%" border="0" align="center" cellpadding="3" cellspacing="1" class="tableborder">
 
-  <form name="userinfoform" method="post" enctype="multipart/form-data" action="do_edit_member">
+  <form id = "userinfoform" name="userinfoform" method="post" enctype="multipart/form-data" action="do_edit_member">
     <input type="hidden" name="enews" value="EditInfo">
 	<input type="hidden" name="user_id" value="{$user_id}">
 	<input type="hidden" name="security_code" value="{$security_code}">
@@ -445,7 +500,7 @@
     </tr>
     <tr> 
       <td height="25" bgcolor="#FFFFFF">&nbsp;</td>
-      <td height="25" bgcolor="#FFFFFF"> <input type="submit" name="Submit" value="提交">
+      <td height="25" bgcolor="#FFFFFF"> <input type="button" name="Submit" onclick="formsubmit()" value="提交">
       </td>
     </tr>
   </form>

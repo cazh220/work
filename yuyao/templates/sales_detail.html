@@ -71,7 +71,7 @@
 				<td><div id="d_received_num_{$item.goods_id}">{$item.received_num}</div></td>
 				<td>{$item.unit}</td>
 				<td><div id="d_goods_price_{$item.goods_id}">{$item.good_price}</div></td>
-				<td>{$item.sales_amount}</td>
+				<td><span id="sales_{$item.goods_id}">{$item.sales_amount}</span></td>
 				<td><span id="diff_{$item.goods_id}">{$item.diff_amount}</span></td>
 				<td><div id="d_good_note_{$item.goods_id}">{$item.good_note}</div></td>
 				<td><div id="dn_good_note_{$item.goods_id}">{$item.n_good_note}</div></td>
@@ -170,6 +170,7 @@ function save_info()
 			var good_price = $("#goods_price"+goods_id).val();
 		}
 		var send_status_tmp = $("#c_send_status"+goods_id).attr("class");
+		console.log(send_status_tmp);
 		var send_status;
 		if(send_status_tmp == 'fa fa-check')
 		{
@@ -193,9 +194,7 @@ function save_info()
 		alert('送货日期和采购日期和加工日期必须一致');
 		return false;
 	}
-	
-	
-	
+
 	$.ajax({
 		type:"get",
 		url:"order.php",
@@ -238,7 +237,8 @@ function diff(id, price)
 	var diff = 0;
 	var goods_num = $("#goods_num_"+id).val();
 	var received_num = $("#received_num_"+id).val();
-	console.log(received_num);console.log(goods_num);
+	var price = $("#goods_price"+id).val();
+	price = parseFloat(price);
 	if(received_num >= goods_num)
 	{
 		diff = 0;
@@ -247,8 +247,10 @@ function diff(id, price)
 	{
 		diff = (goods_num-received_num)*price;
 	}
+	var sales = goods_num*price;
 	console.log(diff);
-	$("#diff_"+id).html(diff);
+	$("#diff_"+id).html(diff.toFixed(2));
+	$("#sales_"+id).html(sales.toFixed(2));
 	//console.log(id+':'+price);
 }
 

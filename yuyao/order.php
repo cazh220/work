@@ -606,7 +606,7 @@ class order extends Action {
 						'good_note'		=> $goods[4],
 						'n_good_note'	=> $goods[5],
 						'good_price'	=> $offer_price,
-						'send_status'	=> $goods[6],
+						'send_status'	=> $goods[7],
 					);
 
 				}
@@ -627,7 +627,7 @@ class order extends Action {
 				}
 			}
 		}
-		//print_r($order_title);
+		//print_r($order_title);print_r($items);die;
 		$res = $obj_order->replace_order($order_title, $items);
 		
 		if($res)
