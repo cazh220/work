@@ -117,5 +117,120 @@ class ArrayUtil {
 			$array = $newarray;
 		}
 	}
+	
+	/**
+	 * 数组转置处理
+	 */
+	public static function transposition($array=array())
+	{
+		$array_result = array();
+		for($i=0; $i < count($array); $i++)
+		{
+			for($j=0; $j<count($array[$i]); $j++)
+			{
+				$array_result[$j][$i] = $array[$i][$j];
+			}
+		}
+		
+		return $array_result;
+	}
+	
+	/**
+	 * 打印样式排版
+	 */
+	public static function ptint_web($array, $frows, $srows, $cols)
+	{
+		if(empty($array))
+		{
+			return array();
+		}
+		//打印首页
+		//首页共打印多少数量
+		$first_page_num = $frows*$cols;
+		//将第一页的数组放到一个数组里
+		$first_page_array = array();
+		if(count($array) < $first_page_num)
+		{
+			for($i=0; $i<$first_page_num; $i++)
+			{
+				$first_page_array[$i] = !empty($array[$i]) ? $array[$i] : array();
+			}
+		}
+		else
+		{
+			foreach($array as $key => $value)
+			{
+				if($key < $first_page_num)
+				{
+					$first_page_array[] = $value;
+				}
+			}
+			
+		}
+
+		$first_page_array_group = array_chunk($first_page_array, $frows);
+
+		return $first_page_array_group;
+	}
+	
+	//join array
+	public static function join_array($array, $frows, $srows, $cols)
+	{
+		$count = count($array);
+		$first_page_num = $frows*$cols;
+		$first_page_array = array();
+		$result = array();
+		if($count < $first_page_num)
+		{
+			for($i=0; $i<$first_page_num; $i++)
+			{
+				$first_page_array[$i] = !empty($array[$i]) ? $array[$i] : array();
+			}
+			$first_page_array_first = array_chunk($first_page_array, $frows);
+			$result = self::transposition($first_page_array_first);
+			return $result;
+		}
+		else
+		{
+			foreach($array as $key => $value)
+			{
+				if($key < $first_page_num)
+				{
+					$first_page_array[] = $value;
+				}
+			}
+			$first_page_array_first = array_chunk($first_page_array, $frows);
+			$result_first = self::transposition($first_page_array_first);
+			//第二页
+			$second_page_array = array();
+			foreach($array as $key => $value)
+			{
+				if($key >= $first_page_num && $key < ($first_page_num+30*$cols))
+				{
+					$second_page_array[] = $value;
+				}
+			}
+			
+			if(count($second_page_array) < 30*$cols)
+			{
+				for($i=0; $i<30*$cols; $i++)
+				{
+					$ik = $i+$first_page_num;
+					$second_page_array_s[$i] = !empty($array[$ik]) ? $array[$ik] : array();
+				}
+			}
+			$second_page_array_second = array_chunk($second_page_array_s, 30);
+			$result_second = self::transposition($second_page_array_second);
+
+			$res = array_merge($result_first, $result_second);
+			return $res;
+			//print_r($res);die;
+			
+		}
+		
+		
+		
+	}
+	
 }
 ?>

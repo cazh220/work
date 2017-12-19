@@ -54,7 +54,7 @@
 				<td>
 					<label>下单客户：</label>
 					<select name="user_id">
-						<option value="0">所有客户</option>
+						<option value="0" {if $user_id == 0}selected="selected"{/if}>所有客户</option>
 						{if $role_show}
 						{foreach from=$role_show item=item key=key}
 							<option value="rid{$item.role_id}" style="font-weight: bolder;" {if $order_role_id == $itema.role_id}selected="selected"{/if}>{$item.role_name}</option>
@@ -170,11 +170,11 @@
 <div class="pageContent">
 	<div class="panelBar">
 		<ul class="toolBar">
-			<li><a class="icon" href="javascript:$.printBox('w_list_print')"><span>简介客户打印模式</span></a></li>
+			<li><a class="icon" href="javascript:$.printBox('w_list_print_css')"><span>简介客户打印模式</span></a></li>
 			<li><a class="icon" href="order.php?do=customerbuy&confirm_time={$confirm_time}&category_id={$category_id}&user_id={$user_id}" target="_blank"><span>客户明细打印模式</span></a></li>
 		</ul>
 	</div>
-	<div id="w_list_print">
+	<div id="w_list_print_css">
 		<div class="pageFormContent" layoutH="110">
 			<table style="margin: 0 auto; text-align: center;" width="600px">
 				<tr>
@@ -185,13 +185,13 @@
 					<td width="40%">统计日期:{$confirm_time}</td>
 				</tr>
 				<tr>
-					<td width="100" colspan="2" height="40px" style="font-size: 15px; font-weight: bolder;">{if $category_name}{$category_name}----{/if}{if $order_role_name}{$order_role_name}{/if}<!--；   总金额：￥{$total_amount}--></td>
+					<td width="100" colspan="2" height="40px" style="font-size: 15px; font-weight: bolder;">{if $category_name}{$category_name}----{/if}{if $user_title}{$user_title}{/if}<!--{if $order_role_name}{$order_role_name}{/if}--><!--；   总金额：￥{$total_amount}--></td>
 				</tr>
 				
 			</table>
 			
-			<table style="margin-top: 20px; margin-left: 0px;" width="50%">
-				{if $goods}
+			<table style="margin-top: 20px; margin-left: 0px; margin-right: 0px;" width="100%">
+				<!--{if $goods}
 				{foreach from=$goods key=key item=item}
 					{if $item.list}
 						{foreach from=$item.list key=keya item=itema}
@@ -206,6 +206,23 @@
 					{/if}
 				
 				{/foreach}
+				{/if}-->
+				{if $print}
+					{foreach from=$print key=key item=item}
+						<tr>
+							{foreach from=$item key=keya item=itema}
+								<td width="33%" height="30px">
+									<table width="100%">
+										<tr>
+											<td width="33%">{$itema.order_user_name}</td>
+											<td width="33%">{$itema.goods_name}{if $itema.good_note}({$itema.good_note}){/if}</td>
+											<td width="33%">{$itema.goods_num} {$itema.unit}</td>
+										</tr>
+									</table>
+								</td>
+							{/foreach}
+						</tr>
+					{/foreach}
 				{/if}
 			</table>
 		</div>

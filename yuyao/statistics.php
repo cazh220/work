@@ -5,6 +5,16 @@
 require_once('./common.inc.php');
 
 class statistics extends Action {
+	public function doTest()
+	{
+		$result = range(0,1000);
+		import('util.ArrayUtil');
+		$result_s = ArrayUtil::ptint_web($result, 40, 50, 3);
+		
+		$res = ArrayUtil::transposition($result_s);
+		
+		print_r($res);
+	}
 	
 	/**
 	 * 默认执行的方法
@@ -22,28 +32,34 @@ class statistics extends Action {
 		$confirm_time 		= !empty($_REQUEST['confirm_time']) ? trim($_REQUEST['confirm_time']) : date("Y-m-d", strtotime("+1 days"));//当前时间
 		$category_id  		= !empty($_REQUEST['category_id']) ? intval($_REQUEST['category_id']) : 0;
 		$order_role_id		= !empty($_REQUEST['order_role_id']) ? intval($_REQUEST['order_role_id']) : 0;
-		$order_user_id		= !empty($_REQUEST['user_id']) ? ($_REQUEST['user_id']) : '';
-
+		$order_user_id		= !empty($_REQUEST['user_id']) ? ($_REQUEST['user_id']) : 0;
+		//var_dump($order_role_id);var_dump($order_user_id);die;
 		if(!empty($order_user_id))
 		{
 			$prefix = substr($order_user_id,0,3);
 			if($prefix == 'rid')
 			{
 				$rid = substr($order_user_id, 3);
+				if($rid == 9)
+				{
+					$rid = 0;
+					$order_user_id = 0;
+				}
 			}
 		}
-		
+
 		if($rid)
 		{
 			//客户分类
 			$order_role_id = $rid;
 			$order_user_id = 0;
 		}
-		
+
 		importModule("StatisticsInfo","class");
 		$obj_statistics = new StatisticsInfo;
 		
 		$data = $obj_statistics->get_day_unsend_goods($confirm_time, $category_id, 0,  0,  $order_user_id, $order_role_id);
+		//print_r($data);
 		//分客户统计
 		$data_role = array();
 		$total_amount = 0;
@@ -67,7 +83,7 @@ class statistics extends Action {
 			}
 		}
 		
-		//print_r($data_role);die;
+		//print_r($data_role);//die;
 		//导入工具类
 		//import('util.Tongji');
 		//$return = Tongji::goods_statistics($data);
@@ -145,7 +161,30 @@ class statistics extends Action {
 		{
 			$user_title = '所有客户';
 		}
-
+		//print_r($user_title);
+		//print_r($data_role);
+		//重新排版打印样式
+		$print_array = array();
+		if($data_role)
+		{
+			foreach($data_role as $key => $val)
+			{
+				if($val['list'])
+				{
+					foreach($val['list'] as $k => $v)
+					{
+						$print_array[] = $v;
+					}
+				}
+			}
+		}
+		import('util.ArrayUtil');
+		$print = ArrayUtil::join_array($print_array, 16, 50, 3);
+		//print_r($result_s);die;
+		
+		//$result_s = ArrayUtil::ptint_web($print_array, 16, 50, 3);
+		//$print = ArrayUtil::transposition($result_s);
+		
 		$page = $this->app->page();
 		$page->value('title',"宇尧实业（上海）有限公司");
 		$page->value('confirm_time',$confirm_time);
@@ -159,6 +198,7 @@ class statistics extends Action {
 		$page->value('user_id',$order_user_id);
 		$page->value('role_show',$role_show);
 		$page->value('user_title',$user_title);
+		$page->value('print',$print);
 		$page->value('category_name',$category_info['cname'] ? $category_info['cname'] : '所有分类');
 		$page->params['template'] = 'goods_statistics.html';
 		$page->output();
@@ -307,10 +347,10 @@ class statistics extends Action {
 	public function doTruckStatistic()
 	{
 		//获取日期
-		$confirm_time 	= !empty($_REQUEST['confirm_time']) ? trim($_REQUEST['confirm_time']) : date("Y-m-d", strtotime("+1 days"));//当前时间
-		$category_id  	= !empty($_REQUEST['category_id']) ? intval($_REQUEST['category_id']) : 0;
-		$order_role_id	= !empty($_REQUEST['order_role_id']) ? intval($_REQUEST['order_role_id']) : 0;
-		$order_truck_id	= !empty($_REQUEST['order_truck_id']) ? intval($_REQUEST['order_truck_id']) : 0;
+		$confirm_time 		= !empty($_REQUEST['confirm_time']) ? trim($_REQUEST['confirm_time']) : date("Y-m-d", strtotime("+1 days"));//当前时间
+		$category_id  		= !empty($_REQUEST['category_id']) ? intval($_REQUEST['category_id']) : 0;
+		$order_role_id		= !empty($_REQUEST['order_role_id']) ? intval($_REQUEST['order_role_id']) : 0;
+		$order_truck_id		= !empty($_REQUEST['order_truck_id']) ? intval($_REQUEST['order_truck_id']) : 0;
 		$order_user_id		= !empty($_REQUEST['user_id']) ? $_REQUEST['user_id'] : 0;
 
 		if(empty($order_truck_id))
