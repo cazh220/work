@@ -9,13 +9,26 @@ use think\Session;
 
 class Member
 {	
+	public function __construct()
+	{
+		$this->host_url = Config::get('host_url');
+	}
+	
 	public function index()
 	{
 		//获取我的信息
 		$user_id = Session::get('user.user_id');
+
+		
 		$Member = model('Member');
 		$user = $Member->get_my_detail($user_id);
-
+		if(empty($user))
+		{
+			//转到登录页
+			header("Location:".$this->host_url."/public/index.php/index/index");
+			exit();
+		}
+		
 		if($user[0]['user_type'] == 1)
 		{
 			$user[0]['user_type_name'] = '技工';
