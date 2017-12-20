@@ -107,8 +107,13 @@ class index extends Action {
 			
 			if($res)
 			{
-				header("Location:user.php?do=setting&user_id=".$user_id);
+				echo "<script>alert('提交成功！');window.location.href='user.php?do=setting&user_id={$user_id}';</script>";
+				//header("Location:user.php?do=setting&user_id=".$user_id);
 				exit();
+			}
+			else
+			{
+				echo "<script>alert('提交成功！');history.back();</script>";
 			}
 		}
 		$user_id = $_GET['user_id'];
@@ -328,13 +333,15 @@ class index extends Action {
 		$s_type   = strtolower($ar_type[1]);
 
 		if(!in_array($s_type,array('jpg','png','bmp','gif'))){
-			exit(json_encode(array('status'=>0, 'info'=>'文件类型不正确')));
+			//exit(json_encode(array('status'=>0, 'info'=>'文件类型不正确')));
+			echo "<script>alert('上传文件类型不正确');history.go(-1);</script>";
 		}
 		
 		$path = date("Ymd", time());
 		if(!file_exists('../app/public/uploads/'.$path)) {
 			if(!mkdir($path)) {
-				exit(json_encode(array('status'=>0, 'info'=>'创建目录失败')));
+				//exit(json_encode(array('status'=>0, 'info'=>'创建目录失败')));
+				echo "<script>alert('创建目录失败');history.go(-1);</script>";
 			}
 			
 			chmod($path.'/',0777);
@@ -346,7 +353,8 @@ class index extends Action {
 		$res = $obj_upload->upload($_FILES['cfile'],'../app/public/uploads/'.$path.'/', 1);
 
 		if($res === false) {
-			exit(json_encode(array('status'=>0, 'info'=>'文件上传失败')));
+			//exit(json_encode(array('status'=>0, 'info'=>'文件上传失败')));
+			echo "<script>alert('文件上传失败');history.go(-1);</script>";
 		}
 		
 		return $res;

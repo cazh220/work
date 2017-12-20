@@ -27,9 +27,9 @@
   <div data-role="header" data-position="fixed"><a href="#" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back">后退</a>
   <h1>会员注册</h1>
   </div>
-
+   <div style="color: red; font-size: 11px;">*温馨提示：资料填写完整会获得更多积分哦!</div>
   <div data-role="content">
-
+	
     <form method="post" action="user.php?do=register" data-ajax="false" enctype="multipart/form-data">
 		
 		<table width="100%">
@@ -205,7 +205,7 @@ function show(note)
   layer.open({
     content: note
     ,skin: 'msg'
-    ,time: 2 //2秒后自动关闭
+    ,time: 3 //3秒后自动关闭
   });
 }
 
@@ -334,11 +334,7 @@ $("#register").click(function(){
 			}
 		}
 	});
-	
-	
-	
-	
-	
+
 });
 
 $(function(){

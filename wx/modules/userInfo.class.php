@@ -120,7 +120,7 @@ class userInfo
     		return false;
     	}
 
-		$sql  = "UPDATE hg_user SET realname = '".$data['realname']."', email = '".$data['email']."', company_name = '".$data['company_name']."', company_addr = '".$data['address']."', head_img = '".$data['company_pic']."', company_info = '".$data['info']."', province = {$data['province']}, city = {$data['city']}, district = {$data['district']}, position='".$data['position']."', persons_num = '".$data['persons_num']."',address_id={$data['address_id']} WHERE user_id = {$data['user_id']}";
+		$sql  = "UPDATE hg_user SET realname = '".$data['realname']."', email = '".$data['email']."', company_name = '".$data['company_name']."', company_addr = '".$data['address']."', head_img = '".$data['company_pic']."', company_info = '".$data['info']."', province = {$data['province']}, city = {$data['city']}, district = {$data['district']}, position='".$data['position']."', persons_num = '".$data['persons_num']."',address_id={$data['address_id']}, total_credits='".$data['total_credits']."', left_credits='".$data['left_credits']."' WHERE user_id = {$data['user_id']}";
 		$res = $this->db->exec($sql);
     	if($res === false) {
     		return $this->_log(array( __CLASS__ . '.class.php line ' . __LINE__ , 'function '. __FUNCTION__ . ' sql execute false. sql = ' . $sql, date("Y-m-d H:i:s")));
