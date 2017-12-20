@@ -83,7 +83,7 @@
 </script>
 <div data-role="page" data-theme="p" >
   <div data-role="header">
-  <h1>会员登录</h1>
+  <h1>防伪认证</h1>
   </div>
 
   <div data-role="content">
@@ -95,6 +95,19 @@
       
 		<a href="javascript:login('{$host}')" data-role="button">登录</a>
 		<label class="left_show"><a data-ajax="false" href="user.php?do=findPwd" style="text-decoration:none;">忘记密码?</a></label><label class="right_show"><a data-ajax="false" href="user.php?do=bind_mobile" style="text-decoration:none;">马上注册</a></label>
+		
+		<div style="margin-top: 80px; font-size: 14px; line-height: 25px; text-align: left">
+			沪鸽防伪认证系统说明：<br>
+			1、 沪鸽美晶瓷、美国诺必灵等产品将陆续实现防伪认证；<br>
+			2、 沪鸽防伪认证，将提高沪鸽、技工所、医疗机构的知名度和美誉度；<br>
+			3、 技师和医生，都可以免费注册会员，并录入或查询信息； <br>
+			4、 患者凭防伪认证卡，扫一扫二维码，可以查看防伪认证、技工所和医生的信息； <br>
+			5、 技工所手机端和电脑端录入，其中电脑端可以批量录入（电脑端地址： http://www.yrsyc.cn/app/public/index.php/index#）； <br>
+			6、 医生使用本系统，主要是查询和纠错，高效方便； <br>
+			7、 技师和医生会员，录入和查询会获得积分，有礼品可兑换； <br>
+			8、会员注册或登陆，将视为您已理解和同意会员协议；<br>
+			9、任何疑问，可以通过沪鸽微信平台沟通咨询。<br>
+		</div>
     </form>
   </div>
 </div>
