@@ -91,7 +91,7 @@
 				<div>
         <div style="height: 50px; text-align: right; width: 30%; float: left; line-height: 50px">修复体图片：</div>
         <div style="height: 50px; text-align: center; width: 70%; float: left; line-height: 50px">
-        	<input type="file" name="repaire_pic" id="fileInput" value="http://www.yrsyc.cn/app/public/uploads/{$repairosome_pic}" {if $repairosome_pic}disabled="disabled"{/if}>
+        	<input type="file" name="repaire_pic" id="fileInput" value="{$url_upload}/public/uploads/{$repairosome_pic}" {if $repairosome_pic}disabled="disabled"{/if}>
         </div>
         </div>
         
@@ -107,7 +107,7 @@
 				<input type="hidden"  id="company_pic" name="h_repaire_pic" value=""/><a href="javascript:remove()" style="color: red;">撤销</a>
 				</span>
 				
-				<img src="http://www.yrsyc.cn/app/public/uploads/{$repairosome_pic}" width="120px" height="100px" style="vertical-align: middle;" id="yu_picture">
+				<img src="{$url_upload}/public/uploads/{$repairosome_pic}" width="120px" height="100px" style="vertical-align: middle;" id="yu_picture">
 				
       </div>
       </div> 

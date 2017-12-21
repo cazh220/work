@@ -49,7 +49,7 @@
 <div data-role="page" data-theme="p">
   <div data-role="header"><a href="#" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back" data-ajax="false">后退</a>
   <h1>质保卡录入</h1>
-    <a href="http://www.yrsyc.cn/wx/user.php?do=ucenter&user_id={$user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
+    <a href="{$url_application}/user.php?do=ucenter&user_id={$user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
   </div>
 
   <div data-role="content">
@@ -59,9 +59,9 @@
 	<div style="text-align:center; padding:20px 0px 20px 0px">当前总积分：{$left_credits}</div>
 	<!--<a href="patient.php?do=techrecord&user_id={$user_id}&security_code={$security_code}" data-role="button" data-ajax="false">完善患者信息</a>-->
 	{if $user_type == 1}
-	<a href="#" id="scanQRCode" data-id="http://www.yrsyc.cn/wx/user.php?do=patientin&user_id={$user_id}&qrcode="  data-ajax="false" data-role="button">继续录入</a>
+	<a href="#" id="scanQRCode" data-id="{$url_application}/user.php?do=patientin&user_id={$user_id}&qrcode="  data-ajax="false" data-role="button">继续录入</a>
 	{else}
-	<a href="#" id="scanQRCode" data-id="http://www.yrsyc.cn/wx/user.php?do=doctorin&user_id={$user_id}&qrcode="  data-ajax="false" data-role="button">继续录入</a>
+	<a href="#" id="scanQRCode" data-id="{$url_application}/user.php?do=doctorin&user_id={$user_id}&qrcode="  data-ajax="false" data-role="button">继续录入</a>
 	{/if}
 	
 	

@@ -587,7 +587,7 @@ class user extends Action {
 	    //var_dump($message_count);die;
 	    if(empty($user[0]['wx_headimgurl']))
 	    {
-	    	$user[0]['wx_headimgurl'] = "http://www.yrsyc.cn/wx/public/themes/images/head.png";
+	    	$user[0]['wx_headimgurl'] = HOST."/public/themes/images/head.png";
 	    }
 	    
 	    

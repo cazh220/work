@@ -124,7 +124,7 @@
 						<canvas id="resultCanvas1"></canvas>
 						<input type="hidden"  id="company_pic" name="company_pic" value="{$mine.head_img}"/><a href="javascript:remove()" style="color: red;">撤销</a>
 					</span>
-					<img id="yu_picture" src="http://www.yrsyc.cn/app/public/uploads/{$mine.head_img}" width="150px" height="150px">
+					<img id="yu_picture" src="{$url_upload}/public/uploads/{$mine.head_img}" width="150px" height="150px">
 				</td>
 			</tr>
 			

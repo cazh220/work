@@ -19,7 +19,7 @@
 <div data-role="page" data-theme="p">
   <div data-role="header"><a href="#" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back">后退</a>
   <h1>信息更新</h1>
-  <a href="http://www.yrsyc.cn/wx/user.php?do=ucenter&user_id={$user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
+  <a href="{$url_application}/user.php?do=ucenter&user_id={$user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
   </div>
 
   <div data-role="content">
@@ -92,7 +92,7 @@
 					<input type="hidden"  id="company_pic" name="h_repaire_pic" value=""/><a href="javascript:remove()" style="color: red;">撤销</a>
         	</span>
         	
-        	<img src="http://www.yrsyc.cn/app/public/uploads/{$patient.repairosome_pic}" width="120px" height="100px" style="vertical-align: middle;" id="yu_picture">
+        	<img src="{$url_upload}/public/uploads/{$patient.repairosome_pic}" width="120px" height="100px" style="vertical-align: middle;" id="yu_picture">
       	</div>
       </div>
       

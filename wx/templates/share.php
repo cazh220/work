@@ -96,7 +96,7 @@
 		<li>
 			<div><h4>医疗机构：{$patient.hospital}</h4></div>
 			<div class="content" style="font-size: 14px; white-space: normal; line-height: 20px;">{$patient.doc.company_info}</div>
-			<div style="text-align: center; padding-bottom: 30px;"><img src="http://www.yrsyc.cn/app/public/uploads/{$patient_pic}" width="100%" height="100%"></div>
+			<div style="text-align: center; padding-bottom: 30px;"><img src="{$url_upload}/public/uploads/{$patient_pic}" width="100%" height="100%"></div>
 		</li>
 		
 	</ul>
@@ -105,7 +105,7 @@
 		<li>
 			<div><h4>加工单位：{$patient.tech.company_name}</h4></div>
 			<div class="content" style="font-size: 14px; white-space: normal; line-height: 20px;">{$patient.tech.company_info}</div>
-			<div style="text-align: center; padding-bottom: 30px;"><img src="http://www.yrsyc.cn/app/public/uploads/{$patient.tech.head_img}" width="100%" height="100%"></div>
+			<div style="text-align: center; padding-bottom: 30px;"><img src="{$url_upload}/public/uploads/{$patient.tech.head_img}" width="100%" height="100%"></div>
 		</li>
 		
 	</ul>
@@ -133,7 +133,7 @@
   var e = $("#head_img").val();
   var f = $("#hospital").val();
   var security_code = $("#security_code").val();
-  var urlen = encodeURIComponent("http://www.yrsyc.cn/wx/index.php?do=share&security_code="+security_code);
+  var urlen = encodeURIComponent("{$url_application}/index.php?do=share&security_code="+security_code);
   var links = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa02a6a965b89a9c0&redirect_uri="+urlen+"&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
   var headimgurl_encode = encodeURIComponent(e);
   var data;

@@ -22,7 +22,7 @@
 <div data-role="page" data-theme="p">
   <div data-role="header" data-position="fixed"><a href="#" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back">后退</a>
   <h1> 质保卡录入</h1>
-    <a href="http://www.yrsyc.cn/wx/user.php?do=ucenter&user_id={$user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext"  data-ajax="false">首页</a>
+    <a href="{$url_application}/user.php?do=ucenter&user_id={$user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext"  data-ajax="false">首页</a>
   </div>
   
 
@@ -42,7 +42,7 @@
 		      
     </form>
     <div class="blank"></div>
-    <a href="#" id="scanQRCode" data-id="http://www.yrsyc.cn/wx/user.php?do=doctorin&user_id={$user_id}&qrcode="  data-ajax="false" data-role="button">继续录入</a>
+    <a href="#" id="scanQRCode" data-id="{$url_application}/user.php?do=doctorin&user_id={$user_id}&qrcode="  data-ajax="false" data-role="button">继续录入</a>
   </div>
   
 </div>

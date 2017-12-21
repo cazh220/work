@@ -19,7 +19,7 @@
 <div data-role="page" data-theme="p">
   <div data-role="header"><a href="#" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back">后退</a>
   <h1>医生录入</h1>
-    <a href="http://www.yrsyc.cn/wx/user.php?do=ucenter&user_id={$user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
+    <a href="{$url_application}/user.php?do=ucenter&user_id={$user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
   </div>
 
   <div data-role="content">
@@ -84,7 +84,7 @@
         </div>
         <br/>
         
-        <div style="height: 120px; text-align: right; width: 30%; float: left; line-height: 120px">修复体图片：</div><div style="height: 120px; text-align: center; width: 70%; float: left; line-height: 120px"><img src="http://www.yrsyc.cn/app/public/uploads/{$patient.repairosome_pic}" width="100px" height="100px"></div>
+        <div style="height: 120px; text-align: right; width: 30%; float: left; line-height: 120px">修复体图片：</div><div style="height: 120px; text-align: center; width: 70%; float: left; line-height: 120px"><img src="{$url_upload}/public/uploads/{$patient.repairosome_pic}" width="100px" height="100px"></div>
         <div style="height: 50px; text-align: right; width: 30%; float: left; line-height: 50px">案例图片：</div><div style="height: 50px; text-align: center; width: 70%; float: left; line-height: 50px">
         	<input type="file" name="case_pic" id="fileInput" value="" disabled="disabled"></div>
 		
@@ -104,7 +104,7 @@
 				<input type="hidden"  id="company_pic" name="h_repaire_pic" value="{$patient.case_pic}"/><a href="javascript:remove()" style="color: red;">撤销</a>
 				</span>
 				
-				<img src="http://www.yrsyc.cn/app/public/uploads/{$patient.case_pic}" width="120px" height="100px" style="vertical-align: middle;" id="yu_picture">
+				<img src="{$url_upload}/public/uploads/{$patient.case_pic}" width="120px" height="100px" style="vertical-align: middle;" id="yu_picture">
 				
       </div>
       </div>

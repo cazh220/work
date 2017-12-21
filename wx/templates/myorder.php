@@ -38,7 +38,7 @@
 							
 							{foreach from=$list item=item key=key}
 							<tr>
-								<td style="border-top: solid 1px #000000;"><img src="http://www.yrsyc.cn/app/public/uploads/{$item.gift_pic}" width="90px" height="60px" style="padding-top: 5px;"></td>
+								<td style="border-top: solid 1px #000000;"><img src="{$url_upload}/public/uploads/{$item.gift_pic}" width="90px" height="60px" style="padding-top: 5px;"></td>
 								<td style="border-top: solid 1px #000000;">{$item.gift_name}</td>
 								<td style="border-top: solid 1px #000000;">{$item.amount}</td>
 								<td style="border-top: solid 1px #000000;">{$item.price}</td>

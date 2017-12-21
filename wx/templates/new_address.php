@@ -122,7 +122,7 @@ $(function(){
 <div data-role="page" data-theme="p">
   <div data-role="header" data-position="fixed"><a href="#" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back">后退</a>
   <h1>填写收货地址</h1>
-  <a href="http://www.yrsyc.cn/wx/user.php?do=ucenter&user_id={$user.user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
+  <a href="{$url_application}/user.php?do=ucenter&user_id={$user.user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
   </div>
   
 

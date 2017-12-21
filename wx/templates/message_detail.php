@@ -16,7 +16,7 @@
 <div data-role="page" id="pageone"  data-theme="p">
   <div data-role="header"><a href="#" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back">后退</a>
   <h1>消息详情</h1>
-    <a href="http://www.yrsyc.cn/wx/user.php?do=ucenter&user_id={$message.to_user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
+    <a href="{$url_application}/user.php?do=ucenter&user_id={$message.to_user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
   </div>
 
   <div data-role="content">

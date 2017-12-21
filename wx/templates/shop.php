@@ -66,7 +66,7 @@ $(function(){
 			show("请选择礼品");
 			return false;
 		}
-		window.location.href="http://www.yrsyc.cn/wx/order.php?do=orderconfirm&id="+id+"&user_id="+user_id;
+		window.location.href=HOST."/order.php?do=orderconfirm&id="+id+"&user_id="+user_id;
 	});
 	
 	$(".goods_check").click(function(){
@@ -102,7 +102,7 @@ $(function(){
 		 <div {if $key%2==0}class="ui-block-a"{else}class="ui-block-b"{/if} style="border: 0px solid black; overflow: hidden;">
 		 	<table align="center" class="product">
 		 		<tr>
-		 			<td colspan="3" style="text-align: center;"><img src="http://www.yrsyc.cn/app/public/uploads/{$item.gift_photo}" width="150px" height="120px"></td>
+		 			<td colspan="3" style="text-align: center;"><img src="{$url_upload}/public/uploads/{$item.gift_photo}" width="150px" height="120px"></td>
 		 		</tr>
 		 		<tr>
 		 			<td style="text-align: right; width: 40%; line-height: 25px;">产品名称:</td>

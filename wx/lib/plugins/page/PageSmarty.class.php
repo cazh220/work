@@ -49,6 +49,8 @@ class PageSmarty extends APageFactory {
 		$this->value('site_title', $app->cfg['site']['title']);
 		$this->value('site_name', $app->cfg['site']['name']);
 		$this->value('url_theme', $app->cfg['url']['theme']);
+		$this->value('url_application', HOST);
+		$this->value('url_upload', UPLOAD_HOST);
 		
 		$ar_payensure = $ar_shipensure = $ar_lawensure = $ar_cooperation = array();    //支付保障 ， 配送保障 ， 法律保障 ， 合作伙伴
 		$cooperation = isset($app->cfg['cooperation']) ? $app->cfg['cooperation'] : array();

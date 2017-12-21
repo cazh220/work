@@ -3,3 +3,75 @@
 2017-12-15 14:06:46微信接口ticket：{"errcode":41008,"errmsg":"missing code, hints: [ req_id: 8DPWDa0006th50 ]"}
 2017-12-15 14:06:46微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=4_sjUtHuErNROixdzjyWh21GDPRq2ZZEOzz8kxgUsAhwK0nl_PUGnv8HeXfQn98JFzXfKbC4zcPEj1wAz1m3qk7cMdk02gCCdtGUW7sLA9Xs1LhMG1UXgVoSRszej1XNK_atl_A7EMfQkus4neKULeADAVFW&openid=
 2017-12-15 14:06:47微信接口获取：{"errcode":40003,"errmsg":"invalid openid hint: [ffOBha0007vr23]"}
+2017-12-20 10:10:20Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:10:20获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:10:20微信接口param：[]
+2017-12-20 10:10:23微信接口ticket：
+2017-12-20 10:10:23微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:10:23微信接口获取：
+2017-12-20 10:11:01Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:01获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:01微信接口param：[]
+2017-12-20 10:11:01微信接口ticket：
+2017-12-20 10:11:01微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:01微信接口获取：
+2017-12-20 10:11:03Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:03获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:03微信接口param：[]
+2017-12-20 10:11:03微信接口ticket：
+2017-12-20 10:11:03微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:03微信接口获取：
+2017-12-20 10:11:04Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:04获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:04微信接口param：[]
+2017-12-20 10:11:04微信接口ticket：
+2017-12-20 10:11:04微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:04微信接口获取：
+2017-12-20 10:11:04Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:04获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:04微信接口param：[]
+2017-12-20 10:11:04微信接口ticket：
+2017-12-20 10:11:04微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:04微信接口获取：
+2017-12-20 10:11:04Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:04获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:04微信接口param：[]
+2017-12-20 10:11:04微信接口ticket：
+2017-12-20 10:11:04微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:05微信接口获取：
+2017-12-20 10:11:10Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:10获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:10微信接口param：[]
+2017-12-20 10:11:10微信接口ticket：
+2017-12-20 10:11:10微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:10微信接口获取：
+2017-12-20 10:11:12Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:12获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:12微信接口param：[]
+2017-12-20 10:11:12微信接口ticket：
+2017-12-20 10:11:12微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:12微信接口获取：
+2017-12-20 10:11:13Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:13获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:13微信接口param：[]
+2017-12-20 10:11:13微信接口ticket：
+2017-12-20 10:11:13微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:13微信接口获取：
+2017-12-20 10:11:39Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:39获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:39微信接口param：[]
+2017-12-20 10:11:39微信接口ticket：
+2017-12-20 10:11:39微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:39微信接口获取：
+2017-12-20 10:11:40Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 10:11:40获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 10:11:40微信接口param：[]
+2017-12-20 10:11:40微信接口ticket：
+2017-12-20 10:11:40微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 10:11:40微信接口获取：
+2017-12-20 11:40:33Login：{"PHPSESSID":"sbj2kek2eu0jqam1nk10n75cl5"}
+2017-12-20 11:40:33获取SESSION：{"user_id":"2","username":"admin","password":"e10adc3949ba59abbe56e057f20f883e","realname":"\u7ba1\u7406\u5458","role_id":"1","company_name":"\u7ba1\u7406\u516c\u53f8","address":"\u8679\u8398\u8def1955","mobile":"18721225190","truck":"2","is_delete":"0","create_time":"2017-09-09 22:48:56","update_time":"2017-09-09 22:48:56","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5","sbj2kek2eu0jqam1nk10n75cl5":{"user_id":"26","username":"cao","password":"e10adc3949ba59abbe56e057f20f883e","realname":"caozheng","role_id":"1","company_name":"\u5927\u6e05\u5e1d\u56fd","address":"\u4e0a\u6d77\u5e02\u9646\u5bb6\u5634\u73af\u8def01","mobile":"18721225199","truck":"1","is_delete":"0","create_time":"2017-12-17 15:47:33","update_time":"2017-12-17 15:52:35","type":"1","login_ip":"","sess_id":"sbj2kek2eu0jqam1nk10n75cl5"}}
+2017-12-20 11:40:33微信接口param：[]
+2017-12-20 11:40:34微信接口ticket：
+2017-12-20 11:40:34微信接口URL：https://api.weixin.qq.com/cgi-bin/user/info?access_token=&openid=
+2017-12-20 11:40:34微信接口获取：

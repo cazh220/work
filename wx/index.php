@@ -154,7 +154,7 @@ class index extends Action {
 		$headimgurl = !empty($_GET['headimgurl']) ? trim($_GET['headimgurl']) : '';
 		$urlencode_head = urlencode($headimgurl);
 		//$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wxa02a6a965b89a9c0&redirect_uri=".urlencode("http://www.yrsyc.cn/wx/index.php?do=share&wx=1&security_code=".$security_code."&headimgurl=".$headimgurl)."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
-		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2ccfb6af79958896&redirect_uri=".urlencode("http://www.yrsyc.cn/wx/index.php?do=share&wx=1&security_code=".$security_code."&headimgurl=".$headimgurl)."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
+		$url = "https://open.weixin.qq.com/connect/oauth2/authorize?appid=wx2ccfb6af79958896&redirect_uri=".urlencode(HOST."/index.php?do=share&wx=1&security_code=".$security_code."&headimgurl=".$headimgurl)."&response_type=code&scope=snsapi_base&state=123#wechat_redirect";
 		header("Location:".$url);
 	}
 	

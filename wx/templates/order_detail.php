@@ -161,7 +161,7 @@ $(function(){
 <div data-role="page" data-theme="p">
   <div data-role="header" data-position="fixed"><a href="#" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back">后退</a>
   <h1>填写订单</h1>
-  <a href="http://www.yrsyc.cn/wx/user.php?do=ucenter&user_id={$user.user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
+  <a href="{$url_application}/user.php?do=ucenter&user_id={$user.user_id}" class="ui-btn ui-corner-all ui-icon-home ui-btn-icon-notext" data-ajax="false">首页</a>
   </div>
   
 
@@ -173,7 +173,7 @@ $(function(){
 			{foreach from=$list item=item key=key}
 			<li>
 				<div class="list_product">
-					<div class="list_pic"><img src="http://www.yrsyc.cn/app/public/uploads/{$item.gift_photo}" class="pic_size"></div>
+					<div class="list_pic"><img src="{$url_upload}/public/uploads/{$item.gift_photo}" class="pic_size"></div>
 					<div class="attr">产品名称：{$item.gift_name}<br> 产品规格：{$item.gift_intro}<br> 兑换积分：{$item.credits}<br> 数量：<span class="buy_num_css" onclick="subplus({$item.gift_id}, {$item.credits})"><img src="templates/images/subplus.png" width="20px" height="20px" style="vertical-align: middle;"></span><span id="buy_num_{$item.gift_id}" class="buy_num" data-id="{$item.gift_id}">1</span><span class="buy_num_css" onclick="plus({$item.gift_id}, {$item.credits})"><img src="templates/images/plus.png" width="20px" height="20px" style="vertical-align: middle;"></span></div>
 					<input type="hidden" id="gift_id_{$item.gift_id}" name="gift_id[]" class="h_gift_id" value="{$item.gift_id}"/>
 					<input type="hidden" id="gift_num_{$item.gift_id}" name="gift_num[]" class="h_gift_num" value="1"/>

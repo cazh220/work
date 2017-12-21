@@ -59,9 +59,9 @@
 	<ul data-role="listview">
       <li><a href="member.php?user_id={$user.user_id}" data-ajax="false">录入查询</a></li>
       {if $user.user_type==1}
-      <li><a href="#" id="scanQRCode" data-id="http://www.yrsyc.cn/wx/user.php?do=patientin&user_id={$user.user_id}&qrcode="  data-ajax="false">质保卡积分录入</a></li>
+      <li><a href="#" id="scanQRCode" data-id="{$url_application}/user.php?do=patientin&user_id={$user.user_id}&qrcode="  data-ajax="false">质保卡积分录入</a></li>
       {else}
-      <li><a href="#" id="scanQRCode" data-id="http://www.yrsyc.cn/wx/user.php?do=doctorin&user_id={$user.user_id}&qrcode=" data-ajax="false">质保卡积分录入</a></li>
+      <li><a href="#" id="scanQRCode" data-id="{$url_application}/user.php?do=doctorin&user_id={$user.user_id}&qrcode=" data-ajax="false">质保卡积分录入</a></li>
       {/if}
       
     </ul>

@@ -36,6 +36,7 @@ else
 	$host = 'http://www.yrsyc.cn/wx';
 }
 define('HOST', $host);
+define('UPLOAD_HOST', "http://www.yrsyc.cn/app");
 
 //初始化配置变量
 $cfg = array();
