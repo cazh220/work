@@ -179,7 +179,7 @@ class statistics extends Action {
 			}
 		}
 		import('util.ArrayUtil');
-		$print = ArrayUtil::join_array($print_array, 38, 50, 3);
+		$print = ArrayUtil::join_array($print_array, 24, 50, 3);
 		//print_r($result_s);die;
 		
 		//$result_s = ArrayUtil::ptint_web($print_array, 16, 50, 3);
@@ -524,7 +524,7 @@ class statistics extends Action {
 		}
 		
 		import('util.ArrayUtil');
-		$print = ArrayUtil::join_array($items, 38, 50, 3);
+		$print = ArrayUtil::join_array($items, 24, 50, 3);
 		
 		//print_r($print);die;
 		$page = $this->app->page();

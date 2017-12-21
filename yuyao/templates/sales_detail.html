@@ -155,11 +155,17 @@ function save_info()
 		{
 			//return true;
 			var goods_num = 0;
+			var goods_num = $("#d_goods_num_"+goods_id).html();
 			var send_num = 0;
+			var send_num = $("#d_send_num_"+goods_id).html();
 			var received_num = 0;
+			var received_num = $("#d_received_num_"+goods_id).html();
 			var good_note = '';
+			var good_note = $("#d_good_note_"+goods_id).html();
 			var n_good_note = '';
+			var n_good_note = $("#dn_good_note_"+goods_id).html();
 			var good_price = '';
+			var good_price = $("#d_goods_price_"+goods_id).html();
 		}
 		else
 		{
@@ -167,10 +173,9 @@ function save_info()
 			var received_num = $("#received_num_"+goods_id).val();
 			var good_note = $("#good_note_"+goods_id).val();
 			var n_good_note = $("#n_good_note_"+goods_id).val();
-			var good_price = $("#goods_price"+goods_id).val();
+			var good_price = $("#goods_price_"+goods_id).val();
 		}
 		var send_status_tmp = $("#c_send_status"+goods_id).attr("class");
-		console.log(send_status_tmp);
 		var send_status;
 		if(send_status_tmp == 'fa fa-check')
 		{
@@ -182,6 +187,7 @@ function save_info()
 		}
 		goods_list[i] = goods_id+':'+goods_num+':'+send_num+':'+received_num+':'+good_note+':'+n_good_note+':'+good_price+':'+send_status;
 	});
+
 	var send_no = $("#send_no").val();//发货单号
 	var order_id = $("#mine_order_id").val();
 	var pay_type = $("#pay_type").val();
@@ -237,9 +243,10 @@ function diff(id, price)
 	var diff = 0;
 	var goods_num = $("#goods_num_"+id).val();
 	var received_num = $("#received_num_"+id).val();
-	var price = $("#goods_price"+id).val();
+	var price = $("#goods_price_"+id).val();
 	var send_num = $("#send_num_"+id).val();
 	price = parseFloat(price);
+	//console.log(price);console.log(received_num);console.log(send_num);return false;
 	if(received_num >= send_num)
 	{
 		diff = 0;
@@ -283,7 +290,7 @@ function bring(id)
 		data:"do=getgoods&goods_id="+id,
 		dataType:"json",
 		success:function(msg){
-			$(".goods_list").append("<tr id='tr_"+id+"'><td class='center' style='width:53px'><div>"+id+"</div></td><td class='center'>"+msg.goods.goods_name+"</td><td class='center' style='width:53px'><span id='d_goods_num_"+id+"'><input type='text' id='goods_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:53px'>"+msg.goods.unit+"</td><td class='center' style='width:53px'><span id='d_send_num_"+id+"'><input type='text' id='send_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:53px'><span id='d_received_num_"+id+"'><input type='text' id='received_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:53px'>"+msg.goods.unit+"</td><td class='center' style='width:53px'>"+msg.goods.price+"</td><td class='center' style='width:53px'><span id='d_send_num_"+id+"'><input type='text' id='goods_price_"+id+"' style='width:50px' value='"+msg.goods.price+"'></span></td><td class='center' style='width:53px'>0</td><td class='center' style='width:178px'><span id='d_good_note_"+id+"'><input type='text' id='good_note_"+id+"'></span></td><td class='center' style='width:62px'><a href='#' onclick='delete_good("+id+")' style='color:dodgerblue;'>删除</a></td></tr>");
+			$(".goods_list_a").append("<tr id='tr_"+id+"'><td class='center' style='width:53px'><div>"+id+"</div></td><td class='center'>"+msg.goods.goods_name+"</td><td class='center' style='width:40px'><span id='d_goods_num_"+id+"'><input type='text' id='goods_num_"+id+"' style='width:50px' value='1'></span></td><td class='center' style='width:40px'>"+msg.goods.unit+"</td><td class='center' style='width:40px'><span id='d_send_num_"+id+"'><input type='text' id='send_num_"+id+"' style='width:50px' value='1' onblur='diff("+id+","+msg.goods.price+")'></span></td><td class='center' style='width:40px'><span id='d_received_num_"+id+"'><input type='text' id='received_num_"+id+"' style='width:50px' value='1' onblur='diff("+id+","+msg.goods.price+")'></span></td><td class='center' style='width:40px'>"+msg.goods.unit+"</td><td class='center' style='width:40px'><span id='d_goods_price_"+id+"'><input type='text' id='goods_price_"+id+"' style='width:50px' value='"+msg.goods.price+"' onblur='diff("+id+","+msg.goods.price+")'></span></td><td class='center' style='width:40px'><span id='sales_"+id+"'>0</span></td><td class='center' style='width:40px'><span id='diff_"+id+"'>0</span></td><td class='center' style='width:100px'><span id='d_good_note_"+id+"'><input type='text' id='good_note_"+id+"'></span></td><td class='center' style='width:100px'><span id='dn_good_note_"+id+"'><input type='text' id='n_good_note_"+id+"'></span></td><td width='5%' align='center'><i onclick='change("+id+")'  id='c_send_status"+id+"' class='fa fa-times' style='color: red;' data-id='0'></i></td><td class='center' style='width:62px'><a href='#' onclick='delete_good("+id+")' style='color:dodgerblue;'>删除</a></td></tr>");
 		}
 	});
 	//document.getElementById("aa").value = 'aa';

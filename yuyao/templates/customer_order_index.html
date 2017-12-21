@@ -425,6 +425,10 @@ function calc(id, price)
 {
 	var sales = 0;
 	var goods_num = $("#goods_num"+id).val();
+	if(!goods_num)
+	{
+		goods_num = 0;
+	}
 	goods_num = parseInt(goods_num);
 	var received_num = $("#received_num"+id).val();
 	if(!received_num)
@@ -432,13 +436,18 @@ function calc(id, price)
 		received_num = 0;
 	}
 	var send_num = $("#send_num"+id).val();
+	if(!send_num)
+	{
+		send_num = 0;
+	}
 	received_num = parseInt(received_num);
 	send_num = parseInt(send_num);
 	var goods_price = $("#goods_price"+id).val();
 	goods_price = parseFloat(goods_price);
-	console.log(goods_price);
+	//console.log(goods_price);
 	//console.log(received_num);
 	sales = send_num*goods_price;
+	//console.log(sales);
 	if(received_num >= send_num)
 	{
 		diff = 0;
