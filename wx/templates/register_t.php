@@ -132,6 +132,18 @@
 				</td>
 			</tr>
 			<tr>
+				<td width="30%" align="right">会员头像:</td>
+				<td width="70%" colspan="2"><input type="file" name="vfile" id="fileInput" value="会员头像" style="color: darkgray;"></td>
+			</tr>
+			<tr id="yulan2" style="display: none;">
+				<td width="30%" align="right">预览图片:</td>
+				<td width="70%" colspan="2">
+					<img id="resultImage" style="display:none">
+					<canvas id="resultCanvas1"></canvas>
+					<input type="hidden"  id="vip_head" name="vip_head" value=""/><a href="javascript:remove()" style="color: red;">撤销</a>
+				</td>
+			</tr>
+			<tr>
 				<td width="30%" align="right">单位介绍:</td>
 				<td width="70%" colspan="2"><textarea name="addinfo" id="info" placeholder="单位介绍"></textarea></td>
 			</tr>
