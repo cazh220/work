@@ -354,10 +354,12 @@ class user extends Action {
 		$data['left_credits'] = $score;
 		
 		//医生免审
+		/*
 		if($user_type == 2)
 		{
 			$data['status'] = 1;
-		}
+		}*/
+		$data['status'] = 1;//都免审
 		//print_r($data);die;
 		importModule("userInfo","class");
 		$obj_user = new userInfo;
@@ -384,6 +386,9 @@ class user extends Action {
 			}
 		
 			//注册成功
+			$return = array("status"=>1, "message"=>'注册成功，请登录');
+			exit(json_encode($return));
+			/*
 			if($user_type == 2)
 			{
 				$return = array("status"=>1, "message"=>'注册成功，请登录');
@@ -395,7 +400,7 @@ class user extends Action {
 				$return = array("status"=>1, "message"=>'恭喜您,您已注册成功！账号需要沪鸽工作人员审核通过后才能登录，审核时限8小时');
 				exit(json_encode($return));
 				//echo "<script>alert('恭喜您,您已注册成功！账号需要沪鸽工作人员审核通过后才能登录，审核时限8小时');window.location.href='user.php?register=1';</script>";
-			}
+			}*/
 		}
 		else 
 		{
@@ -1103,6 +1108,7 @@ class user extends Action {
 		importModule("CreditInfo","class");
 		$obj_credit = new CreditInfo;
 		$credit_list = $obj_credit->get_credits_list();
+		
 		$score = 0;//积分
 		if(!empty($credit_list))
 		{
@@ -1114,18 +1120,18 @@ class user extends Action {
 			
 			if(!empty($upload_pic) && empty($user[0]['head_img']))
 			{
-				$score += $credit_item[1];
+				$score += $credit_item[0];
 			}
-			if(!empty($company_info) && empty($user[0]['company_info']))
+			if(!empty($info) && empty($user[0]['company_info']))
 			{
-				$score += $credit_item[2];
+				$score += $credit_item[1];
 			}
 			if(!empty($position) && empty($user[0]['position']))
 			{
-				$score += $credit_item[5];
+				$score += $credit_item[4];
 			}
 		}
-		
+
 		$data = array(
 			'realname'		=> $realname,
 			'position'		=> $position,
@@ -1143,7 +1149,7 @@ class user extends Action {
 			'total_credits'	=> $user[0]['total_credits']+$score,
 			'left_credits'	=> $user[0]['left_credits']+$score,
 		);
-		
+
 		//更新地址
 		$param = array(
 			'user_id'		=> $user_id,

@@ -45,7 +45,7 @@
 <body>
 <div data-role="page" id="pageone" data-theme="p">
   <div data-role="header"><a href="#" class="ui-btn ui-corner-all ui-icon-carat-l ui-btn-icon-notext" data-rel="back">后退</a>
-  <h1>会员中心</h1>
+  <h1>沪鸽防伪认证中心</h1>
   <!--<a href="#pagetwo" data-role="button" data-icon="alert">12</a>-->
   </div>
 
@@ -69,14 +69,14 @@
 	<ul data-role="listview">
 	  <li><a href="message.php?user={$user.user_id}" data-ajax="false">我的消息{if $message_count > 0}<span class="ui-li-count" style="background-color: #E10F05;">{$message_count}</span>{/if}</a></li>
       <li><a href="order.php?do=orderlist&&user_id={$user.user_id}" data-ajax="false">我的订单</a></li>
-      <li><a href="shop.php?&user_id={$user.user_id}" data-ajax="false">积分兑换</a></li>
+      <li><a href="shop.php?&user_id={$user.user_id}" data-ajax="false">积分商城</a></li>
     </ul>
 	
 	<div style="height:60px"></div>
 	<ul data-role="listview">
-      <li><a href="user.php?do=member&user_id={$user.user_id}" data-ajax="false">个人资料</a></li>
-      <li><a href="user.php?do=setting&user_id={$user.user_id}" data-ajax="false">设置</a></li>
-      <!--<li><a href="user.php?do=logout" data-ajax="false">退出</a></li>-->
+      <li><a href="user.php?do=member&user_id={$user.user_id}" data-ajax="false">个人信息</a></li>
+      <li><a href="user.php?do=setting&user_id={$user.user_id}" data-ajax="false">备查资料</a></li>
+      <li><a href="user.php?do=logout" data-ajax="false">会员退出</a></li>
     </ul>
   </div>
 </div>

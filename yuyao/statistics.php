@@ -179,7 +179,7 @@ class statistics extends Action {
 			}
 		}
 		import('util.ArrayUtil');
-		$print = ArrayUtil::join_array($print_array, 16, 50, 3);
+		$print = ArrayUtil::join_array($print_array, 38, 50, 3);
 		//print_r($result_s);die;
 		
 		//$result_s = ArrayUtil::ptint_web($print_array, 16, 50, 3);
@@ -511,7 +511,22 @@ class statistics extends Action {
 		{
 			$user_title = '所有客户';
 		}
-
+		
+		$items = array();
+		foreach($data_role as $key => $value)
+		{
+			$items[] = array("goods_name"=>"","goods_num"=>$value['order_user_name'],"good_note"=>"","unit"=>"");
+			$items[] = array("goods_name"=>"产品","goods_num"=>"数量","good_note"=>"备注", "unit"=>"");
+			foreach($value['list'] as $k => $v)
+			{
+				$items[] = array("goods_name"=>$v['goods_name'],"goods_num"=>$v['goods_num'],"good_note"=>$v['good_note'],"unit"=>$v['unit']);
+			}
+		}
+		
+		import('util.ArrayUtil');
+		$print = ArrayUtil::join_array($items, 38, 50, 3);
+		
+		//print_r($print);die;
 		$page = $this->app->page();
 		$page->value('title',"宇尧实业（上海）有限公司");
 		$page->value('confirm_time',$confirm_time);
@@ -522,6 +537,7 @@ class statistics extends Action {
 		$page->value('order_role_id',$order_role_id);
 		$page->value('order_truck_id',$order_truck_id);
 		$page->value('truck',$truck);
+		$page->value('print',$print);
 		//$page->value('order_role_name',!empty($customer_arr[$order_role_id]) ? $customer_arr[$order_role_id] : '所有客户');
 		$page->value('order_user_name',!empty($customer_user_arr[$order_user_id]) ? $customer_user_arr[$order_user_id] : '所有客户');
 		$page->value('category',$category_show);
