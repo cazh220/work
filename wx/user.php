@@ -260,6 +260,16 @@ class user extends Action {
 		$company_pic 	= $params[15] ? trim($params[15]) : '';
 		$company_info 	= $params[16] ? trim($params[16]) : '';
 
+		//判断手机号是否已存在
+		importModule("userInfo","class");
+		$obj_user = new userInfo;
+		$res_check = $obj_user->check_mobile($mobile);
+		if($res_check)
+		{
+			$return = array("status"=>0, "message"=>'不能重复提交');
+			exit(json_encode($return));
+		}
+
 		//上传图片
 		//$upload_pic = $this->_upload_pic();
 		
@@ -385,6 +395,11 @@ class user extends Action {
 				$obj_user->update_user_address_id($user_id, $address_id);
 			}
 		
+			//注册成功发短信
+			import('util.SendSms');
+			SendSms::send_sms_template($mobile);
+
+
 			//注册成功
 			$return = array("status"=>1, "message"=>'注册成功，请登录');
 			exit(json_encode($return));

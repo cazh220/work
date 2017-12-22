@@ -21,6 +21,18 @@ class SendSms {
 		return $ob;
 	}
 	
+	//发送短信
+	public function send_sms_template($mobile, $content)
+	{
+		import('util.RequestCurl');
+		$content = "【HUGE】恭喜您成为沪鸽口腔防伪认证会员！您的登陆账号为".$mobile."！";
+		$param = '&userid='.self::$id.'&account='.self::$user.'&password='.self::$password.'&mobile='.$mobile.'&content='.$content.'&mobilenumber=1';
+		$url = self::$api_url.$param;//echo $url;
+		$xmlfile = RequestCurl::curl_get($url);
+		$ob= simplexml_load_string($xmlfile);
+		return $ob;
+	}
+	
 	
 }
 
