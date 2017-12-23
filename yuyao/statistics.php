@@ -178,12 +178,16 @@ class statistics extends Action {
 				}
 			}
 		}
-		import('util.ArrayUtil');
-		$print = ArrayUtil::join_array($print_array, 24, 50, 3);
-		//print_r($result_s);die;
 		
-		//$result_s = ArrayUtil::ptint_web($print_array, 16, 50, 3);
-		//$print = ArrayUtil::transposition($result_s);
+		$page_head = array(
+			'title'				=> '宇尧实业（上海）有限公司',
+			'category_name'		=> $category_info['cname'] ? $category_info['cname'] : '所有分类',
+			'user_title'		=> $user_title,
+			'confirm_time'		=> $confirm_time
+		);
+		
+		import('util.ArrayUtil');
+		$print = ArrayUtil::join_array($print_array, 33, 33, 3, $page_head);
 		
 		$page = $this->app->page();
 		$page->value('title',"宇尧实业（上海）有限公司");
@@ -523,10 +527,16 @@ class statistics extends Action {
 			}
 		}
 		
-		import('util.ArrayUtil');
-		$print = ArrayUtil::join_array($items, 24, 50, 3);
+		$page_head = array(
+			'title'				=> '宇尧实业（上海）有限公司',
+			'category_name'		=> $category_info['cname'] ? $category_info['cname'] : '所有分类',
+			'truck_name'		=> !empty($truck_name) ? $truck_name : '所有分车',
+			'confirm_time'		=> $confirm_time
+		);
 		
-		//print_r($print);die;
+		import('util.ArrayUtil');
+		$print = ArrayUtil::join_array($items, 33, 50, 3, $page_head);
+		
 		$page = $this->app->page();
 		$page->value('title',"宇尧实业（上海）有限公司");
 		$page->value('confirm_time',$confirm_time);

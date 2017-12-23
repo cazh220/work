@@ -700,23 +700,81 @@ class order extends Action {
 		$general['role_name'] = $role_info['role_name'];
 		//获取商品信息
 		$total_amount = 0;
+		$order_goods = array();
 		$order_goods = $obj_order->get_order_goods($order_id);
+		
+		$rows = 60;
+		
 		if($order_goods)
 		{
-			foreach($order_goods as $key => $val)
+			if(count($order_goods) < $rows)
 			{
-				$order_goods[$key]['goods_num'] = $val['goods_num'] ? $val['goods_num'] : '';
-				$order_goods[$key]['good_price'] = $val['good_price'] ?  sprintf("%1\$.2f", $val['good_price']) : '';
-				$total_amount += $val['good_price']*$val['goods_num'];
-				$order_goods[$key]['amount'] = $val['price']*$val['goods_num'];
-				$order_goods[$key]['amount'] = $order_goods[$key]['amount'] ? sprintf("%1\$.2f", $order_goods[$key]['amount']) : '';
-				$order_goods[$key]['check_amount'] = $val['good_price']*$val['received_num'];
+				foreach($order_goods as $key => $val)
+				{
+					$order_goods[$key]['goods_num'] = $val['goods_num'] ? $val['goods_num'] : '';
+					$order_goods[$key]['good_price'] = $val['good_price'] ? number_format($val['good_price'], 2, ".", "") : '';
+					$total_amount += $val['good_price']*$val['goods_num'];
+					$order_goods[$key]['amount'] = $val['price']*$val['goods_num'];
+					$order_goods[$key]['amount'] = $order_goods[$key]['amount'] ? number_format($order_goods[$key]['amount'], 2, ".", "") : '';
+					$order_goods[$key]['check_amount'] = $val['good_price']*$val['received_num'];
+				}
+				$general['total_amount'] = $total_amount ? number_format($total_amount, 2, ".", "") : 0;
+			}
+			else
+			{
+				$order_goods_first = array();
+				foreach($order_goods as $key => $val)
+				{
+					if($key < $rows)
+					{
+						$order_goods_first[] = $val;
+					}
+				}
+				
+				foreach($order_goods_first as $key => $val)
+				{
+					$order_goods_first[$key]['goods_num'] = $val['goods_num'] ? $val['goods_num'] : '';
+					$order_goods_first[$key]['good_price'] = $val['good_price'] ? number_format($val['good_price'], 2, ".", "") : '';
+					$total_amount += $val['good_price']*$val['goods_num'];
+					$order_goods_first[$key]['amount'] = $val['price']*$val['goods_num'];
+					$order_goods_first[$key]['amount'] = $order_goods_first[$key]['amount'] ? number_format($order_goods_first[$key]['amount'], 2, ".", "") : '';
+					$order_goods_first[$key]['check_amount'] = $val['good_price']*$val['received_num'];
+				}
+				
+				$general['total_amount'] = $total_amount ? number_format($total_amount, 2, ".", "") : 0;
+				
+				$first = array('page_head'=>$general, 'list'	=> $order_goods_first);
+				
+				$order_goods_second = array();
+				foreach($order_goods as $key => $val)
+				{
+					if($key >= $rows && $key < $rows + $rows)
+					{
+						$order_goods_second[] = $val;
+					}
+				}
+				
+				$total_amount = 0;
+				foreach($order_goods_second as $keys => $vals)
+				{
+					$order_goods_second[$keys]['goods_num'] = $vals['goods_num'] ? $vals['goods_num'] : '';
+					$order_goods_second[$keys]['good_price'] = $vals['good_price'] ? number_format($vals['good_price'], 2, ".", "") : '';
+					$total_amount += $vals['good_price']*$vals['goods_num'];
+					$order_goods_second[$keys]['amount'] = $vals['price']*$vals['goods_num'];
+					$order_goods_second[$keys]['amount'] = $order_goods_second[$keys]['amount'] ? number_format($order_goods_second[$keys]['amount'], 2, ".", "") : '';
+					$order_goods_second[$keys]['check_amount'] = $vals['good_price']*$vals['received_num'];
+				}
+				
+				$general['total_amount'] = $total_amount ? number_format($total_amount, 2, ".", "") : 0;
+				
+				$second = array('page_head'=>$general, 'list'	=> $order_goods_second);
+				
+				$order_goods = array();
+				$order_goods = array_merge(array($first), array($second));
 			}
 		}
-		$general['total_amount'] = $total_amount;
-		//print_r($general);die;
-		//print_r($order_goods);die;
-		
+//print_r($order_goods);die;
+
 		$page = $this->app->page();
 		$page->value('order_goods',$order_goods);
 		$page->value('general',$general);

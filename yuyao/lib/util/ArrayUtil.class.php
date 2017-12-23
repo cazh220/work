@@ -174,7 +174,7 @@ class ArrayUtil {
 	}
 	
 	//join array
-	public static function join_array($array, $frows, $srows, $cols)
+	public static function join_array($array, $frows, $srows, $cols, $page_head)
 	{
 		$count = count($array);
 		$first_page_num = $frows*$cols;
@@ -188,7 +188,7 @@ class ArrayUtil {
 			}
 			$first_page_array_first = array_chunk($first_page_array, $frows);
 			$result = self::transposition($first_page_array_first);
-			return $result;
+			return array(array('page_head'	=> $page_head, 'list'	=> $result));
 		}
 		else
 		{
@@ -201,28 +201,32 @@ class ArrayUtil {
 			}
 			$first_page_array_first = array_chunk($first_page_array, $frows);
 			$result_first = self::transposition($first_page_array_first);
+			$result_first_merge = array(array('page_head'=>$page_head, 'list'	=> $result_first));
+
 			//第二页
 			$second_page_array = array();
 			foreach($array as $key => $value)
 			{
-				if($key >= $first_page_num && $key < ($first_page_num+30*$cols))
+				if($key >= $first_page_num && $key < ($first_page_num+$frows*$cols))
 				{
 					$second_page_array[] = $value;
 				}
 			}
-			
-			if(count($second_page_array) < 30*$cols)
+
+			if(count($second_page_array) < $frows*$cols)
 			{
-				for($i=0; $i<30*$cols; $i++)
+				for($i=0; $i<$frows*$cols; $i++)
 				{
 					$ik = $i+$first_page_num;
 					$second_page_array_s[$i] = !empty($array[$ik]) ? $array[$ik] : array();
 				}
 			}
-			$second_page_array_second = array_chunk($second_page_array_s, 30);
+			
+			$second_page_array_second = array_chunk($second_page_array_s, $frows);
 			$result_second = self::transposition($second_page_array_second);
-
-			$res = array_merge($result_first, $result_second);
+			
+			$result_second_merge = array(array('page_head'=>$page_head, 'list'  => $result_second));
+			$res = array_merge($result_first_merge, $result_second_merge);
 			return $res;
 			//print_r($res);die;
 			

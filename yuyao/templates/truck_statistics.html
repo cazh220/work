@@ -156,60 +156,41 @@
 	</div>
 	<div id="w_list_print">
 		<div class="pageFormContent" layoutH="106">
+			{if $print}
+			{foreach from=$print key=key item=item}
+			{if $item.page_head}
 			<table style="margin: 0 auto; text-align: center" width="600px">
 				<tr>
-					<td colspan="2" style="font-size: 20px; font-weight: bolder;">{$title}</td>
+					<td colspan="2" style="font-size: 20px; font-weight: bolder;">{$item.page_head.title}</td>
 				</tr>
 				<tr>
-					<td width="60%" height="40px"></td>
-					<td width="40%">统计日期:{$confirm_time}</td>
-				</tr>
-				<tr>
-					<td width="100" colspan="2" height="40px" style="font-size: 15px; font-weight: bolder;">{if $category_name}{$category_name}----{/if}{if $truck_name}{$truck_name}{/if}<!--；   总金额：￥{$total_amount}--></td>
-				</tr>
-				
+					<td width="60%" height="30px" align="right">{if $item.page_head.category_name}{$item.page_head.category_name}----{/if}{if $item.page_head.truck_name}{$item.page_head.truck_name}{/if}</td>
+					<td width="40%">统计日期:{$item.page_head.confirm_time}</td>
+				</tr>				
 			</table>
+			{/if}
 			
-			<table style="margin-top: 20px; margin-left: 0px; margin-right: 0px;" width="100%">
-				<!--{if $goods}
-				{foreach from=$goods key=key item=item}
-				<tr>
-					<td colspan="4" style="text-align: center; height: 30px;"><b>{$item.order_user_name}</b></td>
-				</tr>
-				<tr>
-					<td width="25%"></td>
-					<td width="20%">产品</td>
-					<td width="20%">数量</td>
-					<td width="35%" height="30px" style="text-align: left;">备注</td>
-				</tr>
-				{foreach from=$item.list key=keya item=itema}
-				<tr>
-					<td width="25%"></td>
-					<td width="20%">{$itema.goods_name}</td>
-					<td width="20%">{$itema.goods_num} {$itema.unit}</td>
-					<td width="35%" height="30px" style="text-align: left;">{if $itema.good_note}{$itema.good_note}{/if}</td>
-				</tr>
-				{/foreach}
-				{/foreach}
-				{/if}-->
-				{if $print}
-					{foreach from=$print key=key item=item}
+			{if $item.list}
+			<table style="margin-top: 0px; margin-left: 0px; margin-right: 0px;" width="100%">
+					{foreach from=$item.list key=keyc item=itemc}
 						<tr>
-							{foreach from=$item key=keya item=itema}
-								<td width="33%" height="30px">
+							{foreach from=$itemc key=keya item=itema}
+								<td width="33%" height="20px">
 									<table width="100%">
 										<tr>
-											<td width="33%">{$itema.goods_name}</td>
-											<td width="33%">{$itema.goods_num}{if $itema.unit}({$itema.unit}){/if}</td>
-											<td width="33%">{$itema.good_note}</td>
+											<td width="30%">{$itema.goods_name}</td>
+											<td width="35%" {if !$itema.goods_name}style="font-weight: bolder;"{/if}>{$itema.goods_num}{if $itema.unit}({$itema.unit}){/if}</td>
+											<td width="35%">{$itema.good_note}</td>
 										</tr>
 									</table>
 								</td>
 							{/foreach}
 						</tr>
 					{/foreach}
-				{/if}
 			</table>
+			{/if}
+			{/foreach}
+			{/if}
 		</div>
 		
 	</div>
