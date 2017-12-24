@@ -33,9 +33,17 @@
 		<table>
 			<tr>
 				<td width="12%">时间:</td>
-				<td><input type="text" name="date" value="{$date}" width="30%"/>	</td>
+				<td>
+					<input  type="date" name="date" id="date" value="{$date}" placeholder="" width="30%">
+				</td>
+				{if $user_type==1}
+				<td width="12%">患者:</td>
+				<td><input type="text" name="name" value="{$name}" width="30%"/>	</td>
+				{else}
 				<td width="12%">医院:</td>
 				<td><input type="text" name="hospital" value="{$hospital}" width="30%"/>	</td>
+				{/if}
+				
 				<td><input type="submit" name="subm"  value="搜索" width=""/></td>
 			</tr>
 		</table>

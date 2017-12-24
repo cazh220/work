@@ -173,7 +173,7 @@ function save_info()
 			var received_num = $("#received_num_"+goods_id).val();
 			var good_note = $("#good_note_"+goods_id).val();
 			var n_good_note = $("#n_good_note_"+goods_id).val();
-			var good_price = $("#goods_price_"+goods_id).val();
+			var good_price = $("#goods_price"+goods_id).val();
 		}
 		var send_status_tmp = $("#c_send_status"+goods_id).attr("class");
 		var send_status;
@@ -243,8 +243,10 @@ function diff(id, price)
 	var diff = 0;
 	var goods_num = $("#goods_num_"+id).val();
 	var received_num = $("#received_num_"+id).val();
-	var price = $("#goods_price_"+id).val();
+	var price = $("#goods_price"+id).val();
 	var send_num = $("#send_num_"+id).val();
+	send_num = parseInt(send_num);
+	received_num = parseInt(received_num);
 	price = parseFloat(price);
 	//console.log(price);console.log(received_num);console.log(send_num);return false;
 	if(received_num >= send_num)
@@ -256,6 +258,8 @@ function diff(id, price)
 		diff = (send_num-received_num)*price;
 	}
 	var sales = send_num*price;
+	diff = parseFloat(diff);
+	sales = parseFloat(sales);
 	//console.log(diff);
 	$("#diff_"+id).html(diff.toFixed(2));
 	$("#sales_"+id).html(sales.toFixed(2));

@@ -610,7 +610,7 @@ class OrderInfo
 			
 			foreach($order_goods as $key => $val)
 			{
-				$sql .= "(".$order_id.", ".$val['goods_id'].", ".$val['goods_num'].", ".$val['good_price'].", '".$val['good_note']."', '".$val['send_num']."', '".$val['received_num']."', '".$val['n_good_note']."', '".$val['send_status']."'),";
+				$sql .= "(".$order_id.", ".$val['goods_id'].", '".$val['goods_num']."', '".$val['good_price']."', '".$val['good_note']."', '".$val['send_num']."', '".$val['received_num']."', '".$val['n_good_note']."', '".$val['send_status']."'),";
 			}
 			
 			$sql = rtrim($sql, ',');
@@ -630,7 +630,7 @@ class OrderInfo
 		$amount = $res['amt'] ? intval($res['amt']) : 0;
 		$count  = $res['cnt'] ? intval($res['cnt']) : 0;
     	
-		$sql = "UPDATE yy_order SET total_amount = ".$amount.", total_num =  ".$count.", update_time = '".$order_title['update_time']."', send_no = '".$order_title['send_no']."', order_time = '".$order_title['order_time']."', jg_date = '".$order_title['order_time']."', send_time = '".$order_title['send_time']."', pay_type = ".$order_title['pay_type'].", processing_time = '".$order_title['processing_time']."' WHERE order_id = ".$order_id;
+		$sql = "UPDATE yy_order SET total_amount = '".$amount."', total_num =  '".$count."', update_time = '".$order_title['update_time']."', send_no = '".$order_title['send_no']."', order_time = '".$order_title['order_time']."', jg_date = '".$order_title['order_time']."', send_time = '".$order_title['send_time']."', pay_type = ".$order_title['pay_type'].", processing_time = '".$order_title['processing_time']."' WHERE order_id = ".$order_id;
 		//echo $sql;die;
 		try{
 			$res = $this->db->exec($sql);

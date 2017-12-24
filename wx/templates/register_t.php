@@ -12,6 +12,7 @@
 <script src="http://code.jquery.com/mobile/1.4.3/jquery.mobile-1.4.3.min.js"></script>
 <script src="public/js/megapix-image.js"></script>
 <script src="public/js/megapix-image.test.js"></script>
+<script src="public/js/megapix-image.test2.js"></script>
 <script src="public/layer_mobile/layer.js"></script>
 </head>
 <style type="text/css">

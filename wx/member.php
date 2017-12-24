@@ -16,17 +16,36 @@ class member extends Action {
 		$page 		= !empty($_REQUEST['page']) ? intval($_REQUEST['page']) : 1;
 		$page_size  = 30;
 		
+		$date		= !empty($_REQUEST['date']) ? trim($_REQUEST['date']) : '';
+		$hospital   = !empty($_REQUEST['hospital']) ? trim($_REQUEST['hospital']) : '';
+		$name	    = !empty($_REQUEST['name']) ? trim($_REQUEST['name']) : '';
+		
 		$data = array(
 			'operate_user_id'	=> $user_id,
 			'page'				=> $page,
 			'page_size'			=> $page_size
 		);
+		//确定用户类型
+		importModule("userInfo","class");
+		$obj_user = new userInfo;
+		$user_detail = $obj_user->get_user_detail($user_id);
 		if($act == 1)
 		{
-			$serach = !empty($_POST['search']) ? trim($_POST['search']) : '';
-			$data['hospital'] = $serach;
+			if($user_detail[0]['user_type'] == 1)
+			{
+				//技工
+				$data['name'] = $name;
+				$data['date'] = $date;
+			}
+			else
+			{
+				$data['date'] = $date;
+				$data['hospital'] = $hospital;
+			}
+			
+			
 		}
-
+	
 		importModule("PatientInfo","class");
 		$obj_patient = new PatientInfo;
 		$list = $obj_patient->patient_list($data);
@@ -41,7 +60,11 @@ class member extends Action {
 		$page->value('user_list',$_SESSION);
 		$page->value('list',$list);
 		$page->value('serach',$serach);
+		$page->value('user_type',$user_detail[0]['user_type']);
 		$page->value('user_id',$user_id);
+		$page->value('date',$date);
+		$page->value('name',$name);
+		$page->value('hospital',$hospital);
 		$page->params['template'] = 'search.php';
 		$page->output();
 	}

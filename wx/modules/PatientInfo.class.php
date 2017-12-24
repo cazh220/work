@@ -243,6 +243,15 @@ class PatientInfo
 		{
 			$sql .= " AND hospital LIKE '%".$data['hospital']."%'";
 		}
+		if($data['date'])
+		{
+			$sql .= " AND create_time > '".$data['date']." 00:00:00' AND create_time < '".$data['date']." 23:59:59'";
+		}
+		if($data['name'])
+		{
+			$sql .= " AND name LIKE '%".$data['name']."%'";
+		}
+		
 		$sql .= " ORDER BY patient_id DESC ";
 		$start = ($data['page']-1)*$data['page_size'];
 		$page_size = $data['page_size'];

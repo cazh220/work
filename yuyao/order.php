@@ -290,9 +290,9 @@ class order extends Action {
 		{
 			foreach($order_goods as $key => $val)
 			{
-				$order_goods[$key]['sales_amount'] = number_format($val['good_price']*$val['received_num'], 2, ".", "");
+				$order_goods[$key]['sales_amount'] = number_format($val['good_price']*$val['send_num'], 2, ".", "");
 				//差额
-				$diff_amount = $val['good_price']*($val['goods_num']-$val['received_num']);
+				$diff_amount = $val['good_price']*($val['send_num']-$val['received_num']);
 				$order_goods[$key]['diff_amount'] = number_format($diff_amount, 2, ".", "");
 			}
 		}
@@ -711,14 +711,18 @@ class order extends Action {
 			{
 				foreach($order_goods as $key => $val)
 				{
-					$order_goods[$key]['goods_num'] = $val['goods_num'] ? $val['goods_num'] : '';
-					$order_goods[$key]['good_price'] = $val['good_price'] ? number_format($val['good_price'], 2, ".", "") : '';
+					$order_goods_fs[$key] = $val;
+					$order_goods_fs[$key]['goods_num'] = $val['goods_num'] ? $val['goods_num'] : '';
+					$order_goods_fs[$key]['good_price'] = $val['good_price'] ? number_format($val['good_price'], 2, ".", "") : '';
 					$total_amount += $val['good_price']*$val['goods_num'];
-					$order_goods[$key]['amount'] = $val['price']*$val['goods_num'];
-					$order_goods[$key]['amount'] = $order_goods[$key]['amount'] ? number_format($order_goods[$key]['amount'], 2, ".", "") : '';
-					$order_goods[$key]['check_amount'] = $val['good_price']*$val['received_num'];
+					$order_goods_fs[$key]['amount'] = $val['price']*$val['goods_num'];
+					$order_goods_fs[$key]['amount'] = $order_goods_fs[$key]['amount'] ? number_format($order_goods_fs[$key]['amount'], 2, ".", "") : '';
+					$order_goods_fs[$key]['check_amount'] = $val['good_price']*$val['received_num'];
 				}
 				$general['total_amount'] = $total_amount ? number_format($total_amount, 2, ".", "") : 0;
+				
+				$order_goods = array();
+				$order_goods = array(array('page_head'=>$general, 'list'	=> $order_goods_fs));
 			}
 			else
 			{
